@@ -1,6 +1,6 @@
 # Foreman
 
-A domain-agnostic project operating system built inside Claude Code.
+A domain-agnostic project framework built inside Claude Code.
 
 Foreman turns any vague idea into a scoped, verified output — then gets smarter with every project. It works for any field: software, legal, healthcare, trades, retail, or anything else.
 
