@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.6.0 — 2026-06-28
+
+### New
+- `/from-context` — paste any raw context (notes, requirements, code, docs) and Claude synthesizes the project, picks the right toolchain (Zig/Python/bash/none), and flags CLI tool candidates with token savings estimates before spec work begins
+- `foreman-tools-audit` skill — runs after every new project and command/skill edit; scans for shell patterns worth promoting to a native CLI subcommand
+- `foreman-tools-first` guardrail — Claude checks for a `foreman-tools` subcommand before any data-gathering shell command; warns at session start if `foreman-tools` is not installed
+
+---
+
 ## v1.5.0 — 2026-06-28
 
 ### New
