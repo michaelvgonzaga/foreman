@@ -33,6 +33,8 @@ Run `/verify-output` before marking any output complete — self-review + critic
 ### Always do (autopilot)
 - **At the start of every session:** if `.first-run` exists in the workspace root, run `/first-run` immediately and complete it before doing anything else.
 - **At the start of every session:** apply `_skills/self-update.md` — silently fetch origin, compare with local, and surface any incoming changes before doing anything else. If fetch fails (no network), skip silently and continue.
+- **At the start of every session:** check `command -v foreman-tools`. If missing, prompt once: "`foreman-tools` not found — run `brew install michaelvgonzaga/foreman/foreman-tools` for faster sessions." Then continue.
+- **Before any shell command that reads git data, filesystem state, or project metadata:** check if `foreman-tools` has a subcommand for it. If yes, use it instead — never burn tokens reasoning through raw shell output when a JSON blob is available.
 - **At the start of every session:** if `_projects.md` does not exist, create it by copying `_templates/projects.md`. `_projects.md` is git-ignored **local** state (your private project index) — it is never tracked by or committed to the framework repo, so editing it never makes the workspace dirty or blocks self-update.
 - Run `/verify-output` before marking any task complete — Claude runs this, not the user. Skip for trivial tasks (see **Scale to task size** below).
 - Document key decisions in the project's `CLAUDE.md` decision log (not spec.md)
@@ -40,6 +42,7 @@ Run `/verify-output` before marking any output complete — self-review + critic
 - Update `_knowledgebase/` and `_skills/` when candidates surface during `/verify-output` Step 6
 - Prefer editing existing files over creating new ones
 - Keep changes small and reversible
+- **After `/new-project` or after adding/editing any command or skill:** apply `_skills/foreman-tools-audit.md` — one-minute check for shell patterns worth promoting to a foreman-tools subcommand.
 - **After committing changes to any project:** apply `_skills/release-notes.md` — check if commits have accumulated since the last tag and, if so, remind the user: "You have unreleased changes in `<project>` since `<last-tag>`. Run `/release` when ready to publish." Do not generate notes unprompted — just surface the reminder.
 
 ### Scale to task size
