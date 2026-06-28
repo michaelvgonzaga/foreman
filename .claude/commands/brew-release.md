@@ -6,14 +6,23 @@ Ask the user (one at a time if unclear):
 
 1. **Project repo path** — the local path to the project being released (e.g. `/Users/x/myapp`). If there's only one obvious project in the current working tree, use it without asking.
 2. **Homebrew tap repo path** — the local path to the `homebrew-<name>` tap repo (e.g. `/Users/x/homebrew-myapp`). Infer it from the project name if possible.
-3. **Version number** — suggest the next patch bump from the latest git tag. Show the current latest tag so the user can confirm or override.
+3. **Version number** — get release pre-flight data:
+
+```bash
+# With foreman-tools (preferred — latestTag, suggestedNext, commitsSince, isDirty in one call):
+foreman-tools release-info <project-path>
+# Fallback:
+git -C <project-path> describe --tags --abbrev=0 2>/dev/null
+```
+
+Use `suggestedNext` as the default. Show it and let the user confirm or override.
 
 Do not proceed until you have all three.
 
 ## Step 2 — Pre-flight checks
 
 Run and stop on any failure:
-- `git -C <project-path> status --porcelain` — dirty repo
+- **Dirty repo** — use `isDirty` from `foreman-tools release-info` (if used in Step 1), or `git -C <project-path> status --porcelain`
 - `git -C <project-path> tag | grep "^v<version>$"` — tag exists
 - `git -C <tap-path> status` — tap not found
 

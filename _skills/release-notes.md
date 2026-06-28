@@ -8,16 +8,12 @@
 ### Step 1 — Get commits since last release
 
 ```bash
-# Get the previous tag
+# With foreman-tools (preferred — latestTag + pre-categorized commits in two calls):
+foreman-tools release-info <repo-path>          # get latestTag → use as PREV
+foreman-tools commits <repo-path> <latestTag>   # pre-categorized JSON array
+# Fallback:
 PREV=$(git -C <repo-path> describe --tags --abbrev=0 <new-tag>^ 2>/dev/null || echo "")
-
-# Get all commits since then
-if [ -z "$PREV" ]; then
-  git -C <repo-path> log --oneline
-else
-  git -C <repo-path> log "$PREV"..<new-tag> --oneline
-fi
-
+git -C <repo-path> log ${PREV:+"$PREV"..}"<new-tag>" --oneline
 ```
 
 ### Step 2 — Categorize commits

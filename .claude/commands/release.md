@@ -5,14 +5,23 @@ Cut a GitHub release — update CHANGELOG.md, tag, push, create a GitHub release
 Ask the user (one at a time if unclear):
 
 1. **Project repo path** — the local path to the project being released. If you are already inside a project directory (has a `spec.md` and `CLAUDE.md`), use it without asking.
-2. **Version number** — run `git -C <path> describe --tags --abbrev=0 2>/dev/null` to find the latest tag. Suggest the next patch bump (e.g. `v1.0.3` → `v1.0.4`). If no tags exist, suggest `v1.0.0`. Show the suggestion and let the user confirm or override.
+2. **Version number** — get release pre-flight data:
+
+```bash
+# With foreman-tools (preferred — latestTag, suggestedNext, commitsSince, isDirty in one call):
+foreman-tools release-info <path>
+# Fallback:
+git -C <path> describe --tags --abbrev=0 2>/dev/null
+```
+
+Use `suggestedNext` as the default. If no tags exist, suggest `v1.0.0`. Show the suggestion and let the user confirm or override.
 
 Do not proceed until you have both.
 
 ## Step 2 — Pre-flight checks
 
 Run and stop on any failure:
-- `git -C <project-path> status --porcelain` — dirty repo
+- **Dirty repo** — use `isDirty` from `foreman-tools release-info` (if used in Step 1), or `git -C <project-path> status --porcelain`
 - `git -C <project-path> tag | grep "^v<version>$"` — tag exists
 - `git -C <project-path> remote get-url origin` — no remote
 
