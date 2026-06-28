@@ -22,7 +22,7 @@ Do not proceed until you have both.
 
 Run and stop on any failure:
 - **Dirty repo** — use `isDirty` from `foreman-tools release-info` (if used in Step 1), or `git -C <project-path> status --porcelain`
-- `git -C <project-path> tag | grep "^v<version>$"` — tag exists
+- **Tag already exists** — `foreman-tools tag-exists <project-path> <version>` (preferred), or `git -C <project-path> tag | grep "^v<version>$"`
 - `git -C <project-path> remote get-url origin` — no remote
 
 ## Step 3 — Generate release notes
