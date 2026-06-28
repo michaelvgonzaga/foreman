@@ -30,12 +30,16 @@ Every project builds its own knowledge. A shared skills library and knowledgebas
 **Plugin system** (`/setup`, `/export-plugin`, `/install-plugin`)
 Install public plugins, add your own private repos, or share a plugin with anyone as a zip file.
 
+**Proportional effort**
+Foreman scales to the task — trivial questions get direct answers, full builds get the full 3-layer treatment. The expensive steps (spec interview, second-agent critic) only fire when the work warrants it.
+
 ---
 
 ## Prerequisites
 
 - [Claude Code](https://claude.ai/code) installed and authenticated
 - Git (`brew install git` if missing)
+- GitHub CLI (`brew install gh` if missing) — needed for repo creation, authentication, and pushing
 - A Claude account with API access
 
 ---
@@ -89,9 +93,9 @@ claude /path/to/foreman
 
 ## Getting started
 
-1. Run `/setup-automation` to install the per-machine auto-sync and auto-push hooks
-2. Run `/setup` to install available plugins
-3. Run `/new-project` to start your first project
+Run `/first-run` inside Claude Code. It walks you through everything: dependency checks, GitHub auth, per-machine automation, restoring existing projects, and installing plugins. Takes about 2 minutes.
+
+After that, run `/new-project` to start your first project.
 
 ## How to use
 
@@ -116,6 +120,7 @@ Run `/export-plugin <name>` to package it as a zip. The recipient runs `/install
 
 | Command | What it does |
 |---------|-------------|
+| `/first-run` | First-time setup wizard — dependency checks, GitHub auth, automation hooks, project restore, plugins |
 | `/help` | Show all available commands |
 | `/new-project` | Start a new project — spec interview, scaffolding, and sign-off before any work begins |
 | `/verify-output` | Verify any output before marking it done — self-review + independent critic agent |
