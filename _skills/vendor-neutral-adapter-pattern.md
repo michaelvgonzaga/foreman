@@ -74,4 +74,5 @@ class [Service]Adapter:
 
 ## Results
 
-- **Mjolnir** — Anthropic implemented in M1; OpenAI stub in place. M3 added OpenAI support by adding one method (`_complete_openai`) and one entry in `DEFAULT_MODELS` — zero changes to `cli.py`, `prompts.py`, or any caller.
+- **Mjolnir M1** — Anthropic implemented; OpenAI stub in place with `NotImplementedError`. Adapter dispatch and lazy imports working as designed.
+- **Mjolnir M3 (projected)** — OpenAI support will be added by implementing `_complete_openai` and adding one entry to `DEFAULT_MODELS`. Update this entry with actual results when M3 ships.
