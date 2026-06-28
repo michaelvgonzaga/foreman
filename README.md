@@ -46,13 +46,13 @@ Install public plugins, add your own private repos, or share a plugin with anyon
 
 ```bash
 brew tap michaelvgonzaga/foreman
-brew install foreman
+brew install foreman-ai
 ```
 
 Then launch it from any directory:
 
 ```bash
-foreman
+foreman-ai
 ```
 
 On first run it creates a `foreman/` folder in your current directory and opens it in Claude Code. Subsequent runs just open it. Brew checks for Claude Code and Git on launch and warns you if either is missing.
@@ -60,13 +60,13 @@ On first run it creates a `foreman/` folder in your current directory and opens 
 **To update to the latest version:**
 
 ```bash
-brew upgrade foreman
+brew upgrade foreman-ai
 ```
 
 **To uninstall:**
 
 ```bash
-brew uninstall foreman
+brew uninstall foreman-ai
 brew untap michaelvgonzaga/foreman
 ```
 
@@ -75,7 +75,7 @@ brew untap michaelvgonzaga/foreman
 ```bash
 brew untap michaelvgonzaga/foreman
 brew tap michaelvgonzaga/foreman
-brew install foreman
+brew install foreman-ai
 ```
 
 ### Option 2 — Manual
