@@ -38,7 +38,11 @@ Install public plugins, add your own private repos, or share a plugin with anyon
 - Git (`brew install git` if missing)
 - A Claude account with API access
 
-## Install via Homebrew
+---
+
+## Installation
+
+### Option 1 — Homebrew (recommended)
 
 ```bash
 brew tap michaelvgonzaga/foreman
@@ -53,18 +57,19 @@ foreman
 
 Brew checks for Claude Code and Git on launch and warns you if either is missing.
 
-## Getting started (manual)
+### Option 2 — Manual
 
-1. Clone this repo:
-   ```bash
-   git clone https://github.com/michaelvgonzaga/foreman.git
-   ```
-2. Open it in Claude Code:
-   ```bash
-   claude /path/to/foreman
-   ```
-3. Run `/setup` to install available plugins
-4. Run `/new-project` to start your first project
+```bash
+git clone https://github.com/michaelvgonzaga/foreman.git
+claude /path/to/foreman
+```
+
+---
+
+## Getting started
+
+1. Run `/setup` to install available plugins
+2. Run `/new-project` to start your first project
 
 ## How to use
 
