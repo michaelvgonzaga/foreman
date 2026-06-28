@@ -46,7 +46,7 @@ Install public plugins, add your own private repos, or share a plugin with anyon
 
 ```bash
 brew tap michaelvgonzaga/foreman
-brew install --HEAD foreman
+brew install foreman
 ```
 
 Then launch it from any directory:
@@ -60,7 +60,7 @@ On first run it creates a `foreman/` folder in your current directory and opens 
 **To update to the latest version:**
 
 ```bash
-brew upgrade --fetch-HEAD foreman
+brew upgrade foreman
 ```
 
 **To uninstall:**
@@ -75,7 +75,7 @@ brew untap michaelvgonzaga/foreman
 ```bash
 brew untap michaelvgonzaga/foreman
 brew tap michaelvgonzaga/foreman
-brew install --HEAD foreman
+brew install foreman
 ```
 
 ### Option 2 — Manual
