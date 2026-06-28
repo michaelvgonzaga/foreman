@@ -8,8 +8,9 @@ The user may give you a name, a description, a partial path, or nothing at all. 
 
 ```bash
 # Search home directory and common locations
-find ~ -maxdepth 4 -type d -iname "*<keyword>*" 2>/dev/null
-find ~ -maxdepth 4 -type f -iname "*<keyword>*" 2>/dev/null
+# Note: on macOS /tmp is a symlink to /private/tmp — search both
+find ~ /private/tmp /tmp /var/tmp -maxdepth 4 -type d -iname "*<keyword>*" 2>/dev/null
+find ~ /private/tmp /tmp /var/tmp -maxdepth 4 -type f -iname "*<keyword>*" 2>/dev/null
 ls ~/Desktop ~/Downloads ~/Documents ~/Projects 2>/dev/null
 ```
 
@@ -82,7 +83,7 @@ cp <source-path> <foreman-root>/<name>/
 
 Initialize it as its own git repo:
 ```bash
-git -C <foreman-root>/<name> init
+git -C <foreman-root>/<name> init -b main
 git -C <foreman-root>/<name> add .
 git -C <foreman-root>/<name> commit -m "Initial import"
 ```
