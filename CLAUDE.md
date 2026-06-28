@@ -34,6 +34,7 @@ Each project has its own `CLAUDE.md`, `spec.md`, and knowledge directory that im
 ## Guardrails
 
 ### Always do (autopilot)
+- **At the start of every session:** if `.first-run` exists in the workspace root, run `/first-run` immediately and complete it before doing anything else.
 - **At the start of every session:** apply `_skills/self-update.md` — silently fetch origin, compare with local, and surface any incoming changes before doing anything else. If fetch fails (no network), skip silently and continue.
 - **At the start of every session:** if `_projects.md` does not exist, create it by copying `_templates/projects.md`. `_projects.md` is git-ignored **local** state (your private project index) — it is never tracked by or committed to the framework repo, so editing it never makes the workspace dirty or blocks self-update.
 - Read the project's `CLAUDE.md` and `spec.md` before touching any code or files

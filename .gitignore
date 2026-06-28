@@ -5,6 +5,8 @@ plugins.local.yml
 *-plugin.zip
 # Local project index — per-workspace, seeded from _templates/projects.md, never committed
 /_projects.md
+# First-run marker — created by the launcher on fresh installs, deleted by /first-run on completion
+/.first-run
 
 # Project directories are each their own private repos — auto-excluded by pattern.
 # Framework dirs (_skills/, _knowledgebase/, _templates/) and hidden dirs (.claude/)
