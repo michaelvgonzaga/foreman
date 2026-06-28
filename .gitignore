@@ -3,7 +3,8 @@
 .claude/settings.local.json
 plugins.local.yml
 *-plugin.zip
-/_projects.md          # local project index — seeded from _templates/projects.md
+# Local project index — per-workspace, seeded from _templates/projects.md, never committed
+/_projects.md
 
 # Project directories are each their own private repos — auto-excluded by pattern.
 # Framework dirs (_skills/, _knowledgebase/, _templates/) and hidden dirs (.claude/)
