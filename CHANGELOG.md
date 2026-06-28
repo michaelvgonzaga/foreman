@@ -1,5 +1,16 @@
 # Changelog
 
+## v1.5.0 — 2026-06-28
+
+### New
+- `foreman-tools` binary now installs automatically alongside `foreman-ai` via Homebrew — no separate install step
+
+### Improvements
+- `self-update` skill uses `foreman-tools status` when available — one JSON read replaces two git subprocess calls; falls back cleanly without it
+- `/release` command uses `foreman-tools commits` when available — pre-categorized JSON replaces raw `git log`; falls back cleanly without it
+
+---
+
 ## v1.4.0 — 2026-06-28
 
 ### New commands
