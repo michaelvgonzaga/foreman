@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/logo.svg" alt="Foreman" width="100"/>
+  <img src="assets/logo.svg" alt="Foreman" width="120"/>
 </div>
 
 # Foreman
