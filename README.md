@@ -32,11 +32,54 @@ Install public plugins, add your own private repos, or share a plugin with anyon
 
 ---
 
+## Prerequisites
+
+- [Claude Code](https://claude.ai/code) installed and authenticated
+- Git (to clone this repo and manage project repos)
+- A Claude account with API access
+
 ## Getting started
 
-1. Clone this repo and open it in Claude Code
-2. Run `/setup` to install available plugins
-3. Run `/new-project` to start your first project
+1. Clone this repo:
+   ```bash
+   git clone https://github.com/your-username/foreman.git
+   ```
+2. Open it in Claude Code:
+   ```bash
+   claude /path/to/foreman
+   ```
+3. Run `/setup` to install available plugins
+4. Run `/new-project` to start your first project
+
+## How to use
+
+**Starting a new project**
+Run `/new-project`. Claude will interview you one question at a time to uncover your real goal, write a spec, scaffold the project directory, and require explicit sign-off before any work begins. Don't skip this — the interview takes 5 minutes and prevents weeks of wasted work.
+
+**Working on an existing project**
+Open foreman in Claude Code (`claude /path/to/foreman`), then navigate to your project. Claude will read that project's `CLAUDE.md` and `spec.md` automatically before making any changes.
+
+**Verifying output**
+Before marking any task complete, run `/verify-output`. Claude self-reviews the output, then spawns a second Claude agent as an independent critic. It fixes what the critic flags before showing you the result.
+
+**Adding private plugins**
+Copy `plugins.local.yml.example` → `plugins.local.yml`, add your private repo URLs, then run `/setup` again.
+
+**Sharing a plugin**
+Run `/export-plugin <name>` to package it as a zip. The recipient runs `/install-plugin <path>` to install it.
+
+---
+
+## Commands
+
+| Command | What it does |
+|---------|-------------|
+| `/help` | Show all available commands |
+| `/new-project` | Start a new project — spec interview, scaffolding, and sign-off before any work begins |
+| `/verify-output` | Verify any output before marking it done — self-review + independent critic agent |
+| `/setup` | Install available plugins from the public list and your private repos |
+| `/export-plugin <name>` | Package a plugin as a zip file to share with anyone |
+| `/install-plugin <path>` | Install a plugin from a zip file |
 
 ---
 
