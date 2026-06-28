@@ -46,16 +46,37 @@ Install public plugins, add your own private repos, or share a plugin with anyon
 
 ```bash
 brew tap michaelvgonzaga/foreman
-brew install foreman
+brew install --HEAD foreman
 ```
 
-Then launch it any time with:
+Then launch it from any directory:
 
 ```bash
 foreman
 ```
 
-Brew checks for Claude Code and Git on launch and warns you if either is missing.
+On first run it creates a `foreman/` folder in your current directory and opens it in Claude Code. Subsequent runs just open it. Brew checks for Claude Code and Git on launch and warns you if either is missing.
+
+**To update to the latest version:**
+
+```bash
+brew upgrade --fetch-HEAD foreman
+```
+
+**To uninstall:**
+
+```bash
+brew uninstall foreman
+brew untap michaelvgonzaga/foreman
+```
+
+**To reinstall from scratch:**
+
+```bash
+brew untap michaelvgonzaga/foreman
+brew tap michaelvgonzaga/foreman
+brew install --HEAD foreman
+```
 
 ### Option 2 — Manual
 
