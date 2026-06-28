@@ -86,24 +86,16 @@ git -C <tap-path> push
 
 ## Step 7 — Create GitHub release
 
-Ask the user: **"Any release notes to add? (describe what changed, or press enter to skip)"**
+Apply the `release-notes` skill (`_skills/release-notes.md`) to auto-generate categorized notes from commits since the previous tag. Then ask the user: **"Here are the auto-generated release notes — any additions or changes before I publish?"**
 
-Then create the GitHub release:
+Wait for confirmation, then create the GitHub release:
 
 ```bash
 gh release create v<version> \
   --repo <owner>/<repo> \
-  --title "v<version> — <one line summary>" \
-  --notes "<release notes from user, or auto-generated summary of commits since last tag>"
+  --title "v<version> — <one line summary from release-notes skill>" \
+  --notes "<release notes from release-notes skill, edited by user if needed>"
 ```
-
-To auto-generate commit summary if user skips:
-
-```bash
-git -C <project-path> log <previous-tag>..v<version> --oneline
-```
-
-Use those commits as the release notes body under a `## Changes` heading.
 
 ## Step 8 — Confirm
 
