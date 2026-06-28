@@ -1,7 +1,7 @@
 # Domain Research
 
 **Works well for:** Getting smart about an unfamiliar field before building for it — legal, healthcare, trades, retail, or any domain you haven't worked in before
-**First used in:** app_factory framework setup, 2026-06-28
+**First used in:** foreman framework setup, 2026-06-28
 **Confidence:** High — standard research methodology, not domain-specific
 
 ## The pattern

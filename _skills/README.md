@@ -19,7 +19,7 @@ Create a file: `_skills/[skill-name].md`
 # [Skill Name]
 
 **Works well for:** [what kind of task or problem]
-**First used in:** [project name, date]
+**Reference implementation:** [Project name (date)]
 **Confidence:** [high / medium / low — based on how consistently it produced good outcomes, not just how often it was used]
 
 ## The pattern
@@ -47,3 +47,5 @@ Create a file: `_skills/[skill-name].md`
 |-------|----------|------------|
 | [domain-research.md](domain-research.md) | Getting smart about an unfamiliar field before building for it | High |
 | [software-projects.md](software-projects.md) | Stack decisions, testing approach, and common risks for software builds | Medium |
+| [rubric-driven-verification.md](rubric-driven-verification.md) | Defining quality upfront for subjective outputs; keeps automated checker and human reviewer aligned | High |
+| [vendor-neutral-adapter-pattern.md](vendor-neutral-adapter-pattern.md) | Building provider-switchable integrations (AI models, APIs, gateways) without lock-in | High |

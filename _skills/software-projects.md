@@ -1,7 +1,7 @@
 # Software Projects
 
 **Works well for:** Implementation guidance specific to software projects — the framework handles any domain, but software has patterns worth capturing separately
-**First used in:** app_factory framework setup, 2026-06-28
+**First used in:** foreman framework setup, 2026-06-28
 **Confidence:** Medium — general best practices, will sharpen with real project results
 
 ## The pattern

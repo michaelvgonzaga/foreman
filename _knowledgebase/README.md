@@ -2,7 +2,7 @@
 
 Domain knowledge, research, and external signals that improve the accuracy of Claude's work across all projects.
 
-This is shared across all projects in app_factory. Project-specific knowledge lives in `[project-name]/knowledge/`.
+This is shared across all projects in foreman. Project-specific knowledge lives in `[project-name]/knowledge/`.
 
 ---
 

@@ -64,7 +64,7 @@ Each project has its own `CLAUDE.md`, `spec.md`, and knowledge directory that im
 ## Directory Structure
 
 ```
-app_factory/
+foreman/
 ├── CLAUDE.md                  ← you are here
 ├── .claude/
 │   ├── settings.json          ← permissions & hooks
