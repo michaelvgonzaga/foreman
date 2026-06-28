@@ -12,7 +12,7 @@ Every project starts with a spec interview, every output goes through a verifica
 
 ## Who it's for
 
-Engineers, technical teams, and agencies who want Claude Code to produce consistent, senior-level work — not just fast answers. If you've felt like Claude Code is hit-or-miss depending on how you prompt it, Foreman is the structure that makes it reliable.
+Engineers, technical teams, and agencies running real projects with Claude Code. Claude Code is a skilled worker — but a skilled worker without a foreman builds the wrong thing confidently, skips verification, and forgets what was decided last session. Foreman puts the structure in place: specs before work, verification before shipping, and a knowledgebase that carries context across every session.
 
 ---
 
