@@ -17,6 +17,7 @@ Print the following exactly:
 | `/brew-release` | Cut a Homebrew release — tag, SHA256, update formula, push both repos |
 | `/absorb` | Find a file, repo, or project → bring it into Foreman → scan, fix, and iterate to production |
 | `/restore-projects` | Pull your existing Foreman projects from GitHub into this workspace — clone what's missing, fast-forward the rest, push nothing |
+| `/sync-memory` | Back up your machine-local Claude memory to a private repo, or restore it on a new machine — makes memory portable across devices |
 
 
 **Plugin files**
