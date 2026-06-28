@@ -98,7 +98,7 @@ foreman/
 - The `foreman` repo contains only the framework — templates, skills, knowledgebase, commands
 - Project directories (`mjolnir/`, etc.) are git-ignored by pattern: any root-level dir not starting with `_` or `.` is excluded automatically
 - Each project is its own independent git repo (`git init` inside the project dir) pushed to a private GitHub repo
-- Someone who clones `foreman` gets the OS; projects are never exposed
+- Someone who clones `foreman` gets the framework; projects are never exposed
 - No git submodules — each project is fully independent, zero wiring required
 - Private plugins can be shared as zip files: `/export-plugin <name>` → send zip → recipient runs `/install-plugin <path>`
 
