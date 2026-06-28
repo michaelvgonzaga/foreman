@@ -1,10 +1,9 @@
 # Projects
 
-Index of all projects in Foreman. Updated by `/new-project` after sign-off and manually when status changes.
+Local index of all projects in this Foreman workspace. This file is **git-ignored** — it is your private state and is never committed to the framework repo. Updated by `/new-project` and `/absorb` after sign-off, and manually when status changes.
 
 | Project | Visibility | Status | Started | Last updated | Goal |
 |---------|------------|--------|---------|--------------|------|
-| mjolnir | private | `active` | 2026-06-28 | 2026-06-28 | Vendor-neutral AI engineering OS that produces senior-level decisions from complex technical input |
 
 ---
 
