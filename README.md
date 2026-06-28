@@ -53,6 +53,7 @@ Every line in every command, skill, and template costs tokens on every use. Fore
 
 ```bash
 brew tap michaelvgonzaga/foreman
+brew trust michaelvgonzaga/foreman
 brew install foreman-ai
 ```
 
