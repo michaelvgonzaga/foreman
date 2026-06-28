@@ -4,15 +4,15 @@
 
 # Foreman
 
-A framework for Claude Code that brings structure, verification, and shared knowledge to every project you build.
+The name is literal: a foreman doesn't swing the hammer — they run the job site. Foreman is a framework that directs Claude Code: spec the work, structure the build, verify before shipping.
 
-Every project starts with a spec interview, every output goes through a verification step, and a shared knowledgebase and skills library improves across all your projects.
+Every project starts with a spec interview, every output goes through a verification step, and a shared knowledgebase and skills library accumulates across all your projects.
 
 ---
 
 ## Who it's for
 
-Engineers, technical teams, and agencies who want Claude Code to produce consistent, senior-level work — not just fast answers. If you've felt like AI output is hit-or-miss depending on how you prompt it, Foreman is the structure that makes it reliable.
+Engineers, technical teams, and agencies who want Claude Code to produce consistent, senior-level work — not just fast answers. If you've felt like Claude Code is hit-or-miss depending on how you prompt it, Foreman is the structure that makes it reliable.
 
 ---
 
