@@ -18,18 +18,17 @@ Run and stop on any failure:
 
 ## Step 3 — Generate release notes
 
-Get commits since the previous tag:
+Get commits since the previous tag. If `foreman-tools` is in PATH, use it — the output is pre-categorized JSON:
 
 ```bash
 PREV=$(git -C <project-path> describe --tags --abbrev=0 2>/dev/null || echo "")
-if [ -z "$PREV" ]; then
-  git -C <project-path> log --oneline
-else
-  git -C <project-path> log "$PREV"..HEAD --oneline
-fi
+# With foreman-tools (preferred):
+foreman-tools commits <project-path> $PREV
+# Fallback:
+git -C <project-path> log "$PREV"..HEAD --oneline
 ```
 
-Use the skill's categorization rules (New / Fixed / Improved / Removed / Docs). Skip internal tracking commits (M1/M2/M3 milestones, gate results, Co-Authored-By lines). Focus on what the user can now do differently.
+Categorize into New / Fixed / Improved / Removed / Docs. Skip internal tracking commits (M1/M2/M3 milestones, gate results, Co-Authored-By lines). Focus on what the user can now do differently.
 
 ## Step 4 — Preview and confirm
 

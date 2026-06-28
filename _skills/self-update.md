@@ -7,6 +7,19 @@
 
 At the start of every session (or when the user asks), silently check if Foreman is behind its remote.
 
+### With foreman-tools (preferred)
+
+If `foreman-tools` is in PATH, use it — one call, no shell reasoning:
+
+```bash
+git -C <foreman-root> fetch origin main --quiet
+foreman-tools status <foreman-root>
+```
+
+Read the JSON: if `upToDate` is `true`, say nothing and continue. If `false`, surface the update prompt below using `behindBy` for the commit count.
+
+### Without foreman-tools (fallback)
+
 ```bash
 # 1. Fetch without merging
 git -C <foreman-root> fetch origin main --quiet
@@ -18,7 +31,9 @@ REMOTE=$(git -C <foreman-root> rev-parse origin/main)
 
 **If equal** — up to date, say nothing and continue.
 
-**If different** — surface before starting work:
+**If different** — surface before starting work.
+
+## Update prompt (when behind)
 
 ```
 ⚠ Foreman update available.
