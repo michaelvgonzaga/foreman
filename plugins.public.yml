@@ -1,5 +1,5 @@
-# Public Foreman plugins — maintained by the Foreman owner.
-# Anyone who clones Foreman can install these via /setup.
+# Public Foreman plugins — anyone who installs Foreman can install these via /setup.
+# These extend Foreman itself: new commands, skills, or knowledgebase entries.
 # Add your own public plugins here. Community plugins can be listed too.
 
 plugins: []
@@ -7,6 +7,6 @@ plugins: []
 # Example entry:
 #
 # plugins:
-#   - name: mjolnir
-#     repo: https://github.com/michaelvgonzaga/mjolnir
-#     description: Engineering diagnosis tool — analyzes code, tickets, and logs to produce senior-level engineering reports
+#   - name: my-plugin
+#     repo: https://github.com/username/my-plugin
+#     description: What this plugin adds to Foreman
