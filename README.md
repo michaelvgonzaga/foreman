@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/logo.svg" alt="Foreman" width="120"/>
+  <img src="assets/foreman-banner.png" alt="Foreman - A framework for Claude Code that brings structure, verification, and shared knowledge to every project you build." width="100%"/>
 </div>
 
 # Foreman
