@@ -44,5 +44,5 @@ Plugin is ready. If it has a CLAUDE.md, read it before use.
 **5. Clean up (optional)**
 
 Ask: "Delete the zip file now that it's installed? (yes/no)"
-- If yes: tell the user to delete it themselves — do not delete files.
+- If yes: tell the user the path so they can delete it — do not delete files yourself.
 - If no: done.
