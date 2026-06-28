@@ -14,6 +14,7 @@ Print the following exactly:
 | `/setup` | Install available plugins from the public list and your private repos |
 | `/export-plugin <name>` | Package a plugin as a zip file to share with anyone |
 | `/install-plugin <path>` | Install a plugin from a zip file |
+| `/brew-release` | Cut a Homebrew release — tag, SHA256, update formula, push both repos |
 
 **Plugin files**
 
