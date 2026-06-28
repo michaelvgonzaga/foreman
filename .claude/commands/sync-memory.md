@@ -5,11 +5,17 @@ Sync Claude Code memory to a private GitHub repo (`foreman-memory`) to make it p
 Memory is stored per working directory, encoded by replacing `/` with `-`:
 
 ```bash
+# With foreman-tools (preferred):
+GH_INFO="$(foreman-tools gh-user)"     # {"authenticated": bool, "login": "string"}
+# Fallback:
 gh auth status        # must be authenticated
 OWNER="$(gh api user -q .login)"
+
 MEM="$HOME/.claude/projects/$(pwd | sed 's#/#-#g')/memory"
 echo "memory dir: $MEM"
 ```
+
+If `authenticated` is false (or fallback exits non-zero): tell the user to run `gh auth login` and stop.
 
 (When launched via `foreman-ai`, `pwd` is the Foreman workspace, so this resolves to that session's memory.)
 

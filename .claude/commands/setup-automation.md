@@ -3,11 +3,14 @@ Wire up per-machine Stop hooks in `~/.claude/settings.json` — auto-sync memory
 ## Step 0 — Preconditions
 
 ```bash
+# With foreman-tools (preferred):
+foreman-tools gh-user
+# Fallback:
 gh auth status                 # git pushes need auth
 git --version
 ```
 
-If `gh` isn't authenticated, tell the user to run `gh auth login` first and stop.
+If `authenticated` is false (or fallback exits non-zero), tell the user to run `gh auth login` first and stop.
 
 ## Step 1 — Read existing settings
 

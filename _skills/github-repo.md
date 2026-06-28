@@ -8,15 +8,18 @@
 ### Step 1 — Check prerequisites
 
 ```bash
-# gh CLI must be installed and authenticated
+# With foreman-tools (preferred — auth check + username in one call):
+foreman-tools gh-user
+# Fallback:
 gh auth status
+gh api user --jq '.login'
 ```
 
-If `gh` isn't installed or authenticated, tell the user (`brew install gh` / `gh auth login`) and stop.
+If `authenticated` is false (or fallback exits non-zero), tell the user (`brew install gh` / `gh auth login`) and stop.
 
 ### Step 2 — Confirm details
 
-Confirm name, visibility, and GitHub username (`gh api user --jq '.login'`) before creating anything.
+Confirm name, visibility, and GitHub username (from `foreman-tools gh-user` `.login` field, or `gh api user --jq '.login'`) before creating anything.
 
 ### Step 3 — Create the repo
 

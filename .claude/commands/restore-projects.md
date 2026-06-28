@@ -2,9 +2,12 @@ Pull Foreman projects from GitHub into this workspace — clone what's missing, 
 
 ## Step 0 — Preconditions
 
-Check `gh auth status`. If not authenticated, tell the user to run `gh auth login` and stop.
+Check GitHub auth. If not authenticated, tell the user to run `gh auth login` and stop.
 
 ```bash
+# With foreman-tools (preferred):
+foreman-tools gh-user
+# Fallback:
 gh auth status
 ```
 

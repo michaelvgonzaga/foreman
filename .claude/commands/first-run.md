@@ -20,10 +20,13 @@ Do not continue until all three show OK. Tell the user to type `/first-run` agai
 ## Step 2 — GitHub authentication
 
 ```bash
+# With foreman-tools (preferred):
+foreman-tools gh-user
+# Fallback:
 gh auth status 2>&1
 ```
 
-If not authenticated: tell the user to type `! gh auth login` in this prompt — the `!` prefix runs it in the terminal so the browser flow works correctly. Wait for them to confirm it completed, then re-check before continuing.
+If `authenticated` is false (or fallback exits non-zero): tell the user to type `! gh auth login` in this prompt — the `!` prefix runs it in the terminal so the browser flow works correctly. Wait for them to confirm it completed, then re-check before continuing.
 
 If already authenticated, continue silently.
 
