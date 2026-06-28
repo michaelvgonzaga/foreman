@@ -1,7 +1,6 @@
 # GitHub Repo
 
 **Works well for:** Creating a GitHub repo for a new project — public or private — and wiring it up as the git remote in one step
-**Reference implementation:** Foreman framework (2026-06-28)
 **Confidence:** High
 
 ## The pattern
@@ -13,33 +12,11 @@
 gh auth status
 ```
 
-If `gh` is not installed or not authenticated, tell the user:
-
-```
-gh CLI is required to create GitHub repos automatically.
-Install: brew install gh
-Auth:    gh auth login
-```
-
-Do not proceed without it.
+If `gh` isn't installed or authenticated, tell the user (`brew install gh` / `gh auth login`) and stop.
 
 ### Step 2 — Confirm details
 
-Before creating anything, confirm with the user:
-
-```
-Creating GitHub repo:
-  Name:       <repo-name>
-  Visibility: <public / private>
-  Owner:      <github-username from gh auth status>
-
-Confirm? (yes / no)
-```
-
-Get the GitHub username:
-```bash
-gh api user --jq '.login'
-```
+Confirm name, visibility, and GitHub username (`gh api user --jq '.login'`) before creating anything.
 
 ### Step 3 — Create the repo
 
@@ -84,7 +61,4 @@ Update the project's `CLAUDE.md` Tools & Resources section with the repo URL.
 
 ## Rules
 
-- Never create the repo without confirming name and visibility with the user first
-- Never force-push or overwrite an existing remote
-- Always update `CLAUDE.md` with the repo URL after creation
-- If creation fails (name taken, auth issue, network), report the exact error and stop
+Never create the repo without confirming name and visibility first. Always update `CLAUDE.md` with the repo URL after creation.

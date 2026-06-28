@@ -1,4 +1,4 @@
-You are running the `/first-run` wizard. Walk the user through each step in order — do not skip steps or batch them. One step at a time.
+First-run wizard. Complete each step in order before moving to the next.
 
 ## Step 1 — Dependencies
 
@@ -53,11 +53,6 @@ Run `/setup` to install available public plugins.
 
 ## Step 7 — Done
 
-Delete the first-run marker if it exists:
-
-```bash
-FOREMAN_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")/../.." 2>/dev/null && pwd || echo "$HOME/foreman")"
-rm -f "$FOREMAN_ROOT/.first-run"
-```
+Delete the first-run marker: `rm -f <foreman-root>/.first-run`
 
 Tell the user: "You're set up. Run `/new-project` to start your first project."

@@ -1,6 +1,4 @@
-You are running the `/sync-memory` command. Claude Code memory is machine-local — it lives in `~/.claude/` and does NOT travel with Foreman, your account, or a fresh machine. This command makes it portable by syncing it to a **private** GitHub repo (`<your-account>/foreman-memory`), so a new device can pull your accumulated memory down after installing Foreman.
-
-Argument: `backup` (default) or `restore`.
+Sync Claude Code memory to a private GitHub repo (`foreman-memory`) to make it portable across machines. Argument: `backup` (default) or `restore`.
 
 ## Step 0 — Locate this session's memory directory
 
@@ -46,12 +44,10 @@ else
 fi
 ```
 
-After a restore, tell the user memory is now available and will be loaded next session (the `MEMORY.md` index is read at session start).
+After a restore, tell the user memory is now available and will load in the next session.
 
 ## Rules
 
 - The memory repo MUST be private — it can contain personal/work context. Never make it public.
 - Never put secrets (keys, tokens, passwords) in memory files; this command pushes them to GitHub.
 - restore is fast-forward only — never overwrite or force-merge local memory; if it conflicts, surface it and stop.
-- Memory files may contain machine-specific absolute paths (e.g. `/Users/<you>/...`). If usernames/home paths differ across your machines, those references won't resolve — note this; the facts still carry over, the paths may need a glance.
-- This sync is opt-in and manual. To keep it current, run `/sync-memory backup` after meaningful memory changes and `/sync-memory restore` when setting up a new machine.

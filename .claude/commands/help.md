@@ -1,7 +1,5 @@
 # Foreman Help
 
-Print the following exactly:
-
 ---
 
 **Foreman commands**
@@ -29,6 +27,6 @@ Print the following exactly:
 | `plugins.local.yml` | Your private repos — git-ignored, never pushed (create from `.example`) |
 
 **First time here?**
-Run `/setup` then `/new-project`.
+Run `/first-run`.
 
 ---

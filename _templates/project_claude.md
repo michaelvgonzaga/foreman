@@ -18,16 +18,12 @@ See `spec.md` for the full spec. Key facts:
 
 ## Guardrails (project-specific)
 
-> Fill in what you know now. Bracket placeholders like `[this]` must be replaced. Fields marked "TODO" may be completed later once tools and workflow are confirmed.
-
 ### Always do
 - Read `spec.md` before any implementation work
 - Run `/verify-output` before marking tasks complete
 - Keep changes scoped to v1 — do not add features not in the spec
 - Before making domain-specific decisions: read `_knowledgebase/README.md` to find relevant files, then read those files
 - Before starting a new domain or project type: read `_skills/README.md` and apply any relevant playbooks
-- **After committing changes:** apply `_skills/release-notes.md` — check if commits have accumulated since the last tag and, if so, remind the user: "You have unreleased changes in `<project>` since `<last-tag>`. Run `/release` when ready to publish." Do not generate notes unprompted — just surface the reminder.
-
 ### Ask first
 - Any use of an external service, API, or integration — list what's used in this project: [list here, or "None in v1"]
 - Any change to the data model, schema, or core workflow
@@ -46,8 +42,6 @@ See `spec.md` for the full spec. Key facts:
 
 ## Tools & Resources
 
-> Fill in after tools are decided. Do not leave example values in place.
-
 - **Platform / runtime:** [e.g., web app, mobile, desktop, CLI, physical hardware — or "TODO: not yet decided"]
 - **Key tools & services:** [e.g., Supabase, Stripe, Twilio, QuickBooks API, or specific domain software — or "TODO"]
 - **Data & storage:** [e.g., SQLite, Google Sheets, Postgres, paper forms — or "TODO"]
@@ -56,8 +50,6 @@ See `spec.md` for the full spec. Key facts:
 ---
 
 ## How to execute
-
-> Fill in after the workflow is defined. For software projects, include install/run/test commands. For other projects, describe the process steps.
 
 ```
 # setup
@@ -74,16 +66,11 @@ See `spec.md` for the full spec. Key facts:
 
 ## Knowledgebase
 
-Domain knowledge and research relevant to this project:
-- Global (shared): `_knowledgebase/[topic].md` — update the index table in `_knowledgebase/README.md` when adding
-- Project-specific: `knowledge/[topic].md` (relative to this project's root)
+Project knowledge: `knowledge/[topic].md`. Global: `_knowledgebase/[topic].md`.
 
 ---
 
 ## Decision log
-
-Confirmed decisions from spec sign-off and key choices made during development.
-Mirror each confirmed spec decision here immediately after sign-off.
 
 | Date | Decision | Why |
 |------|----------|-----|

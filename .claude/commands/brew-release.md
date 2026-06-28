@@ -1,4 +1,4 @@
-You are running the `/brew-release` command. Your job is to cut a Homebrew release for a project — tag it, compute the SHA256, update the formula, and push both repos.
+Cut a Homebrew release — tag, compute SHA256, update the formula, push both repos.
 
 ## Step 1 — Gather info
 
@@ -12,28 +12,10 @@ Do not proceed until you have all three.
 
 ## Step 2 — Pre-flight checks
 
-Run these and stop with a clear error if any fail:
-
-```bash
-# Confirm project repo is clean
-git -C <project-path> status --porcelain
-```
-
-If there are uncommitted changes, tell the user and stop. Do not release a dirty repo.
-
-```bash
-# Confirm the tag doesn't already exist
-git -C <project-path> tag | grep "^v<version>$"
-```
-
-If the tag exists, tell the user and stop.
-
-```bash
-# Confirm the tap repo exists and is a git repo
-git -C <tap-path> status
-```
-
-If the tap repo isn't found, tell the user and stop.
+Run and stop on any failure:
+- `git -C <project-path> status --porcelain` — dirty repo
+- `git -C <project-path> tag | grep "^v<version>$"` — tag exists
+- `git -C <tap-path> status` — tap not found
 
 ## Step 3 — Tag the release
 
@@ -43,8 +25,6 @@ git -C <project-path> push origin v<version>
 ```
 
 ## Step 4 — Compute SHA256
-
-Get the owner/repo from the project's git remote. The remote may be SSH or HTTPS — handle both:
 
 ```bash
 git -C <project-path> remote get-url origin
@@ -59,7 +39,7 @@ sleep 5
 curl -sL https://github.com/<owner>/<repo>/archive/refs/tags/v<version>.tar.gz | shasum -a 256
 ```
 
-If the result is `e3b0c44...` (empty file hash) the tarball isn't ready yet — wait 10 more seconds and retry once.
+If shasum returns the empty-file hash (`e3b0c44...`), wait 10s and retry once.
 
 ## Step 5 — Update the formula
 

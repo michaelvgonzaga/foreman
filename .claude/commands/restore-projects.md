@@ -1,32 +1,22 @@
-You are running the `/restore-projects` command. Your job is to pull the user's existing Foreman projects from their GitHub account down into this local workspace — for setting up a new device, or recovering projects that aren't cloned here yet. Bring remote state in **intact**, push **nothing**, and skip anything redundant or unrelated.
+Pull Foreman projects from GitHub into this workspace — clone what's missing, fast-forward the rest, push nothing.
 
 ## Step 0 — Preconditions
 
+Check `gh auth status`. If not authenticated, tell the user to run `gh auth login` and stop.
+
 ```bash
-gh auth status        # must be logged in; if not, tell the user to run: gh auth login
+gh auth status
 ```
 
 Determine the foreman root (the directory containing this `_skills/` and `_templates/`). Call it `<foreman-root>`.
 
 ## Step 1 — Enumerate candidate repos
 
-List repos the user owns or collaborates on (owned + permitted):
-
-```bash
-gh repo list --json nameWithOwner,name,isPrivate,url --limit 300
-gh api user/repos --paginate -q '.[] | "\(.full_name)\t\(.private)"'   # includes collaborator/org repos
-```
+List all repos: `gh repo list --json nameWithOwner,name,isPrivate,url --limit 300` (add `gh api user/repos --paginate` to catch org/collaborator repos not in the list).
 
 ## Step 2 — Keep only Foreman projects (skip redundant/unrelated)
 
-A repo is a Foreman project only if it has **both `spec.md` and `CLAUDE.md` at its root**. Check each candidate cheaply via the API — do not clone to find out:
-
-```bash
-gh api "repos/<owner>/<repo>/contents/spec.md"   --silent 2>/dev/null && \
-gh api "repos/<owner>/<repo>/contents/CLAUDE.md" --silent 2>/dev/null && echo "foreman-project"
-```
-
-Drop everything else (e.g. infrastructure, dotfiles, unrelated tools). Also drop the framework repos themselves (`foreman`, `homebrew-*`).
+A repo is a Foreman project only if it has both `spec.md` and `CLAUDE.md` at its root. Check via API before cloning. Skip framework repos (`foreman`, `homebrew-*`).
 
 ## Step 3 — Classify each Foreman project
 
@@ -39,19 +29,9 @@ For each project repo, decide its action by what's already on disk:
 
 ## Step 4 — Preview, then act
 
-Show the plan before doing anything destructive-adjacent:
+Show a plan (clone/update/skip with reasons) and wait for confirmation before acting.
 
-```
-Found N Foreman projects on your account:
-  clone   → mjolnir            (not present locally)
-  update  → cse-cli            (behind 2 — fast-forward)
-  skip    → dashboards         (already up to date)
-  skip    → invoicer           (local has uncommitted changes — commit first)
-
-Proceed? (yes / pick a subset)
-```
-
-Wait for confirmation, then for each project:
+Then for each project:
 
 ```bash
 # clone
@@ -60,7 +40,7 @@ git clone <repo-url> "<foreman-root>/<name>"
 git -C "<foreman-root>/<name>" pull --ff-only
 ```
 
-Cloned projects land as top-level dirs and are auto-ignored by the foreman `.gitignore` pattern — they stay private to this workspace.
+Cloned projects are auto-ignored by `.gitignore` and stay private to this workspace.
 
 ## Step 5 — Refresh the local index
 

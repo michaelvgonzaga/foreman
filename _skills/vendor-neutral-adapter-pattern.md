@@ -1,12 +1,9 @@
 # Vendor-Neutral Adapter Pattern
 
 **Works well for:** CLI tools, APIs, or agents that call an external service (AI provider, payment processor, SMS gateway, etc.) where the provider may change, multiple providers need to coexist, or lock-in is a design risk
-**Reference implementation:** Mjolnir (2026-06-28)
 **Confidence:** High — clean extension point; OpenAI support added in M3 with zero changes to the rest of the codebase
 
 ## The pattern
-
-Build a thin adapter class with three properties: `provider`, `model`, and `api_key`. All callers talk to the adapter — never to the SDK directly.
 
 ```python
 class [Service]Adapter:
@@ -75,4 +72,4 @@ class [Service]Adapter:
 ## Results
 
 - **Mjolnir M1** — Anthropic implemented; OpenAI stub in place with `NotImplementedError`. Adapter dispatch and lazy imports working as designed.
-- **Mjolnir M3 (projected)** — OpenAI support will be added by implementing `_complete_openai` and adding one entry to `DEFAULT_MODELS`. Update this entry with actual results when M3 ships.
+- **Mjolnir M3** — update when OpenAI support ships.

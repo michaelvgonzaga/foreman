@@ -1,12 +1,9 @@
 # Two-Tier Classification
 
 **Works well for:** Any system with multiple specialist handlers where routing accuracy matters — AI diagnosis tools, support ticket routing, document processing pipelines, code review systems, multi-agent orchestration
-**Reference implementation:** Mjolnir M2 (2026-06-28)
 **Confidence:** High — clean separation between routing and processing; graceful degradation validated in critic review
 
 ## The pattern
-
-Classify input domain before processing, using a fast lightweight call to route to the correct specialist. Two tiers:
 
 **Tier 1 — Classifier:** A single small call whose only job is to return a domain key. Prompt is extremely constrained: list of valid keys, "respond with one word, no explanation." Fast and cheap.
 

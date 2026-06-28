@@ -1,4 +1,4 @@
-You are running the `/release` command. Cut a GitHub release for any Foreman project — update CHANGELOG.md, tag it, push, and create a GitHub release. No Homebrew required. For Homebrew formula distribution, use `/brew-release` instead.
+Cut a GitHub release — update CHANGELOG.md, tag, push, create a GitHub release. For Homebrew formula distribution, use `/brew-release`.
 
 ## Step 1 — Gather info
 
@@ -11,22 +11,14 @@ Do not proceed until you have both.
 
 ## Step 2 — Pre-flight checks
 
-```bash
-# Repo must be clean
-git -C <project-path> status --porcelain
-
-# Tag must not already exist
-git -C <project-path> tag | grep "^v<version>$"
-
-# Remote must be reachable
-git -C <project-path> remote get-url origin
-```
-
-Stop with a clear error if any check fails. Do not release a dirty repo or a duplicate tag.
+Run and stop on any failure:
+- `git -C <project-path> status --porcelain` — dirty repo
+- `git -C <project-path> tag | grep "^v<version>$"` — tag exists
+- `git -C <project-path> remote get-url origin` — no remote
 
 ## Step 3 — Generate release notes
 
-Apply `_skills/release-notes.md` to generate categorized notes from commits since the previous tag:
+Get commits since the previous tag:
 
 ```bash
 PREV=$(git -C <project-path> describe --tags --abbrev=0 2>/dev/null || echo "")
@@ -41,22 +33,7 @@ Use the skill's categorization rules (New / Fixed / Improved / Removed / Docs). 
 
 ## Step 4 — Preview and confirm
 
-Show the user:
-
-```
-Proposed release notes for v<version>:
-
----
-<formatted release notes>
----
-
-Tag: v<version>
-Repo: <owner>/<repo>
-
-Publish? (yes to proceed, or give edits)
-```
-
-Wait for explicit confirmation. Apply any edits the user gives before continuing.
+Show the proposed version, repo, and release notes. Ask for explicit confirmation. Apply any edits before continuing.
 
 ## Step 5 — Update CHANGELOG.md
 
@@ -102,8 +79,6 @@ git -C <project-path> push origin v<version>
 ```
 
 ## Step 8 — Create GitHub release
-
-Get the owner/repo from the remote URL (handles both SSH and HTTPS formats):
 
 ```bash
 git -C <project-path> remote get-url origin

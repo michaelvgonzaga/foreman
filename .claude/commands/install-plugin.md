@@ -1,5 +1,3 @@
-# Install Plugin
-
 Install a plugin from a zip file exported by `/export-plugin`.
 
 ## Input
@@ -17,10 +15,7 @@ The user provides a path to a `.zip` file. The path can be absolute or relative 
 
 **2. Check for conflicts**
 
-If a directory with that name already exists in the Foreman root:
-- Tell the user: "Plugin '<name>' is already installed at <name>/. Installing will overwrite it."
-- Ask: "Overwrite? (yes/no)"
-- If no: stop. If yes: proceed.
+If the directory already exists, warn and ask to overwrite before proceeding.
 
 **3. Install**
 
@@ -32,17 +27,8 @@ unzip -o <path> -d .
 
 **4. Confirm**
 
-Print:
-
-```
-Installed: <name>/
-Source: <zip filename>
-
-Plugin is ready. If it has a CLAUDE.md, read it before use.
-```
+Print the installed path, source zip name, and "If it has a CLAUDE.md, read it before use."
 
 **5. Clean up (optional)**
 
-Ask: "Delete the zip file now that it's installed? (yes/no)"
-- If yes: tell the user the path so they can delete it — do not delete files yourself.
-- If no: done.
+Ask: "Delete the zip? (yes/no)" — if yes, give the path for the user to remove.

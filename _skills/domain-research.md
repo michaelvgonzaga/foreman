@@ -1,18 +1,17 @@
 # Domain Research
 
 **Works well for:** Getting smart about an unfamiliar field before building for it — legal, healthcare, trades, retail, or any domain you haven't worked in before
-**First used in:** foreman framework setup, 2026-06-28
 **Confidence:** High — standard research methodology, not domain-specific
 
 ## The pattern
 
 Before writing any code or detailed spec for a domain you don't know well, run this research sequence:
 
-1. **Map the workflow** — How does a professional in this field actually spend their day? What are the recurring tasks, handoffs, and pain points? Don't assume — ask or look it up.
+1. **Map the workflow** — How does a professional in this field actually spend their day? What are the recurring tasks, handoffs, and pain points?
 
-2. **Identify the vocabulary** — Every domain has terms of art. Legal has "discovery", "pleadings", "retainer". Plumbing has "rough-in", "P-trap", "GPM". Healthcare has "SOAP notes", "intake", "prior auth". Get the vocabulary right or you'll build the wrong thing.
+2. **Identify the vocabulary** — Every domain has terms of art. Legal has "discovery", "pleadings", "retainer". Plumbing has "rough-in", "P-trap", "GPM". Healthcare has "SOAP notes", "intake", "prior auth".
 
-3. **Find the regulations** — Most professional domains have licensing requirements, liability rules, data handling laws, or industry standards that constrain what software can do. Identify these upfront.
+3. **Find the regulations** —
    - Legal: unauthorized practice of law, jurisdiction-specific rules
    - Healthcare: HIPAA, state licensing, scope of practice
    - Finance: SOC2, PCI-DSS, fiduciary rules
@@ -32,7 +31,3 @@ Before writing any code or detailed spec for a domain you don't know well, run t
 
 - The user is the domain expert and is present to answer questions — ask them directly; their answers are more reliable than external research
 - The domain is already well-represented in `_knowledgebase/` — read those files instead of re-researching from scratch
-
-## Results
-
-- _(add results as projects are completed)_

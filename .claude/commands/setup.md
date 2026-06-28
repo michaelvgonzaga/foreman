@@ -58,4 +58,3 @@ Next steps:
   /sync-memory restore — pull your saved Claude memory onto this machine.
 ```
 
-These matter most when setting up Foreman on a new machine. Skip the mention if the user clearly just wanted a plugin refresh.

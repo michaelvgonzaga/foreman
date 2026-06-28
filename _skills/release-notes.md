@@ -1,7 +1,6 @@
 # Release Notes
 
 **Works well for:** Auto-generating release notes for Foreman itself or any project inside Foreman, based on git commits since the last tag
-**Reference implementation:** Foreman framework (2026-06-28)
 **Confidence:** High
 
 ## The pattern
@@ -19,8 +18,6 @@ else
   git -C <repo-path> log "$PREV"..<new-tag> --oneline
 fi
 
-# Also get files changed
-git -C <repo-path> diff "$PREV"..<new-tag> --stat
 ```
 
 ### Step 2 — Categorize commits
@@ -61,11 +58,6 @@ Use this structure:
 
 Skip any section that has no entries. Never include the Co-Authored-By lines from commit messages.
 
-For Foreman itself, also note which commands or skills changed:
-- If a command file changed → mention the command name (`/absorb`, `/new-project`, etc.)
-- If a skill file changed → mention the skill name
-- If a template changed → note it affects all new projects
-
 For projects, focus on what the user can now do differently, not what files changed.
 
 ### Step 4 — One-liner title
@@ -81,6 +73,7 @@ Write a short title (under 60 chars) that captures the most important thing in t
 - Automatically during `/release` (Step 3) and `/brew-release` (Step 7) — generates the release body and CHANGELOG entry
 - When the user asks "write release notes", "what changed since last release", or "generate changelog"
 - When completing a project milestone and wanting to document progress
+- For Foreman itself: if a command or skill file changed, name it specifically.
 
 ## When NOT to use it
 
@@ -89,7 +82,4 @@ Write a short title (under 60 chars) that captures the most important thing in t
 
 ## Rules
 
-- Never invent changes not reflected in the commits
-- Never include internal tooling noise (Co-Authored-By, merge commits, version bumps) as standalone items
-- If a commit message is too vague to categorize ("fix stuff", "updates"), include it under Other rather than guessing
-- Keep each bullet to one line — details belong in the commit, not the release notes
+Never invent changes not in the commits. If a commit message is too vague to categorize, file it under Other rather than guessing.

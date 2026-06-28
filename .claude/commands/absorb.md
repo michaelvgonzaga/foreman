@@ -1,51 +1,20 @@
-You are running the `/absorb` command. Your job is to find a project, file, or repo — wherever it lives — bring it into Foreman, deeply analyze it, and iterate until it's production-ready.
+Find a project, file, or repo — wherever it lives — bring it into Foreman, scan it, and iterate to production-ready.
 
 ---
 
 ## Phase 1 — Find it
 
-The user may give you a name, a description, a partial path, or nothing at all. Search like you would in a terminal.
+The user may give you a name, a description, a partial path, or nothing at all. If the user gave a URL (GitHub, GitLab, etc.), skip the search — that's the source.
 
-```bash
-# Note: on macOS /tmp is a symlink to /private/tmp — search both
-find ~ /private/tmp /tmp /var/tmp -maxdepth 4 -type d -iname "*<keyword>*" 2>/dev/null
-find ~ /private/tmp /tmp /var/tmp -maxdepth 4 -type f -iname "*<keyword>*" 2>/dev/null
-ls ~/Desktop ~/Downloads ~/Documents ~/Projects 2>/dev/null
-```
+Search `~`, common dirs (`~/Desktop`, `~/Downloads`, `~/Documents`, `~/Projects`), and `/private/tmp`. On macOS, `/tmp` is a symlink to `/private/tmp` — search both.
 
-If the user gave a URL (GitHub, GitLab, etc.), skip the search — that's the source.
-
-Present what you found:
-
-```
-Found these matches:
-  1. ~/my-shopify-theme         (directory, last modified 3 days ago)
-  2. ~/Downloads/shopify.zip    (file, 2.4MB)
-
-Which one? (or type a path / URL directly)
-```
-
-Wait for the user to confirm before continuing.
+Present matches with path, type, and recency. Ask which one (or accept a path/URL directly). Wait for confirmation.
 
 ---
 
 ## Phase 2 — Check if already absorbed
 
-Look for an existing Foreman project that matches — check both the directory listing and `_projects.md`:
-
-```bash
-ls <foreman-root>/
-grep -i "<name>" <foreman-root>/_projects.md
-```
-
-If a match exists, tell the user:
-
-```
-"<name>" is already a Foreman project at <foreman-root>/<name>/.
-Run /new-project if you want to start fresh, or open that directory to continue.
-```
-
-Stop here if already absorbed.
+Check `ls <foreman-root>/` and `_projects.md` for an existing match. If found, tell the user and stop.
 
 ---
 
@@ -96,24 +65,7 @@ cp <source-path> <foreman-root>/<name>/src/
 rm -rf <foreman-root>/<name>
 ```
 
-Initialize as its own git repo. Check git version first — `-b main` requires Git 2.28+:
-```bash
-git --version
-```
-If 2.28 or newer:
-```bash
-git -C <foreman-root>/<name> init -b main
-```
-If older:
-```bash
-git -C <foreman-root>/<name> init
-git -C <foreman-root>/<name> symbolic-ref HEAD refs/heads/main
-```
-Then:
-```bash
-git -C <foreman-root>/<name> add .
-git -C <foreman-root>/<name> commit -m "Initial import"
-```
+Check git version; if 2.28+: `git init -b main`, else `git init` + `git symbolic-ref HEAD refs/heads/main`. Then: `git add . && git commit -m "Initial import"`.
 
 If the user chose **public or private project**, apply the `github-repo` skill (`_skills/github-repo.md`) to create the GitHub repo and wire up the remote now.
 
@@ -168,22 +120,7 @@ Work through the spec milestones in order. For each task:
 4. Mark the task complete in spec.md
 5. Report to the user: what was fixed, what's next
 
-After each milestone, pause and show the user:
-
-```
-Milestone <n> complete.
-
-Fixed:
-  - <item>
-  - <item>
-
-Remaining:
-  - <milestone n+1 summary>
-
-Continue? (yes / adjust scope / stop here)
-```
-
-Wait for the user's go-ahead before the next milestone.
+After each milestone, report: what was fixed, what's remaining, and ask: "Continue? (yes / adjust scope / stop here)"
 
 ---
 
@@ -191,33 +128,11 @@ Wait for the user's go-ahead before the next milestone.
 
 When all milestones are done, run a final `/verify-output` against the full M3 "Done when..." criteria from spec.md.
 
-If it passes:
-
-1. Update `_projects.md` — add the project with status `active`
-2. Report:
-
-```
-<name> is production-ready.
-
-  Spec:     <foreman-root>/<name>/spec.md
-  Project:  <foreman-root>/<name>/
-
-Next steps:
-  - Push to your private repo (git remote add origin <url> && git push -u origin main)
-  - Run /brew-release if you want to distribute it via Homebrew
-```
-
-If it doesn't pass — loop back to Phase 5 and keep going.
+If it passes: update `_projects.md` status to `active` and report the project path and spec path. If it fails: loop back to Phase 5.
 
 ---
 
 ## Rules
 
-- Never skip the scan. Even if the project looks simple, read everything.
-- Never assume. If something is unclear (visibility, name, scope), ask.
-- Never mark production-ready without a passing /verify-output against the spec criteria.
-- Never copy `.git` history — absorbed projects always get a fresh git history.
-- Never copy `node_modules`, `.venv`, `dist`, `build`, or similar dependency/output dirs.
-- Always roll back (remove the partial directory) if the copy or git init fails.
-- Keep the user in the loop at each milestone — don't run ahead without sign-off.
-- If the source is a GitHub repo you can't clone (private, auth required), tell the user and ask them to clone it manually first.
+- If a GitHub repo can't be cloned (private, auth required), tell the user and ask them to clone manually first.
+- Roll back the partial directory on any copy or git init failure.

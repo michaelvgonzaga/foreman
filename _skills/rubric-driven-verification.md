@@ -2,11 +2,11 @@
 
 **Works well for:** Any output where "quality" is subjective — AI-generated reports, document drafts, structured data exports, code review outputs, anything where a human might disagree about whether it's good enough
 **Reference implementation:** Mjolnir (2026-06-28)
-**Confidence:** High — the rubric was the direct source of truth that caught a verification bug during `/verify-output`
+**Confidence:** High
 
 ## The pattern
 
-Define a formal rubric document *before* writing any verification code or generating any output. The rubric becomes the single source of truth for both the automated checker and the human reviewer.
+Write the rubric before writing verification code or generating output.
 
 ### Step 1 — Write the rubric first
 

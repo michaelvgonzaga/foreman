@@ -1,12 +1,11 @@
 # Self-Update
 
 **Works well for:** Keeping Foreman current by checking for upstream changes on every session start or on demand
-**Reference implementation:** Foreman framework (2026-06-28)
 **Confidence:** High
 
 ## The pattern
 
-At the start of every session (or when the user asks), silently check if Foreman is behind its remote and surface the result before doing anything else.
+At the start of every session (or when the user asks), silently check if Foreman is behind its remote.
 
 ```bash
 # 1. Fetch without merging
@@ -59,10 +58,3 @@ If `--ff-only` fails (diverged) — stop, show the user the divergence, do not f
 
 - When the user is mid-task and explicitly says not to interrupt
 - In offline environments with no git remote access — skip silently if `git fetch` times out
-
-## Rules
-
-- Never pull without showing what's incoming first
-- Never force-pull, reset --hard, or discard local changes
-- Fast-forward only — if history has diverged, surface it and stop
-- If the fetch itself fails (no network, auth error), skip silently — do not block the session over a connectivity issue

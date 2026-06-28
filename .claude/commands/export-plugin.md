@@ -1,5 +1,3 @@
-# Export Plugin
-
 Package a plugin directory as a zip file that anyone can install into their Foreman instance via `/install-plugin`.
 
 ## Steps
@@ -32,13 +30,4 @@ Save the zip to the Foreman root directory.
 
 **4. Confirm and instruct**
 
-Print:
-
-```
-Exported: <name>-plugin.zip (<size>)
-
-To share: send this file to anyone with a Foreman instance.
-To install: they drop it anywhere, then run /install-plugin <path-to-zip>
-```
-
-Do not suggest uploading to any external service.
+Print the zip filename, size, and: "Send to anyone with Foreman. To install: drop it anywhere and run `/install-plugin <path>`."

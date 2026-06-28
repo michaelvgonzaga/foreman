@@ -1,6 +1,4 @@
-You are running the `/setup-automation` command. It wires up the per-machine automation that does NOT travel with a Foreman install — the `Stop` hooks in `~/.claude/settings.json` that auto-sync memory and auto-push project repos. Run this once on each new machine (after `/sync-memory` has a repo and your projects are restored). It is opt-in and idempotent.
-
-These hooks are written to be **portable**: they compute paths from `$HOME` at runtime, so they work regardless of username/home.
+Wire up per-machine Stop hooks in `~/.claude/settings.json` — auto-sync memory and auto-push project repos. Idempotent; run once per machine.
 
 ## Step 0 — Preconditions
 
@@ -45,7 +43,7 @@ Merge them under `.hooks.Stop` so the result looks like (alongside any existing 
 }
 ```
 
-Write the merged file. Both hook commands always `exit 0`, are no-ops when there's nothing to push, and tolerate offline — they never block or fail a session.
+Write the merged file.
 
 ## Step 3 — Validate
 
@@ -66,8 +64,6 @@ Hooks edited mid-session don't fire until Claude Code re-reads settings. Tell th
 
 ## Rules
 
-- Opt-in and idempotent — never duplicate a hook that's already present; never clobber unrelated settings.
-- Concurrency-safe: both hooks fire per Claude turn (not per file change), run silently with no prompt, and tolerate multiple sessions on one machine — a push rejected by a concurrent session triggers `pull --rebase` then re-push (with `rebase --abort` cleanup if it conflicts), so they self-reconcile instead of silently deferring.
-- Keep hooks portable — compute paths from `$HOME`, never hardcode a username.
-- The project-push hook only pushes repos that already have a remote and unpushed commits; it never creates remotes and never pushes the foreman clone itself (it walks `~/foreman/*/` subdirs only).
-- ⚠️ Auto-push publishes every commit to a project's remote. That's fine for private repos; if a project's remote is public, this publishes each commit — note that to the user.
+- Never duplicate a hook already present; never clobber unrelated settings.
+- Paths must use `$HOME`, never hardcoded usernames.
+- Warn the user that auto-push publishes every commit — note this for public repos.

@@ -1,10 +1,8 @@
-You are running the Layer 1 spec interview for a new project in foreman.
+Layer 1 spec interview. Uncover the real goal, write the spec, scaffold the project, require sign-off on every decision before work begins.
 
-**Before starting the interview:** If the user has already provided a project name, check whether `[project-name]/spec.md` already exists. If it does, stop immediately and say: "A spec already exists for '[name]'. Running `/new-project` again would overwrite it. If you want to start over, delete the existing `spec.md` and `CLAUDE.md` first. If you want to update the spec, edit `spec.md` directly." Do not proceed with the interview.
+**Before starting the interview:** If the user has already provided a project name, check whether `[project-name]/spec.md` already exists. If it does, stop immediately and say: "A spec already exists for '[name]'. If you want to start over, delete the existing `spec.md` and `CLAUDE.md` first. If you want to update the spec, edit `spec.md` directly." Do not proceed with the interview.
 
-Your job is to uncover the REAL goal — not the surface-level request. People often ask for a solution before they've fully defined the problem. Your job is to find the actual problem.
-
-This factory builds projects across any domain — software, legal, healthcare, trades, retail, content, and beyond. The interview questions and spec apply regardless of field.
+This applies across any domain — software, legal, healthcare, trades, retail, and beyond.
 
 ## Rules for this interview
 
@@ -13,7 +11,6 @@ This factory builds projects across any domain — software, legal, healthcare, 
 - If an answer is vague, dig one level deeper before moving on.
 - If a user says "no" to a question, accept it as "none" and move to the next question.
 - Bias toward small, compartmentalized scope. When in doubt, cut scope.
-- After 7–9 questions, you should have enough to write the spec.
 
 ## Question sequence (adapt based on answers)
 
@@ -30,7 +27,7 @@ This factory builds projects across any domain — software, legal, healthcare, 
 1. **Confirm the project name.** Ask: "What do you want to call this project? This becomes the directory name — keep it short, lowercase, no spaces (e.g., `injury-intake`, `plumbing-scheduler`, `lease-drafter`)."
 
 2. **Check the knowledgebase and skills before writing anything:**
-   - Read `_knowledgebase/README.md` — scan the index for any files relevant to this domain. If found, read them. Let what you find shape the spec's risks and decisions.
+   - Read `_knowledgebase/README.md` and any relevant files before writing the spec.
    - Read `_skills/README.md` — identify which playbooks apply:
      - If the domain is unfamiliar: read and apply `_skills/domain-research.md`
      - If the project is a software build: read and apply `_skills/software-projects.md`
@@ -46,7 +43,7 @@ This factory builds projects across any domain — software, legal, healthcare, 
 
 5. **Scaffold the project directory:**
    - Create `[project-name]/` and `[project-name]/knowledge/` if they don't exist
-   - Read `_templates/project_claude.md` and write its contents to `[project-name]/CLAUDE.md` using the Write tool — do not use `cp`
+   - Read `_templates/project_claude.md` and write its contents to `[project-name]/CLAUDE.md`
    - Fill in from the interview: title, goal, user, domain, scope, guardrails, tools, integrations, domain-specific requirements
    - Replace `[list here]` with actual external services or integrations identified, or "None in v1"
    - For "Never do" hard lines: keep the two universals and add domain-specific ones (e.g., "never store patient data unencrypted", "never provide legal advice — only information"). Remove the placeholder label.
@@ -58,7 +55,7 @@ This factory builds projects across any domain — software, legal, healthcare, 
 
 6. **Present the spec to the user** and say:
 
-   "Before any work begins, I need you to check each decision box above. Read each one and confirm it's right. Type 'confirmed' next to any you agree with, or tell me what's wrong."
+   "Check each decision box. Confirm what's right or tell me what to change."
 
    - If the user **confirms** a decision: mark it `[x]` in the spec
    - If the user **rejects** a decision: discuss the alternative, update the decision text to reflect what was agreed, then re-present it for confirmation before proceeding

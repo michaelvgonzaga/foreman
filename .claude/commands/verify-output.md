@@ -1,16 +1,10 @@
-You are running the Layer 2 verification process. This happens before any output is marked complete.
+Layer 2 verification. Run before marking any output complete.
 
 ## Step 1 — Define the success criteria (do this first, before evaluating anything)
 
 If the project has a `spec.md`, read it now — do not work from memory. If there is no spec.md (e.g., you are verifying the spec itself), derive criteria from the original user request and any explicit constraints stated in the conversation.
 
-Then state out loud — define as many criteria as the task requires, minimum 3:
-
-"A perfect result for this task would:
-1. [criterion]
-2. [criterion]
-3. [criterion]
-[add more if the task is complex]"
+State the success criteria (minimum 3) before evaluating anything. Derive from `spec.md` if it exists, otherwise from the user request.
 
 ## Step 2 — Self-review
 
@@ -19,7 +13,7 @@ Check the output against each criterion. For each one, mark:
 - PARTIAL — mostly there but something's off
 - FAIL — not met
 
-**PARTIAL counts as FAIL for the purpose of marking work complete.** Do not ship a PARTIAL — treat it the same as a FAIL and fix it before proceeding.
+**PARTIAL counts as FAIL — fix before proceeding.**
 
 List specific evidence for anything that is not a clear PASS.
 
