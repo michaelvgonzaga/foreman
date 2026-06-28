@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 150" width="120" height="150">
+
+  <!-- Hard hat dome -->
+  <ellipse cx="60" cy="52" rx="52" ry="44" fill="#FFD700"/>
+
+  <!-- Hard hat dome shading -->
+  <ellipse cx="48" cy="36" rx="22" ry="14" fill="#FFE84D" opacity="0.5"/>
+
+  <!-- Hard hat brim -->
+  <ellipse cx="60" cy="88" rx="58" ry="10" fill="#FFC200"/>
+  <ellipse cx="60" cy="86" rx="58" ry="10" fill="#FFD700"/>
+  <ellipse cx="60" cy="84" rx="58" ry="9" fill="#FFC200"/>
+
+  <!-- Hat outline -->
+  <ellipse cx="60" cy="52" rx="52" ry="44" fill="none" stroke="#CC9900" stroke-width="2"/>
+  <ellipse cx="60" cy="85" rx="58" ry="10" fill="none" stroke="#CC9900" stroke-width="1.5"/>
+
+  <!-- Rivet on top -->
+  <circle cx="60" cy="14" r="5" fill="#CC9900"/>
+  <circle cx="60" cy="14" r="3" fill="#FFD700"/>
+
+  <!-- Body peeking under hat -->
+  <rect x="28" y="84" width="64" height="36" rx="6" fill="#5BA4E6"/>
+  <rect x="28" y="84" width="64" height="6" rx="3" fill="#4A90D9"/>
+
+  <!-- Eyes -->
+  <circle cx="44" cy="102" r="11" fill="white"/>
+  <circle cx="76" cy="102" r="11" fill="white"/>
+  <circle cx="44" cy="103" r="7" fill="#1A1A2E"/>
+  <circle cx="76" cy="103" r="7" fill="#1A1A2E"/>
+  <circle cx="47" cy="100" r="2.5" fill="white"/>
+  <circle cx="79" cy="100" r="2.5" fill="white"/>
+
+  <!-- Feet -->
+  <rect x="33" y="118" width="22" height="20" rx="5" fill="#4A90D9"/>
+  <rect x="65" y="118" width="22" height="20" rx="5" fill="#4A90D9"/>
+
+  <!-- Foot highlight -->
+  <rect x="36" y="120" width="10" height="4" rx="2" fill="#5BA4E6"/>
+  <rect x="68" y="120" width="10" height="4" rx="2" fill="#5BA4E6"/>
+
+</svg>

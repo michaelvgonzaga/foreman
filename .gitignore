@@ -10,3 +10,4 @@ plugins.local.yml
 /*/
 !/_*/
 !/.*/
+!/assets/

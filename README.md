@@ -1,8 +1,12 @@
+<div align="center">
+  <img src="assets/logo.svg" alt="Foreman" width="100"/>
+</div>
+
 # Foreman
 
-A local operating system for AI-assisted engineering work.
+A framework for Claude Code that brings structure, verification, and shared knowledge to every project you build.
 
-Foreman gives you a structured way to run projects with Claude Code: every project starts with a spec interview, every output goes through a verification step, and a shared knowledgebase and skills library improves across all your projects.
+Every project starts with a spec interview, every output goes through a verification step, and a shared knowledgebase and skills library improves across all your projects.
 
 ---
 
@@ -48,7 +52,7 @@ To share a private plugin with someone: run `/export-plugin <name>` → send the
 
 ## The framework is public. Your projects stay private.
 
-Everything in this repo is the OS — templates, commands, skills, knowledgebase. Project directories are git-ignored by design; each lives in its own private repo.
+Everything in this repo is the framework — templates, commands, skills, knowledgebase. Project directories are git-ignored by design; each lives in its own private repo.
 
 ---
 
