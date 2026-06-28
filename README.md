@@ -134,6 +134,7 @@ Built-in playbooks Claude applies automatically:
 |-------|-----------------|
 | `self-update` | Session start — silently checks if Foreman is behind its remote and prompts to update before any work begins |
 | `release-notes` | Auto-generates categorized release notes from git commits for Foreman or any project — called automatically by `/brew-release` |
+| `github-repo` | Creates a public or private GitHub repo and wires it as the git remote — called by `/new-project` and `/absorb` |
 | `domain-research` | Before building in an unfamiliar field |
 | `software-projects` | Stack decisions and risk checklist for software builds |
 | `rubric-driven-verification` | Defining quality criteria upfront for subjective outputs |

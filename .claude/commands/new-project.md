@@ -54,7 +54,7 @@ This factory builds projects across any domain — software, legal, healthcare, 
      - Universal: "Never send real messages, emails, or notifications to real users"
    - If tools and platform not yet decided, leave those fields as `TODO: not yet decided`
    - Run `git init -b main` inside `[project-name]/` to initialize it as its own repository (the project directory is already excluded from foreman's git by `.gitignore` — no manual entry needed). If git version is older than 2.28 and `-b` is unsupported, run `git init` then `git symbolic-ref HEAD refs/heads/main`.
-   - Ask the user: "Should this project be **public** (anyone can see it on GitHub) or **private** (only you)?" — note the answer in `[project-name]/CLAUDE.md` under Tools & Resources and record it in `_projects.md` as the Visibility column
+   - Ask the user: "Should this project be **public** (anyone can see it on GitHub) or **private** (only you)?" — then apply the `github-repo` skill (`_skills/github-repo.md`) to create the GitHub repo and wire up the remote immediately. Record visibility in `_projects.md` and `[project-name]/CLAUDE.md`.
 
 6. **Present the spec to the user** and say:
 
