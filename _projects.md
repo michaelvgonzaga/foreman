@@ -1,10 +1,10 @@
 # Projects
 
-Index of all projects in app_factory. Updated by `/new-project` after sign-off, and manually when status changes.
+Index of all projects in foreman. Updated by `/new-project` after sign-off, and manually when status changes.
 
 | Project | Status | Started | Last updated | Goal |
 |---------|--------|---------|--------------|------|
-| _(none yet)_ | | | | |
+| mjolnir | `active` | 2026-06-28 | 2026-06-28 | Vendor-neutral AI engineering OS that produces senior-level decisions from complex technical input |
 
 ---
 
