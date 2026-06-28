@@ -38,13 +38,23 @@ Each project has its own `CLAUDE.md`, `spec.md`, and knowledge directory that im
 - **At the start of every session:** apply `_skills/self-update.md` — silently fetch origin, compare with local, and surface any incoming changes before doing anything else. If fetch fails (no network), skip silently and continue.
 - **At the start of every session:** if `_projects.md` does not exist, create it by copying `_templates/projects.md`. `_projects.md` is git-ignored **local** state (your private project index) — it is never tracked by or committed to the framework repo, so editing it never makes the workspace dirty or blocks self-update.
 - Read the project's `CLAUDE.md` and `spec.md` before touching any code or files
-- Run `/verify-output` before marking any task complete — Claude runs this, not the user
+- Run `/verify-output` before marking any task complete — Claude runs this, not the user. Skip for trivial tasks (see **Scale to task size** below).
 - Document key decisions in the project's `CLAUDE.md` decision log (not spec.md)
 - Check `_skills/README.md` for relevant playbooks before starting work in a new domain or project type
 - Update `_knowledgebase/` and `_skills/` when candidates surface during `/verify-output` Step 6
 - Prefer editing existing files over creating new ones
 - Keep changes small and reversible
 - **After committing changes to any project:** apply `_skills/release-notes.md` — check if commits have accumulated since the last tag and, if so, remind the user: "You have unreleased changes in `<project>` since `<last-tag>`. Run `/release` when ready to publish." Do not generate notes unprompted — just surface the reminder. (Use `/brew-release` only when distributing via a Homebrew formula.)
+
+### Scale to task size
+
+Before starting, classify the task and match the treatment:
+
+- **Trivial** — a question, a lookup, a rename, a one-liner fix. Answer directly. No spec, no `/verify-output`. Keep the response short.
+- **Standard** — a bug fix, a contained feature, a single-file change. Run the normal workflow. Skip `/verify-output` only when the change is a single, obvious, reversible fix.
+- **Full build** — a new project, a major feature, anything touching multiple files or introducing new architecture. Full 3-layer treatment without exception: spec → build → verify-output.
+
+`/verify-output` spawns a second Claude agent and burns tokens proportionate to the output size — worth it for standard and full-build tasks, wasteful for trivial ones.
 
 ### Ask first (consequences)
 - Any action that costs money — API calls, cloud deploys, paid services
