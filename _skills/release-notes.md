@@ -77,8 +77,8 @@ Write a short title (under 60 chars) that captures the most important thing in t
 
 ## When to use it
 
-- **Automatically after every project commit** — wired into `CLAUDE.md` guardrails; checks if unreleased commits have accumulated and surfaces a reminder to run `/brew-release`. Does not generate notes unprompted — just flags that a release may be due.
-- Automatically during `/brew-release` — called in Step 7 to generate the GitHub release body
+- **Automatically after every project commit** — wired into `CLAUDE.md` guardrails (framework and project template); checks if unreleased commits have accumulated and surfaces a reminder to run `/release`. Does not generate notes unprompted — just flags that a release may be due.
+- Automatically during `/release` (Step 3) and `/brew-release` (Step 7) — generates the release body and CHANGELOG entry
 - When the user asks "write release notes", "what changed since last release", or "generate changelog"
 - When completing a project milestone and wanting to document progress
 

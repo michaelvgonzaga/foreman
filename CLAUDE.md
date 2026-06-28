@@ -43,7 +43,7 @@ Each project has its own `CLAUDE.md`, `spec.md`, and knowledge directory that im
 - Update `_knowledgebase/` and `_skills/` when candidates surface during `/verify-output` Step 6
 - Prefer editing existing files over creating new ones
 - Keep changes small and reversible
-- **After committing changes to any project:** apply `_skills/release-notes.md` — check if commits have accumulated since the last tag and, if so, remind the user: "You have unreleased changes in `<project>` since `<last-tag>`. Run `/brew-release` when ready to publish." Do not generate notes unprompted — just surface the reminder.
+- **After committing changes to any project:** apply `_skills/release-notes.md` — check if commits have accumulated since the last tag and, if so, remind the user: "You have unreleased changes in `<project>` since `<last-tag>`. Run `/release` when ready to publish." Do not generate notes unprompted — just surface the reminder. (Use `/brew-release` only when distributing via a Homebrew formula.)
 
 ### Ask first (consequences)
 - Any action that costs money — API calls, cloud deploys, paid services

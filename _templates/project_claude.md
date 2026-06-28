@@ -26,6 +26,7 @@ See `spec.md` for the full spec. Key facts:
 - Keep changes scoped to v1 — do not add features not in the spec
 - Before making domain-specific decisions: read `_knowledgebase/README.md` to find relevant files, then read those files
 - Before starting a new domain or project type: read `_skills/README.md` and apply any relevant playbooks
+- **After committing changes:** apply `_skills/release-notes.md` — check if commits have accumulated since the last tag and, if so, remind the user: "You have unreleased changes in `<project>` since `<last-tag>`. Run `/release` when ready to publish." Do not generate notes unprompted — just surface the reminder.
 
 ### Ask first
 - Any use of an external service, API, or integration — list what's used in this project: [list here, or "None in v1"]
