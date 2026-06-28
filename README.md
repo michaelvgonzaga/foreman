@@ -33,6 +33,9 @@ Install public plugins, add your own private repos, or share a plugin with anyon
 **Proportional effort**
 Foreman scales to the task — trivial questions get direct answers, full builds get the full 3-layer treatment. The expensive steps (spec interview, second-agent critic) only fire when the work warrants it.
 
+**Token discipline**
+Every line in every command, skill, and template costs tokens on every use. Foreman enforces a hard rule when editing its own framework files: earn every token, one location per rule, no rationale commentary, no placeholders, no obvious instructions. Tighten, don't expand.
+
 ---
 
 ## Prerequisites
