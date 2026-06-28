@@ -49,3 +49,4 @@ Create a file: `_skills/[skill-name].md`
 | [software-projects.md](software-projects.md) | Stack decisions, testing approach, and common risks for software builds | Medium |
 | [rubric-driven-verification.md](rubric-driven-verification.md) | Defining quality upfront for subjective outputs; keeps automated checker and human reviewer aligned | High |
 | [vendor-neutral-adapter-pattern.md](vendor-neutral-adapter-pattern.md) | Building provider-switchable integrations (AI models, APIs, gateways) without lock-in | High |
+| [two-tier-classification.md](two-tier-classification.md) | Routing input to specialist handlers via a fast classification call before full processing | High |

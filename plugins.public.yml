@@ -1,0 +1,12 @@
+# Public Foreman plugins — maintained by the Foreman owner.
+# Anyone who clones Foreman can install these via /setup.
+# Add your own public plugins here. Community plugins can be listed too.
+
+plugins: []
+
+# Example entry:
+#
+# plugins:
+#   - name: mjolnir
+#     repo: https://github.com/michaelvgonzaga/mjolnir
+#     description: Engineering diagnosis tool — analyzes code, tickets, and logs to produce senior-level engineering reports
