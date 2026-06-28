@@ -41,8 +41,8 @@ Install public plugins, add your own private repos, or share a plugin with anyon
 ## Install via Homebrew
 
 ```bash
-brew tap michaelvgonzaga/foreman https://github.com/michaelvgonzaga/foreman
-brew install --HEAD michaelvgonzaga/foreman/foreman
+brew tap michaelvgonzaga/foreman
+brew install foreman
 ```
 
 Then launch it any time with:
@@ -51,7 +51,7 @@ Then launch it any time with:
 foreman
 ```
 
-Brew checks for Claude Code and Git on install and warns you if either is missing.
+Brew checks for Claude Code and Git on launch and warns you if either is missing.
 
 ## Getting started (manual)
 
