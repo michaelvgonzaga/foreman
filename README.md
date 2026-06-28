@@ -55,7 +55,7 @@ Then launch it from any directory:
 foreman-ai
 ```
 
-On first run it creates a `foreman/` folder in your current directory and opens it in Claude Code. Subsequent runs just open it. Brew checks for Claude Code and Git on launch and warns you if either is missing.
+On first run it clones the Foreman workspace from GitHub into a `foreman/` folder in your current directory and opens it in Claude Code. Subsequent runs just open it. Brew checks for Claude Code and Git on launch and warns you if either is missing.
 
 **To update to the latest version:**
 
@@ -89,8 +89,9 @@ claude /path/to/foreman
 
 ## Getting started
 
-1. Run `/setup` to install available plugins
-2. Run `/new-project` to start your first project
+1. Run `/setup-automation` to install the per-machine auto-sync and auto-push hooks
+2. Run `/setup` to install available plugins
+3. Run `/new-project` to start your first project
 
 ## How to use
 
@@ -121,6 +122,7 @@ Run `/export-plugin <name>` to package it as a zip. The recipient runs `/install
 | `/setup` | Install available plugins from the public list and your private repos |
 | `/export-plugin <name>` | Package a plugin as a zip file to share with anyone |
 | `/install-plugin <path>` | Install a plugin from a zip file |
+| `/release` | Cut a GitHub release for any project — update CHANGELOG, tag, push, and publish a GitHub release |
 | `/brew-release` | Cut a Homebrew release — tag, SHA256, update formula, push both repos |
 | `/absorb` | Find a file, repo, or project → bring it into Foreman → scan, fix, and iterate to production |
 | `/restore-projects` | Pull your existing Foreman projects from GitHub down into this workspace (new device / recovery) — clone what's missing, fast-forward the rest, push nothing |
