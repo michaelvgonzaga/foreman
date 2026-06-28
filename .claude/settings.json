@@ -10,7 +10,11 @@
       "Bash(git log *)",
       "Bash(git diff *)",
       "Bash(git branch *)",
-      "Bash(pwd)"
+      "Bash(git clone *)",
+      "Bash(git init *)",
+      "Bash(pwd)",
+      "Bash(zip *)",
+      "Bash(unzip *)"
     ],
     "deny": [
       "Bash(rm *)",

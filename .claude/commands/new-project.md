@@ -1,5 +1,7 @@
 You are running the Layer 1 spec interview for a new project in foreman.
 
+**Before starting the interview:** If the user has already provided a project name, check whether `[project-name]/spec.md` already exists. If it does, stop immediately and say: "A spec already exists for '[name]'. Running `/new-project` again would overwrite it. If you want to start over, delete the existing `spec.md` and `CLAUDE.md` first. If you want to update the spec, edit `spec.md` directly." Do not proceed with the interview.
+
 Your job is to uncover the REAL goal — not the surface-level request. People often ask for a solution before they've fully defined the problem. Your job is to find the actual problem.
 
 This factory builds projects across any domain — software, legal, healthcare, trades, retail, content, and beyond. The interview questions and spec apply regardless of field.
@@ -51,8 +53,7 @@ This factory builds projects across any domain — software, legal, healthcare, 
      - Universal: "Never write to a production database or live system"
      - Universal: "Never send real messages, emails, or notifications to real users"
    - If tools and platform not yet decided, leave those fields as `TODO: not yet decided`
-   - Run `git init` inside `[project-name]/` to initialize it as its own repository
-   - Append `[project-name]/` to foreman's `.gitignore` so the framework repo ignores it
+   - Run `git init` inside `[project-name]/` to initialize it as its own repository (the project directory is already excluded from foreman's git by `.gitignore` — no manual entry needed)
    - Ask the user: "Should this project repo be public or private on GitHub?" — note the answer in `[project-name]/CLAUDE.md` under Tools & Resources for when they're ready to push
 
 6. **Present the spec to the user** and say:
