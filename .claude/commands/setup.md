@@ -46,3 +46,16 @@ If a repo was skipped, verify your credentials can reach it: git clone <repo>
 ```
 
 Do not suggest installing gh CLI or configuring tokens — git credentials are sufficient.
+
+**6. Point to the next steps (especially on a new machine)**
+
+After the plugin summary, print:
+
+```
+Next steps:
+  /setup-automation    — install the auto-sync/auto-push hooks (memory + project repos). Run once per machine; the hooks are machine-local and don't travel with Foreman.
+  /restore-projects    — pull your existing Foreman projects from GitHub into this workspace.
+  /sync-memory restore — pull your saved Claude memory onto this machine.
+```
+
+These matter most when setting up Foreman on a new machine. Skip the mention if the user clearly just wanted a plugin refresh.
