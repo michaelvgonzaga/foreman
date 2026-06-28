@@ -53,7 +53,7 @@ This factory builds projects across any domain — software, legal, healthcare, 
      - Universal: "Never write to a production database or live system"
      - Universal: "Never send real messages, emails, or notifications to real users"
    - If tools and platform not yet decided, leave those fields as `TODO: not yet decided`
-   - Run `git init` inside `[project-name]/` to initialize it as its own repository (the project directory is already excluded from foreman's git by `.gitignore` — no manual entry needed)
+   - Run `git init -b main` inside `[project-name]/` to initialize it as its own repository (the project directory is already excluded from foreman's git by `.gitignore` — no manual entry needed). If git version is older than 2.28 and `-b` is unsupported, run `git init` then `git symbolic-ref HEAD refs/heads/main`.
    - Ask the user: "Should this project repo be public or private on GitHub?" — note the answer in `[project-name]/CLAUDE.md` under Tools & Resources for when they're ready to push
 
 6. **Present the spec to the user** and say:

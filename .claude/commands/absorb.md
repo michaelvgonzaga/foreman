@@ -7,7 +7,6 @@ You are running the `/absorb` command. Your job is to find a project, file, or r
 The user may give you a name, a description, a partial path, or nothing at all. Search like you would in a terminal.
 
 ```bash
-# Search home directory and common locations
 # Note: on macOS /tmp is a symlink to /private/tmp — search both
 find ~ /private/tmp /tmp /var/tmp -maxdepth 4 -type d -iname "*<keyword>*" 2>/dev/null
 find ~ /private/tmp /tmp /var/tmp -maxdepth 4 -type f -iname "*<keyword>*" 2>/dev/null
@@ -32,11 +31,11 @@ Wait for the user to confirm before continuing.
 
 ## Phase 2 — Check if already absorbed
 
-Look for an existing Foreman project that matches:
+Look for an existing Foreman project that matches — check both the directory listing and `_projects.md`:
 
 ```bash
 ls <foreman-root>/
-cat <foreman-root>/_projects.md
+grep -i "<name>" <foreman-root>/_projects.md
 ```
 
 If a match exists, tell the user:
@@ -57,39 +56,62 @@ Ask the user two questions (one at a time):
 1. **Name:** "What should this project be called inside Foreman? (lowercase, no spaces — e.g. `shopify-theme`)"
 2. **Visibility:** "Public plugin (shared via `plugins.public.yml`) or private project (git-ignored, your own repo)?"
 
-Then:
+Then copy the source. Use `rsync` to exclude dependency dirs and any existing `.git` history — the absorbed project gets a fresh git history inside Foreman:
 
-**If private project:**
 ```bash
-mkdir -p <foreman-root>/<name>
+rsync -a \
+  --exclude='.git' \
+  --exclude='node_modules' \
+  --exclude='.venv' \
+  --exclude='venv' \
+  --exclude='__pycache__' \
+  --exclude='*.pyc' \
+  --exclude='.DS_Store' \
+  --exclude='dist' \
+  --exclude='build' \
+  --exclude='.next' \
+  --exclude='vendor' \
+  --exclude='*.zip' \
+  <source-path>/ <foreman-root>/<name>/
 ```
-Copy or clone the source into `<foreman-root>/<name>/src/` (or the root if it's already structured).
 
 If source is a git repo URL:
 ```bash
-git clone <url> <foreman-root>/<name>
+git clone --depth=1 <url> <foreman-root>/<name>
+rm -rf <foreman-root>/<name>/.git
 ```
 
-If source is a local directory:
+If source is a single file, create a minimal structure:
 ```bash
-cp -r <source-path> <foreman-root>/<name>
+mkdir -p <foreman-root>/<name>/src
+cp <source-path> <foreman-root>/<name>/src/
 ```
 
-If source is a single file:
+**On any failure during copy:** immediately remove the partial directory and tell the user what failed — do not leave a broken state.
 ```bash
-mkdir -p <foreman-root>/<name>
-cp <source-path> <foreman-root>/<name>/
+rm -rf <foreman-root>/<name>
 ```
 
-Initialize it as its own git repo:
+Initialize as its own git repo. Check git version first — `-b main` requires Git 2.28+:
+```bash
+git --version
+```
+If 2.28 or newer:
 ```bash
 git -C <foreman-root>/<name> init -b main
+```
+If older:
+```bash
+git -C <foreman-root>/<name> init
+git -C <foreman-root>/<name> symbolic-ref HEAD refs/heads/main
+```
+Then:
+```bash
 git -C <foreman-root>/<name> add .
 git -C <foreman-root>/<name> commit -m "Initial import"
 ```
 
-**If public plugin:**
-Copy into `<foreman-root>/_skills/` or `.claude/commands/` depending on what it is (a skill/playbook vs a runnable command). Ask the user if unclear.
+**If public plugin:** copy into `.claude/commands/` (if it's a runnable command) or `_skills/` (if it's a playbook/pattern). Ask if unclear.
 
 ---
 
@@ -188,5 +210,8 @@ If it doesn't pass — loop back to Phase 5 and keep going.
 - Never skip the scan. Even if the project looks simple, read everything.
 - Never assume. If something is unclear (visibility, name, scope), ask.
 - Never mark production-ready without a passing /verify-output against the spec criteria.
+- Never copy `.git` history — absorbed projects always get a fresh git history.
+- Never copy `node_modules`, `.venv`, `dist`, `build`, or similar dependency/output dirs.
+- Always roll back (remove the partial directory) if the copy or git init fails.
 - Keep the user in the loop at each milestone — don't run ahead without sign-off.
 - If the source is a GitHub repo you can't clone (private, auth required), tell the user and ask them to clone it manually first.

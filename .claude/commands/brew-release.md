@@ -44,15 +44,22 @@ git -C <project-path> push origin v<version>
 
 ## Step 4 — Compute SHA256
 
-```bash
-curl -sL https://github.com/<owner>/<repo>/archive/refs/tags/v<version>.tar.gz | shasum -a 256
-```
-
-Get the owner/repo from the project's git remote:
+Get the owner/repo from the project's git remote. The remote may be SSH or HTTPS — handle both:
 
 ```bash
 git -C <project-path> remote get-url origin
+# SSH format:  git@github.com:owner/repo.git  → owner/repo
+# HTTPS format: https://github.com/owner/repo.git → owner/repo
 ```
+
+GitHub needs a few seconds to generate the tarball after a tag is pushed. Wait 5 seconds then compute:
+
+```bash
+sleep 5
+curl -sL https://github.com/<owner>/<repo>/archive/refs/tags/v<version>.tar.gz | shasum -a 256
+```
+
+If the result is `e3b0c44...` (empty file hash) the tarball isn't ready yet — wait 10 more seconds and retry once.
 
 ## Step 5 — Update the formula
 
