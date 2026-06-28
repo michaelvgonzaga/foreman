@@ -124,6 +124,20 @@ Run `/export-plugin <name>` to package it as a zip. The recipient runs `/install
 | `/brew-release` | Cut a Homebrew release — tag, SHA256, update formula, push both repos |
 | `/absorb` | Find a file, repo, or project → bring it into Foreman → scan, fix, and iterate to production |
 
+---
+
+## Skills
+
+Built-in playbooks Claude applies automatically:
+
+| Skill | When it kicks in |
+|-------|-----------------|
+| `self-update` | Session start — silently checks if Foreman is behind its remote and prompts to update before any work begins |
+| `domain-research` | Before building in an unfamiliar field |
+| `software-projects` | Stack decisions and risk checklist for software builds |
+| `rubric-driven-verification` | Defining quality criteria upfront for subjective outputs |
+| `vendor-neutral-adapter-pattern` | Building integrations that aren't locked to one provider |
+| `two-tier-classification` | Routing inputs to specialist handlers via a fast pre-pass |
 
 ---
 
