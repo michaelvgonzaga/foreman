@@ -125,6 +125,7 @@ Run `/export-plugin <name>` to package it as a zip. The recipient runs `/install
 | `/absorb` | Find a file, repo, or project → bring it into Foreman → scan, fix, and iterate to production |
 | `/restore-projects` | Pull your existing Foreman projects from GitHub down into this workspace (new device / recovery) — clone what's missing, fast-forward the rest, push nothing |
 | `/sync-memory` | Back up your machine-local Claude memory to a private repo, or restore it on a new machine — makes memory portable across devices |
+| `/setup-automation` | Install the per-machine auto-sync/auto-push Stop hooks (memory + project repos) into ~/.claude/settings.json — run once on a new machine |
 
 ---
 
