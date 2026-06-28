@@ -126,6 +126,7 @@ Run `/export-plugin <name>` to package it as a zip. The recipient runs `/install
 | `/first-run` | First-time setup wizard — dependency checks, GitHub auth, automation hooks, project restore, plugins |
 | `/help` | Show all available commands |
 | `/new-project` | Start a new project — spec interview, scaffolding, and sign-off before any work begins |
+| `/from-context` | Paste notes, requirements, or code — Claude synthesizes the project, picks the right toolchain, and flags CLI tool candidates for token savings before spec work begins |
 | `/verify-output` | Verify any output before marking it done — self-review + independent critic agent |
 | `/setup` | Install available plugins from the public list and your private repos |
 | `/export-plugin <name>` | Package a plugin as a zip file to share with anyone |
@@ -146,6 +147,7 @@ Built-in playbooks Claude applies automatically:
 | Skill | When it kicks in |
 |-------|-----------------|
 | `self-update` | Session start — silently checks if Foreman is behind its remote and prompts to update before any work begins |
+| `foreman-tools-audit` | After any new project or command/skill edit — scans for shell patterns worth promoting to a native CLI subcommand |
 | `release-notes` | Auto-generates categorized release notes from git commits for Foreman or any project — called automatically by `/brew-release` |
 | `github-repo` | Creates a public or private GitHub repo and wires it as the git remote — called by `/new-project` and `/absorb` |
 | `domain-research` | Before building in an unfamiliar field |
