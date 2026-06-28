@@ -70,4 +70,4 @@ To re-verify: check the original source, update any outdated content, and update
 
 | File | Domain | Topic | Last verified |
 |------|--------|-------|---------------|
-| _(none yet)_ | | | |
+| [zig-0.16-io-api.md](zig-0.16-io-api.md) | Zig 0.16 | std.Io file/dir/process/env API — gotchas and correct patterns | 2026-06-29 |
