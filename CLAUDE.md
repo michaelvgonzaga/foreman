@@ -4,6 +4,10 @@ Base of operations. Every project lives here. Every project follows the 3-layer 
 
 ---
 
+## First-time setup (after cloning)
+
+Run `/setup`. It reads `plugins.public.yml` (public plugins, tracked) and `plugins.local.yml` (your private repos, git-ignored) and clones whatever your git credentials can reach. If you have private repos to add, copy `plugins.local.yml.example` → `plugins.local.yml` and fill it in before running.
+
 ## Starting a new project
 
 Run `/new-project`. Do not skip this. The interview takes 5 minutes and prevents weeks of wasted work.
@@ -74,15 +78,29 @@ foreman/
 ├── _templates/
 │   ├── project_claude.md      ← per-project CLAUDE.md template
 │   └── spec_output.md         ← spec format (single source of truth)
+├── plugins.public.yml         ← public plugins anyone can install via /setup
+├── plugins.local.yml          ← your private repos (git-ignored — create from .example)
+├── plugins.local.yml.example  ← template for plugins.local.yml
 ├── _projects.md               ← index of all projects and their status
 ├── _knowledgebase/            ← domain knowledge shared across all projects
 ├── _skills/                   ← reusable prompt patterns & playbooks
-└── [project-name]/            ← each project lives here
+└── [project-name]/            ← each project lives here (git-ignored — own private repo)
     ├── CLAUDE.md
     ├── spec.md
     ├── knowledge/             ← project-specific knowledge
     └── ...
 ```
+
+## Distribution model
+
+**Foreman is public. Projects are private.**
+
+- The `foreman` repo contains only the framework — templates, skills, knowledgebase, commands
+- Project directories (`mjolnir/`, etc.) are git-ignored by pattern: any root-level dir not starting with `_` or `.` is excluded automatically
+- Each project is its own independent git repo (`git init` inside the project dir) pushed to a private GitHub repo
+- Someone who clones `foreman` gets the OS; projects are never exposed
+- No git submodules — each project is fully independent, zero wiring required
+- Private plugins can be shared as zip files: `/export-plugin <name>` → send zip → recipient runs `/install-plugin <path>`
 
 ---
 

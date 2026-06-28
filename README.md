@@ -1,12 +1,18 @@
 # Foreman
 
-A domain-agnostic project framework built inside Claude Code.
+A local operating system for AI-assisted engineering work.
 
-Foreman turns any vague idea into a scoped, verified output — then gets smarter with every project. It works for any field: software, legal, healthcare, trades, retail, or anything else.
+Foreman gives you a structured way to run projects with Claude Code: every project starts with a spec interview, every output goes through a verification step, and a shared knowledgebase and skills library improves across all your projects.
 
 ---
 
-## How it works
+## Who it's for
+
+Engineers, technical teams, and agencies who want Claude Code to produce consistent, senior-level work — not just fast answers. If you've felt like AI output is hit-or-miss depending on how you prompt it, Foreman is the structure that makes it reliable.
+
+---
+
+## What it does
 
 **Layer 1 — Spec** (`/new-project`)
 Interview → real goal → scoped spec → explicit sign-off before any work begins.
@@ -15,39 +21,35 @@ Interview → real goal → scoped spec → explicit sign-off before any work be
 Self-review → independent critic (forked Claude agent) → fix what fails → then ship.
 
 **Layer 3 — Workspace**
-Every project builds a knowledge base. Foreman gets smarter with every domain it touches.
+Every project builds its own knowledge. A shared skills library and knowledgebase accumulate across all projects so you don't re-solve the same problems.
+
+**Plugin system** (`/setup`, `/export-plugin`, `/install-plugin`)
+Install public plugins, add your own private repos, or share a plugin with anyone as a zip file.
 
 ---
 
-## Setup
+## Getting started
 
-1. Clone this repo into your working directory
-2. Open the directory in Claude Code
+1. Clone this repo and open it in Claude Code
+2. Run `/setup` to install available plugins
 3. Run `/new-project` to start your first project
 
 ---
 
-## Structure
+## Plugins
 
-```
-foreman/
-├── CLAUDE.md                  ← root instructions for Claude
-├── .claude/
-│   ├── settings.json          ← auto-approved and blocked permissions
-│   └── commands/
-│       ├── new-project.md     ← Layer 1: spec interview + scaffolding
-│       └── verify-output.md   ← Layer 2: self-review + critic agent
-├── _templates/                ← spec and project CLAUDE.md templates
-├── _knowledgebase/            ← domain knowledge shared across all projects
-├── _skills/                   ← reusable playbooks (domain research, software builds)
-├── _projects.md               ← index of all projects and their status
-└── [your-project]/            ← each project lives here
-```
+Public plugins are listed in `plugins.public.yml` and install automatically via `/setup`.
+
+To add your private repos: copy `plugins.local.yml.example` → `plugins.local.yml`, add your repos, run `/setup` again.
+
+To share a private plugin with someone: run `/export-plugin <name>` → send the zip → they run `/install-plugin <path>`.
 
 ---
 
-## Why Foreman?
+## The framework is public. Your projects stay private.
 
-A foreman scopes the job before work starts, enforces quality before it leaves the site, and knows the trade. That's exactly what this does.
+Everything in this repo is the OS — templates, commands, skills, knowledgebase. Project directories are git-ignored by design; each lives in its own private repo.
+
+---
 
 Built with [Claude Code](https://claude.ai/code).
