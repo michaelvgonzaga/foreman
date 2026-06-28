@@ -115,6 +115,25 @@ git log --format=SOMEWORD          # fails — git rejects plain words as format
 
 Equivalent to `--pretty=format:SOMEWORD`.
 
+### Detecting git repos — worktrees use a file, not a directory
+
+`openDirAbsolute` on `<path>/.git` fails silently in git worktrees because `.git` is a plain text file there (containing `gitdir: /path/to/real/.git`), not a directory. Any repo check that relies on opening `.git` as a directory will return false for worktrees.
+
+Correct approach — use git itself:
+
+```zig
+const result = try std.process.run(gpa, io, .{
+    .argv = &[_][]const u8{ "git", "-C", repo_path, "rev-parse", "--git-dir" },
+    .stdout_limit = std.Io.Limit.limited(256),
+    .stderr_limit = std.Io.Limit.limited(256),
+});
+defer gpa.free(result.stdout);
+defer gpa.free(result.stderr);
+const is_repo = switch (result.term) { .exited => |c| c == 0, else => false };
+```
+
+This returns exit 0 for normal repos, worktrees, submodules, and bare repos with a working tree.
+
 ## What we're not sure about
 
 - Whether `std.process.Environ.Map.clone` exists and works as documented — it was planned but not exercised in Plowman (switched to `/usr/bin/env` trick instead)
