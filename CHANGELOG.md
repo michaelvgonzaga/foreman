@@ -1,0 +1,51 @@
+# Changelog
+
+## v1.4.0 — 2026-06-28
+
+### New commands
+- `/first-run` — guided first-time setup wizard: dependency checks, GitHub auth, per-machine automation hooks, project restore, memory sync, and plugin install
+- `/release` — cut a GitHub release for any project (CHANGELOG, tag, push, publish GitHub release)
+- `/setup-automation` — install per-machine auto-sync and auto-push Stop hooks into `~/.claude/settings.json`; portable across usernames, idempotent
+- `/sync-memory` — back up and restore Claude Code memory across machines via a private GitHub repo
+- `/restore-projects` — pull existing Foreman projects from GitHub into a fresh workspace (clone missing, fast-forward existing, push nothing)
+
+### Improvements
+- **Token efficiency pass** — net −348 lines across all 27 commands, skills, and templates; removed preamble boilerplate, redundant rules sections, over-specified examples, and placeholder content
+- **Token discipline guardrail** — CLAUDE.md now enforces rules for keeping framework files lean when making future edits (earn every token, one location per rule, no rationale commentary, no placeholders)
+- **Proportional effort guardrail** — trivial/standard/full-build tiers with appropriate verification; `/verify-output` (second-agent critic) only fires when the work warrants it
+- Auto-push hooks hardened for concurrent Claude sessions — `pull --rebase` fallback prevents push rejection when another session pushed first
+- Self-update and release-notes skills wired into CLAUDE.md session-start guardrails for automatic behavior
+- `_projects.md` is now git-ignored local state seeded from template at session start (never committed to the framework repo)
+
+### Docs
+- Foreman reframed: "a foreman directs Claude Code" — not an AI
+- README overhauled: identity, who it's for, prerequisites (added `gh`), getting started, commands table
+- GitHub repo description updated
+
+### Fixes
+- `.gitignore`: inline comments moved to their own lines (were silently ignored by git)
+- `mjolnir.md` gitignored and scrubbed from git history via `git filter-repo` (private project command was accidentally public)
+
+---
+
+## v1.3.1 — 2026-06-28
+
+- Launcher now `git clone`s the workspace (was `cp -r`) so `/self-update` works correctly
+- Tag and tap formula aligned with `main`
+
+## v1.3.0 — 2026-06-28
+
+- Auto-release notes skill; GitHub repo skill wired into `/new-project` and `/absorb`
+- Auto-commit and auto-push Stop hooks for project repos
+
+## v1.2.0
+
+- Plugin system: `/export-plugin`, `/install-plugin`, public/private plugin model
+
+## v1.1.0
+
+- `/absorb` command — import any file, repo, or project into Foreman
+
+## v1.0.0
+
+- Initial release: 3-layer framework, `/new-project`, `/verify-output`, self-update skill
