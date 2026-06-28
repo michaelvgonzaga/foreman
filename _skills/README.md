@@ -52,3 +52,4 @@ Create a file: `_skills/[skill-name].md`
 | [two-tier-classification.md](two-tier-classification.md) | Routing input to specialist handlers via a fast classification call before full processing | High |
 | [self-update.md](self-update.md) | Checking for Foreman upstream updates at session start and applying them safely | High |
 | [release-notes.md](release-notes.md) | Auto-generating categorized release notes from git commits for Foreman or any project | High |
+| [github-repo.md](github-repo.md) | Creating a public or private GitHub repo and wiring it as the git remote in one step | High |

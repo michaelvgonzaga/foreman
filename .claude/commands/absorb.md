@@ -54,7 +54,11 @@ Stop here if already absorbed.
 Ask the user two questions (one at a time):
 
 1. **Name:** "What should this project be called inside Foreman? (lowercase, no spaces — e.g. `shopify-theme`)"
-2. **Visibility:** "Public plugin (shared via `plugins.public.yml`) or private project (git-ignored, your own repo)?"
+2. **Visibility:** "Public or private?"
+   - **Public project** — pushed to a public GitHub repo, anyone can see it
+   - **Private project** — pushed to a private GitHub repo, only you
+   - **Public plugin** — extends Foreman, listed in `plugins.public.yml`, anyone can install via `/setup`
+   - **Private plugin** — extends your Foreman privately, listed in `plugins.local.yml`
 
 Then copy the source. Use `rsync` to exclude dependency dirs and any existing `.git` history — the absorbed project gets a fresh git history inside Foreman:
 
@@ -110,6 +114,8 @@ Then:
 git -C <foreman-root>/<name> add .
 git -C <foreman-root>/<name> commit -m "Initial import"
 ```
+
+If the user chose **public or private project**, apply the `github-repo` skill (`_skills/github-repo.md`) to create the GitHub repo and wire up the remote now.
 
 **If public plugin:** copy into `.claude/commands/` (if it's a runnable command) or `_skills/` (if it's a playbook/pattern). Ask if unclear.
 
