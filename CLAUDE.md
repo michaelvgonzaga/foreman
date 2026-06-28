@@ -34,6 +34,7 @@ Each project has its own `CLAUDE.md`, `spec.md`, and knowledge directory that im
 ## Guardrails
 
 ### Always do (autopilot)
+- **At the start of every session:** apply `_skills/self-update.md` — silently fetch origin, compare with local, and surface any incoming changes before doing anything else. If fetch fails (no network), skip silently and continue.
 - Read the project's `CLAUDE.md` and `spec.md` before touching any code or files
 - Run `/verify-output` before marking any task complete — Claude runs this, not the user
 - Document key decisions in the project's `CLAUDE.md` decision log (not spec.md)
@@ -41,6 +42,7 @@ Each project has its own `CLAUDE.md`, `spec.md`, and knowledge directory that im
 - Update `_knowledgebase/` and `_skills/` when candidates surface during `/verify-output` Step 6
 - Prefer editing existing files over creating new ones
 - Keep changes small and reversible
+- **After committing changes to any project:** apply `_skills/release-notes.md` — check if commits have accumulated since the last tag and, if so, remind the user: "You have unreleased changes in `<project>` since `<last-tag>`. Run `/brew-release` when ready to publish." Do not generate notes unprompted — just surface the reminder.
 
 ### Ask first (consequences)
 - Any action that costs money — API calls, cloud deploys, paid services

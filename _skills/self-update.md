@@ -51,7 +51,7 @@ If `--ff-only` fails (diverged) — stop, show the user the divergence, do not f
 
 ## When to use it
 
-- At the top of every session when working inside Foreman
+- **Automatically at the start of every session** — wired into `CLAUDE.md` guardrails, no manual trigger needed
 - Whenever the user says "check for updates", "is foreman current", "update foreman", or similar
 - Before running `/new-project` or `/absorb` — stale commands can produce outdated behavior
 
