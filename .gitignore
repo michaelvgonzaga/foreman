@@ -7,6 +7,8 @@ plugins.local.yml
 /_projects.md
 # First-run marker — created by the launcher on fresh installs, deleted by /first-run on completion
 /.first-run
+# Private project commands — add per-project entries here to keep them out of the public repo
+/.claude/commands/mjolnir.md
 
 # Project directories are each their own private repos — auto-excluded by pattern.
 # Framework dirs (_skills/, _knowledgebase/, _templates/) and hidden dirs (.claude/)
