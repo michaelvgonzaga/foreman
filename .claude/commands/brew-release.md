@@ -84,19 +84,41 @@ git -C <tap-path> commit -m "Release v<version>"
 git -C <tap-path> push
 ```
 
-## Step 7 — Confirm
+## Step 7 — Create GitHub release
+
+Ask the user: **"Any release notes to add? (describe what changed, or press enter to skip)"**
+
+Then create the GitHub release:
+
+```bash
+gh release create v<version> \
+  --repo <owner>/<repo> \
+  --title "v<version> — <one line summary>" \
+  --notes "<release notes from user, or auto-generated summary of commits since last tag>"
+```
+
+To auto-generate commit summary if user skips:
+
+```bash
+git -C <project-path> log <previous-tag>..v<version> --oneline
+```
+
+Use those commits as the release notes body under a `## Changes` heading.
+
+## Step 8 — Confirm
 
 Print a summary:
 
 ```
 Released v<version>
 
-  Project tag:  https://github.com/<owner>/<repo>/releases/tag/v<version>
-  Tap formula:  updated and pushed
+  GitHub release:  https://github.com/<owner>/<repo>/releases/tag/v<version>
+  Tap formula:     updated and pushed
 
-Install with:
-  brew tap <owner>/<tap-short-name>
-  brew install <name>
+Install / upgrade:
+  brew tap <owner>/<tap-short-name>   ← first time only
+  brew install <name>                 ← fresh install
+  brew upgrade <name>                 ← existing install
 ```
 
 Where `<tap-short-name>` is the tap name without `homebrew-` prefix (e.g. `homebrew-myapp` → `myapp`).
