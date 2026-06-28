@@ -35,7 +35,12 @@ git -C <project-path> push origin v<version>
 
 ## Step 4 — Compute SHA256
 
+Get owner/repo (needed to build the tarball URL):
+
 ```bash
+# With foreman-tools (preferred — parses SSH and HTTPS automatically):
+foreman-tools repo-info <project-path>
+# Fallback:
 git -C <project-path> remote get-url origin
 # SSH format:  git@github.com:owner/repo.git  → owner/repo
 # HTTPS format: https://github.com/owner/repo.git → owner/repo

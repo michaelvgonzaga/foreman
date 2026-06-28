@@ -88,7 +88,12 @@ git -C <project-path> push origin v<version>
 
 ## Step 8 — Create GitHub release
 
+Get owner/repo (needed for `gh release create --repo`):
+
 ```bash
+# With foreman-tools (preferred — parses SSH and HTTPS automatically):
+foreman-tools repo-info <project-path>
+# Fallback:
 git -C <project-path> remote get-url origin
 # SSH:   git@github.com:owner/repo.git  → owner/repo
 # HTTPS: https://github.com/owner/repo.git → owner/repo

@@ -37,6 +37,14 @@ If the repo name is already taken under that account, stop and tell the user —
 
 ### Step 4 — Confirm
 
+Get the canonical URL:
+
+```bash
+# With foreman-tools (preferred):
+foreman-tools repo-info <project-path>
+# Fallback: construct from owner + repo-name used in Step 3
+```
+
 Print:
 
 ```
