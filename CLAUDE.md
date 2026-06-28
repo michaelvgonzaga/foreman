@@ -91,14 +91,22 @@ foreman/
     └── ...
 ```
 
+## Four categories of work
+
+**Projects** — things you build with Foreman's help. Each is its own git repo inside `foreman/`, git-ignored by pattern so it never leaks into the framework repo.
+- `private project` — pushed to a private GitHub repo; only you can access it
+- `public project` — pushed to a public GitHub repo; anyone can clone or use it
+
+**Plugins** — things that extend Foreman itself: new commands, skills, or knowledgebase entries.
+- `private plugin` — listed in `plugins.local.yml` (git-ignored); only installed on your machine
+- `public plugin` — listed in `plugins.public.yml` (tracked); anyone who runs `/setup` can install it
+
 ## Distribution model
 
-**Foreman is public. Projects are private.**
-
-- The `foreman` repo contains only the framework — templates, skills, knowledgebase, commands
-- Project directories (`mjolnir/`, etc.) are git-ignored by pattern: any root-level dir not starting with `_` or `.` is excluded automatically
-- Each project is its own independent git repo (`git init` inside the project dir) pushed to a private GitHub repo
-- Someone who clones `foreman` gets the framework; projects are never exposed
+- The `foreman` repo contains only the framework — templates, skills, knowledgebase, commands, and public plugin list
+- Project directories are git-ignored by pattern: any root-level dir not starting with `_` or `.` is excluded automatically
+- Each project is its own independent git repo (`git init -b main` inside the project dir)
+- Someone who clones `foreman` gets the framework only; projects and private plugins are never exposed
 - No git submodules — each project is fully independent, zero wiring required
 - Private plugins can be shared as zip files: `/export-plugin <name>` → send zip → recipient runs `/install-plugin <path>`
 

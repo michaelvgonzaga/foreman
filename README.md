@@ -151,9 +151,16 @@ To share a private plugin with someone: run `/export-plugin <name>` → send the
 
 ---
 
-## The framework is public. Your projects stay private.
+## Four categories
 
-Everything in this repo is the framework — templates, commands, skills, knowledgebase. Project directories are git-ignored by design; each lives in its own private repo.
+| Type | Visibility | How |
+|------|-----------|-----|
+| Project | Private | Own private git repo, git-ignored inside Foreman |
+| Project | Public | Own public git repo, git-ignored inside Foreman |
+| Plugin | Private | Listed in `plugins.local.yml` (git-ignored), install via `/setup` |
+| Plugin | Public | Listed in `plugins.public.yml` (tracked), anyone can install via `/setup` |
+
+**Projects** are things you build. **Plugins** extend Foreman itself — new commands, skills, or knowledgebase entries. Both can be public or private.
 
 ---
 
