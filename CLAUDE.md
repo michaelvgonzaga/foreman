@@ -32,6 +32,7 @@ Run `/verify-output` before marking any output complete — self-review + critic
 
 ### Always do (autopilot)
 - **At the start of every session:** if `.first-run` exists in the workspace root, run `/first-run` immediately and complete it before doing anything else.
+- **At the start of every session:** *(once `compat-check` is in binary — M31)* run `foreman-tools compat-check` BEFORE doctor. If `ok: false`, surface the `advice` string and each drifted tool's `rollback` command, then pause — do not proceed until user confirms or rolls back. Zero Claude tokens; the advice is pre-computed Zig output.
 - **At the start of every session:** run `foreman-tools doctor` via Bash. If it fails (binary missing), prompt once: "`foreman-tools` not found — run `brew install michaelvgonzaga/foreman/foreman-tools`." If it succeeds, use the JSON to check `claude`, `git`, and `gh`. Then immediately verify the binary is current by running `foreman-tools cache-fetch /dev/null x 2>&1`— if the output contains "unknown subcommand" instead of JSON, surface once: "Homebrew binary is stale (missing cache + context subcommands). Run `/brew-release` to fix." and skip all `cache-fetch`, `cache-store`, `cache-check`, `outline`, `context-*`, `yaml-query`, and `deps` calls for this session.
 - **At the start of every session:** apply `_skills/self-update.md` — silently fetch origin, compare with local, and surface any incoming changes. If fetch fails (no network), skip silently.
 - **At the start of every session:** if binary is current (not stale per above), check `~/.foreman/profile.json` via `foreman-tools cache-fetch ~/.foreman/profile.json device` — if `hit: true`, load the stored hardware/tools/optimal profile and skip tool-detection shell calls. If miss, continue normally.
@@ -39,6 +40,7 @@ Run `/verify-output` before marking any output complete — self-review + critic
   | Need | Subcommand |
   |---|---|
   | session deps (claude/git/gh present) | `foreman-tools doctor` |
+  | tool version drift check vs baseline — surfaces rollback advice if anything changed *(not yet in binary — implement M31 next)* | `foreman-tools compat-check` |
   | workspace up-to-date vs origin | `foreman-tools status <workspace>` |
   | incoming commits + files changed | `foreman-tools changes-preview <repo>` |
   | commits since a tag (for release notes) | `foreman-tools commits <repo> [tag]` |

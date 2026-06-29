@@ -3,9 +3,9 @@
 ## Active Work — pick up here after any restart
 
 **Wave:** 1 — Token Savings  
-**Current subcommand:** `run-tests` (W1-A) → spec written in `foreman-tools/spec.md` (M28) and schema in `foreman-tools/api-schema.md`. **Next step: implement in `foreman-tools/src/root.zig` + `src/main.zig`.**  
-**Queued:** `build` (W1-B) — spec and schema also written, implement after `run-tests`.  
-**Repo:** `foreman-tools/` is a separate git repo — check its own CHANGELOG for version state.
+**Current subcommand:** `compat-check` (W1-A, NEW priority) — spec locked in `foreman-tools/spec.md` (M31). **Next step: implement in `foreman-tools/src/root.zig` + `src/main.zig`.**  
+**Queued:** `run-tests` (W1-B), `build` (W1-C) — specs and schemas written.  
+**Repo:** `foreman-tools/` is a separate git repo — check its own CHANGELOG for version state (current: v0.29.1).
 
 ---
 
@@ -65,7 +65,18 @@ Modules 1–4, 9–11, 15–21, 23–29 not yet started.
 
 Each of these eliminates multi-step Claude-side reasoning loops. One subcommand replaces detect + run + parse + read.
 
-#### W1-A: `run-tests <path>` — Module 18 M1–M3
+#### W1-A: `compat-check` — Module 31 M1–M3 ← IMPLEMENT NEXT
+**Problem:** When Homebrew, Zig, git, or other tools auto-update, Foreman can silently break — wrong JSON output, build failures, subcommand errors — and the user has no warning until something goes wrong mid-session.  
+**Fix:** A pure Zig, zero-token, ~20ms guard that runs before the first user prompt. Compares current tool versions to a stored baseline. If drift is detected, surfaces rollback advice and pauses — the user knows exactly what changed, why it might break, and how to roll back before they type a single character.  
+**Output:** `{ ok: bool, baselineAge: "2026-06-30", drifted: [{tool, was, now, risk, rollback}], advice: string }`  
+**Milestones:**
+- M1: `compat-check --baseline` — snapshot current tool versions to `~/.foreman/compat-baseline.json` (zig, git, gh, homebrew, node, python3, foreman_tools, os, arch)
+- M2: `compat-check` (default) — compare current vs baseline; return `{ ok, drifted }` with rollback commands for each drifted tool
+- M3: `compat-check --update-baseline` — after user confirms drift is safe, update baseline to current versions; push verified combination to `foreman-env` repo (opt-in, same consent flow as device-scan)
+
+**Session-start rule (add after M1 is implemented):** Run `foreman-tools compat-check` before doctor. If `ok: false`, surface the `advice` string and all `rollback` commands, then pause — do not proceed with the session until the user confirms or rolls back.
+
+#### W1-C: `run-tests <path>` — Module 18 M1–M3
 **Saves:** Test framework detection + command run + raw output parsing + failure reading.  
 **Output:** `{ framework, passed, failed, errors: [{file, line, message}], duration }`  
 **Milestones:**
@@ -73,7 +84,7 @@ Each of these eliminates multi-step Claude-side reasoning loops. One subcommand 
 - M2: Run tests, capture exit code + stdout/stderr
 - M3: Parse failures into structured `{file, line, message}` per framework
 
-#### W1-B: `build <path>` — Module 17 M1–M4
+#### W1-D: `build <path>` — Module 17 M1–M4
 **Saves:** Build system detection + command run + compiler error parsing.  
 **Output:** `{ tool, success, errors: [{file, line, col, message, severity}], warnings, duration }`  
 **Milestones:**
@@ -82,7 +93,7 @@ Each of these eliminates multi-step Claude-side reasoning loops. One subcommand 
 - M3: Run build, capture output
 - M4: Parse errors/warnings into structured JSON per toolchain
 
-#### W1-C: `env-inspect <path>` — Module 4 M1–M4
+#### W1-E: `env-inspect <path>` — Module 4 M1–M4
 **Saves:** Multiple `which`, `--version`, and manifest reads to discover project stack.  
 **Output:** `{ languages: [{name, version, present}], packageManagers, missing, envVars }`  
 **Milestones:**
@@ -91,14 +102,14 @@ Each of these eliminates multi-step Claude-side reasoning loops. One subcommand 
 - M3: Package manager checks (npm, pip, cargo, brew)
 - M4: Missing dependency report
 
-#### W1-D: `symbol-find <path> <name>` — Module 6 M2
+#### W1-F: `symbol-find <path> <name>` — Module 6 M2
 **Saves:** Claude running grep + reading N files to locate a symbol.  
 **Output:** `{ definition: {file, line}, references: [{file, line}], kind }`  
 **Milestones:**
 - M1: Definition lookup (function, class, struct, const)
 - M2: Reference listing across project
 
-#### W1-E: `secret-scan <path>` — Module 19 M1
+#### W1-G: `secret-scan <path>` — Module 19 M1
 **Saves:** Manual inspection + reading files to check for accidental secrets.  
 **Output:** `{ findings: [{file, line, pattern, severity}] }`  
 **Milestones:**
@@ -137,6 +148,7 @@ Safe shell execution: timeout, retry, exit-code parse, destructive-command check
 **Fix M1 — Local profile:** `foreman-tools device-scan` snapshots hardware + tools + optimal settings → `~/.foreman/profile.json`. Claude reads this at session start (cached by `cache-fetch`) instead of running any shell commands.  
 **Fix M2 — Community profile (`foreman-env` repo):** Public repo stores one JSON per hardware profile (e.g. `apple_m3_pro_36gb_macos_arm64.json`). Contains hardware specs and optimal settings only — **no paths, no usernames, no personal data**. When a new device is profiled, Foreman shows the user exactly what will be shared and asks for consent before pushing. A user on an M3 Pro gets pre-validated optimal flags on day 1 without burning any tokens to discover them.  
 **Output:** `{ profile_id, hardware: {cpu, cores, ram_gb, os, arch}, tools: {zig/git/gh/…}, optimal: {zig_build_flags, bottleneck, git_spawn_ms_estimate}, shell, scanned_at }`  
+**Compat ledger in `foreman-env`:** When `compat-check --update-baseline` runs, Foreman pushes the verified tool-version combination to `foreman-env` alongside the hardware profile — so any future install with the same hardware can skip the version-discovery phase entirely. Format: `{ profile_id, compat_matrix: [{ tools: {zig, git, gh, homebrew, ...}, status: "verified", tested_at }] }`. Same consent + no-PII rules apply.  
 **Consent rule:** Foreman never pushes to `foreman-env` without explicit user confirmation. Shows a diff of what will be shared. Community benefit is opt-in, not default.
 
 ---
