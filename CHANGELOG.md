@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.25.0 — 2026-06-30
+
+### New
+- `foreman-tools outline <abs-file-path>` — structural outline of any source file: function/class/struct/enum names with line numbers; covers Go, Python, JS, TS, Rust, Zig, Ruby, Java, Kotlin, C#, Swift, PHP; use instead of reading the full file when you only need to understand its structure or find a specific symbol
+
+---
+
 ## v1.24.0 — 2026-06-29
 
 ### New
