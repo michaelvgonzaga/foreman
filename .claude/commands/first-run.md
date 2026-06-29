@@ -5,6 +5,9 @@ First-run wizard. Complete each step in order before moving to the next.
 Check all required tools:
 
 ```bash
+# With foreman-tools (preferred — claude, git, gh in one call):
+foreman-tools doctor
+# Fallback:
 echo "claude: $(command -v claude >/dev/null 2>&1 && echo OK || echo MISSING)"
 echo "git:    $(command -v git >/dev/null 2>&1 && echo OK || echo MISSING)"
 echo "gh:     $(command -v gh >/dev/null 2>&1 && echo OK || echo MISSING)"
