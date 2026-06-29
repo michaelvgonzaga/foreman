@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.24.0 — 2026-06-29
+
+### New
+- `foreman-tools yaml-query <file-path> <dot-path>` — extract a value from any YAML file (GitHub Actions, docker-compose, k8s, Rails config); same shape as `json-query` and `toml-query`; supports nested mappings and sequence indexing (`steps.0.uses`); use before reading the whole file when you only need one value
+
+---
+
 ## v1.23.0 — 2026-06-29
 
 ### New

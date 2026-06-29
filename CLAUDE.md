@@ -69,6 +69,7 @@ Run `/verify-output` before marking any output complete — self-review + critic
   | Relevance ranking — score and rank files by query relevance so Claude reads most-important files first (top 15, content + name match) | `foreman-tools context-rank <abs-root-path> <query>` |
   | Changed files with unified diff content — orient to what changed without reading raw git output (first 8 files, 100 lines/file) | `foreman-tools context-changed <repo-path> [ref]` |
   | Evidence packets — relevant excerpts from a file without reading the whole thing (case-insensitive, ±10 lines context, merged windows, up to 8 chunks) | `foreman-tools context-evidence <abs-file-path> <pattern>` |
+  | extract a value from a YAML file (GitHub Actions, docker-compose, k8s, Rails) | `foreman-tools yaml-query <file-path> <dot-path>` |
 - **At the start of every session:** if `_projects.md` does not exist, create it by copying `_templates/projects.md`. `_projects.md` is git-ignored **local** state (your private project index) — it is never tracked by or committed to the framework repo, so editing it never makes the workspace dirty or blocks self-update.
 - Run `/verify-output` before marking any task complete — Claude runs this, not the user. Skip for trivial tasks (see **Scale to task size** below).
 - Document key decisions in the project's `CLAUDE.md` decision log (not spec.md)
