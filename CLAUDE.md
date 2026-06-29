@@ -45,7 +45,8 @@ Run `/verify-output` before marking any output complete — self-review + critic
   | latest tag, next version, dirty state | `foreman-tools release-info <repo>` |
   | remote owner/repo/url | `foreman-tools repo-info <repo>` |
   | check if a tag exists | `foreman-tools tag-exists <repo> <tag>` |
-  | project structure (framework, key files) | `foreman-tools scan <path>` |
+  | project structure, entry point, file inventory (use instead of find/ls) | `foreman-tools scan <path>` |
+  | structural diff of two directories (use instead of diff -r or manual comparison) | `foreman-tools diff-dirs <path1> <path2>` |
   | search for a string across multiple files (use instead of bash grep/rg) | `foreman-tools grep <root-path> <pattern> [ext]` |
   | find files by name/glob (use instead of bash find) | `foreman-tools find-files <root-path> <glob>` |
   | extract a value from a JSON file (use instead of reading the whole file) | `foreman-tools json-query <file-path> <dot-path>` |

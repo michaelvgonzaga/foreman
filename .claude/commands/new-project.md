@@ -27,7 +27,7 @@ This applies across any domain — software, legal, healthcare, trades, retail, 
 1. **Confirm the project name.** Ask: "What do you want to call this project? This becomes the directory name — keep it short, lowercase, no spaces (e.g., `injury-intake`, `plumbing-scheduler`, `lease-drafter`)."
 
 2. **Check the knowledgebase and skills before writing anything:**
-   - If the user provides an existing codebase path, run `foreman-tools scan <path>` first — it returns framework, key files, dep count, and directory map in one call instead of manual browsing.
+   - If the user provides an existing codebase path, run `foreman-tools scan <path>` first — it returns framework, key files, dep count, directory map, entry point, and a file inventory (sorted largest-first). Use `entryPoint` and the top `files` entries to prioritize reads instead of running `find` or `ls`.
    - Read `_knowledgebase/README.md` and any relevant files before writing the spec.
    - Read `_skills/README.md` — identify which playbooks apply:
      - If the domain is unfamiliar: read and apply `_skills/domain-research.md`

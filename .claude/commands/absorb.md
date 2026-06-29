@@ -83,7 +83,7 @@ foreman-tools scan <foreman-root>/<name>
 # Fallback: ls -la <foreman-root>/<name>
 ```
 
-The JSON gives you: `framework` (tech stack), `keyFiles` (manifest/config files present), `depCount` (dependency scale), `dirMap` (directory tree). Use it as your map before reading individual files.
+The JSON gives you: `framework` (tech stack), `keyFiles` (manifest/config files present), `depCount` (dependency scale), `dirMap` (directory tree), `entryPoint` (detected main file), `files` (flat file inventory sorted largest-first, capped at 500), `fileCount` (total). Use `entryPoint` and the top entries in `files` to decide which files to read first — do not `find` or `ls` when the scan result is available.
 
 Read everything. Do not skim.
 

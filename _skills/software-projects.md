@@ -5,6 +5,16 @@
 
 ## The pattern
 
+### Read the project before writing anything
+
+If there is an existing codebase at a known path, scan it first:
+
+```bash
+foreman-tools scan <path>
+```
+
+Use `entryPoint` to find the main file, `files` (sorted largest-first) to decide read order — largest source files are usually the most important. Use `framework` to confirm the tech stack before asking the user. Skip `find` / `ls` chains when the scan result covers it.
+
 ### Stack decisions to make before writing code
 - **Runtime**: what runs this? (Python, Node, browser, mobile, etc.)
 - **Data layer**: where does data live and how persistent does it need to be? Start with the simplest option (SQLite, local file, Supabase) — don't reach for Postgres until you need it
