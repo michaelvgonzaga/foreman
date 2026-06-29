@@ -58,10 +58,12 @@ sleep 5 && curl -sL https://github.com/<owner>/<repo>/archive/refs/tags/v<versio
 
 ## Step 5 — Update the formula
 
-Find the formula file in the tap repo:
+Read the current formula state to know what to change:
 
 ```bash
-ls <tap-path>/Formula/*.rb
+# With foreman-tools (preferred — parses url, sha256, version in one call):
+foreman-tools formula-info <tap-path> <formula-name>
+# Fallback: read the .rb file directly
 ```
 
 Update three fields in the formula:

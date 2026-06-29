@@ -58,6 +58,7 @@ Run `/verify-output` before marking any output complete — self-review + critic
   | stack trace in context — pipe it here to get structured file:line:col:fn JSON instead of reading it manually | `foreman-tools parse-stack` (reads stdin) |
   | GitHub repos with isForeman + isLocal flags (use instead of gh repo list + per-repo API) | `foreman-tools list-projects <foreman-root>` |
   | GitHub tarball SHA256 with retry (use in /brew-release instead of curl \| shasum) | `foreman-tools tarball-sha <owner> <repo> <tag>` |
+  | Homebrew formula fields — url, sha256, version (use in /brew-release instead of reading .rb) | `foreman-tools formula-info <tap-path> <formula-name>` |
 - **At the start of every session:** if `_projects.md` does not exist, create it by copying `_templates/projects.md`. `_projects.md` is git-ignored **local** state (your private project index) — it is never tracked by or committed to the framework repo, so editing it never makes the workspace dirty or blocks self-update.
 - Run `/verify-output` before marking any task complete — Claude runs this, not the user. Skip for trivial tasks (see **Scale to task size** below).
 - Document key decisions in the project's `CLAUDE.md` decision log (not spec.md)
