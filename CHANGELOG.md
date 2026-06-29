@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.23.0 — 2026-06-29
+
+### New
+- `foreman-tools context-rank <abs-root-path> <query>` — relevance ranking: score and rank project files by query relevance so Claude reads the most important files first; top 15 results, composite score (content hits + name match + file kind); use before reading files to determine read order
+
+### Fixed
+- `foreman-tools scan` (and all subcommands using scan) now excludes `.DS_Store`, `Thumbs.db`, and binary files (images, fonts, audio, video, archives, compiled objects)
+
+---
+
 ## v1.22.0 — 2026-06-29
 
 ### New
