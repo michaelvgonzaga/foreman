@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.21.0 — 2026-06-29
+
+### New
+- `foreman-tools context-evidence <abs-file-path> <pattern>` — evidence packets: relevant excerpts from a file without reading the whole thing; case-insensitive literal search, ±10 lines context per match, overlapping windows merged, up to 8 chunks; use instead of reading a full file when you only need to answer a question about a specific function, rule, or keyword
+
+---
+
 ## v1.20.0 — 2026-06-29
 
 ### New

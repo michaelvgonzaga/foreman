@@ -66,6 +66,7 @@ Run `/verify-output` before marking any output complete — self-review + critic
   | Store extracted JSON keyed to a file (stdin → cache, auto-invalidates on change) | `echo '<json>' \| foreman-tools cache-store <abs-file-path> <sub-key>` |
   | Retrieve cached value — `hit: true` means file unchanged, skip the read | `foreman-tools cache-fetch <abs-file-path> <sub-key>` |
   | Compact project summary (structure + top 10 files by size) — use instead of `scan` when only structure is needed, not the full file inventory | `foreman-tools context-scan <abs-path>` |
+  | Evidence packets — relevant excerpts from a file without reading the whole thing (case-insensitive, ±10 lines context, merged windows, up to 8 chunks) | `foreman-tools context-evidence <abs-file-path> <pattern>` |
 - **At the start of every session:** if `_projects.md` does not exist, create it by copying `_templates/projects.md`. `_projects.md` is git-ignored **local** state (your private project index) — it is never tracked by or committed to the framework repo, so editing it never makes the workspace dirty or blocks self-update.
 - Run `/verify-output` before marking any task complete — Claude runs this, not the user. Skip for trivial tasks (see **Scale to task size** below).
 - Document key decisions in the project's `CLAUDE.md` decision log (not spec.md)
