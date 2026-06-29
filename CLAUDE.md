@@ -60,6 +60,7 @@ Run `/verify-output` before marking any output complete — self-review + critic
   | GitHub tarball SHA256 with retry (use in /brew-release instead of curl \| shasum) | `foreman-tools tarball-sha <owner> <repo> <tag>` |
   | Homebrew formula fields — url, sha256, version (use in /brew-release instead of reading .rb) | `foreman-tools formula-info <tap-path> <formula-name>` |
   | Claude Code Stop hooks present check (use in /setup-automation and /first-run instead of jq) | `foreman-tools validate-hooks` |
+  | GitHub release creation via notes file (use in /release and /brew-release instead of --notes "...") | `foreman-tools gh-release <owner> <repo> <tag> <title> <notes-file>` |
 - **At the start of every session:** if `_projects.md` does not exist, create it by copying `_templates/projects.md`. `_projects.md` is git-ignored **local** state (your private project index) — it is never tracked by or committed to the framework repo, so editing it never makes the workspace dirty or blocks self-update.
 - Run `/verify-output` before marking any task complete — Claude runs this, not the user. Skip for trivial tasks (see **Scale to task size** below).
 - Document key decisions in the project's `CLAUDE.md` decision log (not spec.md)

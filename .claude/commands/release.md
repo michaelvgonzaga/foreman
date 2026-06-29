@@ -99,13 +99,17 @@ git -C <project-path> remote get-url origin
 # HTTPS: https://github.com/owner/repo.git → owner/repo
 ```
 
-Then create the release:
+Then create the release. Write the confirmed notes to a temp file first, then:
 
 ```bash
+# With foreman-tools (preferred — avoids heredoc/quote escaping):
+# Write notes to $NOTES_FILE, then:
+foreman-tools gh-release <owner> <repo> v<version> "v<version> — <summary>" $NOTES_FILE
+# Fallback:
 gh release create v<version> \
   --repo <owner>/<repo> \
   --title "v<version> — <one-line summary from release notes>" \
-  --notes "<confirmed release notes>"
+  --notes-file $NOTES_FILE
 ```
 
 ## Step 9 — Summary

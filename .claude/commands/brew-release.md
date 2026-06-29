@@ -85,13 +85,17 @@ git -C <tap-path> push
 
 Apply the `release-notes` skill (`_skills/release-notes.md`) to auto-generate categorized notes from commits since the previous tag. Then ask the user: **"Here are the auto-generated release notes — any additions or changes before I publish?"**
 
-Wait for confirmation, then create the GitHub release:
+Wait for confirmation, then write the notes to a temp file and create the release:
 
 ```bash
+# With foreman-tools (preferred — avoids heredoc/quote escaping):
+# Write notes to $NOTES_FILE, then:
+foreman-tools gh-release <owner> <repo> v<version> "v<version> — <summary>" $NOTES_FILE
+# Fallback:
 gh release create v<version> \
   --repo <owner>/<repo> \
   --title "v<version> — <one line summary from release-notes skill>" \
-  --notes "<release notes from release-notes skill, edited by user if needed>"
+  --notes-file $NOTES_FILE
 ```
 
 ## Step 8 — Confirm
