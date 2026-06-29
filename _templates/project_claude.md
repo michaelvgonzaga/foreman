@@ -19,7 +19,8 @@ See `spec.md` for the full spec. Key facts:
 ## Guardrails (project-specific)
 
 ### Always do
-- Read `spec.md` before any implementation work
+- Read `spec.md` and `ROADMAP.md` before any implementation work
+- After completing any step: update `ROADMAP.md` (check the step done, update milestone status) before asking to proceed
 - Run `/verify-output` before marking tasks complete
 - Keep changes scoped to v1 — do not add features not in the spec
 - Before making domain-specific decisions: read `_knowledgebase/README.md` to find relevant files, then read those files

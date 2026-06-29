@@ -33,6 +33,7 @@ Run `/verify-output` before marking any output complete — self-review + critic
 ### Always do (autopilot)
 - **At the start of every session:** if `.first-run` exists in the workspace root, run `/first-run` immediately and complete it before doing anything else.
 - **At the start of every session:** apply `_skills/self-update.md` — silently fetch origin, compare with local, and surface any incoming changes before doing anything else. If fetch fails (no network), skip silently and continue.
+- **At the start of every session:** check `~/.foreman/profile.json` via `foreman-tools cache-fetch ~/.foreman/profile.json device` — if `hit: true`, load the stored hardware/tools/optimal profile directly and skip all tool-detection shell calls for this session. If miss or file absent, continue normally (doctor fills the gap until `device-scan` is implemented in v0.30.0).
 - **At the start of every session:** run `foreman-tools doctor` via Bash. If it fails (binary missing), prompt once: "`foreman-tools` not found — run `brew install michaelvgonzaga/foreman/foreman-tools` for faster sessions." If it succeeds, use the JSON to check `claude`, `git`, and `gh` without extra shell calls. Then continue.
 - **Before any shell command that reads git data, filesystem state, or project metadata:** use `foreman-tools` — one JSON call beats shell parsing every time. Full subcommand map:
   | Need | Subcommand |
@@ -62,9 +63,9 @@ Run `/verify-output` before marking any output complete — self-review + critic
   | Claude Code Stop hooks present check (use in /setup-automation and /first-run instead of jq) | `foreman-tools validate-hooks` |
   | GitHub release creation via notes file (use in /release and /brew-release instead of --notes "...") | `foreman-tools gh-release <owner> <repo> <tag> <title> <notes-file>` |
   | SHA256 hash of a local file (use before re-reading to detect if file changed) | `foreman-tools file-hash <abs-file-path>` |
-  | Persistent change detection — `changed: false` means skip the read entirely | `foreman-tools cache-check <abs-file-path>` |
-  | Store extracted JSON keyed to a file (stdin → cache, auto-invalidates on change) | `echo '<json>' \| foreman-tools cache-store <abs-file-path> <sub-key>` |
-  | Retrieve cached value — `hit: true` means file unchanged, skip the read | `foreman-tools cache-fetch <abs-file-path> <sub-key>` |
+  | Skip re-reading an unchanged file — `hit: true` means use `value` directly without reading; `hit: false` means read + extract + call cache-store | `foreman-tools cache-fetch <abs-file-path> <sub-key>` |
+  | Store extracted JSON after a cache miss so next call is a hit (stdin → cache, auto-invalidates when file changes) | `echo '<json>' \| foreman-tools cache-store <abs-file-path> <sub-key>` |
+  | Use ONLY when you need to know if a file changed and have no extracted value to store (rare) | `foreman-tools cache-check <abs-file-path>` |
   | Compact project summary (structure + top 10 files by size) — use instead of `scan` when only structure is needed, not the full file inventory | `foreman-tools context-scan <abs-path>` |
   | Relevance ranking — score and rank files by query relevance so Claude reads most-important files first (top 15, content + name match) | `foreman-tools context-rank <abs-root-path> <query>` |
   | Changed files with unified diff content — orient to what changed without reading raw git output (first 8 files, 100 lines/file) | `foreman-tools context-changed <repo-path> [ref]` |
@@ -72,8 +73,13 @@ Run `/verify-output` before marking any output complete — self-review + critic
   | extract a value from a YAML file (GitHub Actions, docker-compose, k8s, Rails) | `foreman-tools yaml-query <file-path> <dot-path>` |
   | structural outline of a source file (function/class/struct names + line numbers) — use instead of reading the full file when you only need to understand its structure | `foreman-tools outline <abs-file-path>` |
   | project dependencies from any package manifest (package.json/Cargo.toml/go.mod/requirements.txt) — use instead of reading the manifest when you only need the dep list | `foreman-tools deps <abs-root-path>` |
+  | run tests + get structured pass/fail/failures (use instead of running the test command and reading raw output) | `foreman-tools run-tests <abs-root-path>` |
+  | detect build system, run build, get structured errors/warnings (use instead of running the build command and parsing raw compiler output) | `foreman-tools build <abs-root-path>` |
+- **Before reading any large project file (spec.md, CLAUDE.md, ROADMAP.md, any source file >2KB):** call `cache-fetch <abs-path> <sub-key>` first — if `hit: true` use `value` and skip the read entirely. If `hit: false`: read the file, extract the key facts as JSON, call `cache-store`. Cache is local disk (`~/.cache/foreman-tools/`), persistent across restarts and power loss, auto-invalidates on file change. Standard sub-keys: `spec.md` → `"milestones"`, `CLAUDE.md` → `"guardrails"`, `ROADMAP.md` → `"state"`, source files → `"outline"`.
+- **At the start of every session, and whenever the user says "next", "continue", or similar:** read `ROADMAP.md` — the "Active Work" section at the top shows exactly where to resume. Do not ask the user what they were doing; the answer is there.
 - **At the start of every session:** if `_projects.md` does not exist, create it by copying `_templates/projects.md`. `_projects.md` is git-ignored **local** state (your private project index) — it is never tracked by or committed to the framework repo, so editing it never makes the workspace dirty or blocks self-update.
 - Run `/verify-output` before marking any task complete — Claude runs this, not the user. Skip for trivial tasks (see **Scale to task size** below).
+- **After completing any milestone step:** update `ROADMAP.md` in that project — check the step done (`[x]`), update the current milestone status — before asking the user to proceed with the next step. Never skip this update.
 - Document key decisions in the project's `CLAUDE.md` decision log (not spec.md)
 - Check `_skills/README.md` for relevant playbooks before starting work in a new domain or project type
 - Update `_knowledgebase/` and `_skills/` when candidates surface during `/verify-output` Step 6

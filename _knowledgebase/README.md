@@ -71,3 +71,5 @@ To re-verify: check the original source, update any outdated content, and update
 | File | Domain | Topic | Last verified |
 |------|--------|-------|---------------|
 | [zig-0.16-io-api.md](zig-0.16-io-api.md) | Zig 0.16 | std.Io file/dir/process/env API — gotchas and correct patterns | 2026-06-29 |
+| [cache-architecture.md](cache-architecture.md) | Foreman/foreman-tools | All 5 caching layers — status, gaps, implementation order | 2026-06-30 |
+| [zig-language-interop.md](zig-language-interop.md) | Foreman/foreman-tools | Zig-native vs. language worker decision tree — when to use Python/Node, no-bloat rule | 2026-06-30 |
