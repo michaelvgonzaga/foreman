@@ -34,7 +34,18 @@ Run `/verify-output` before marking any output complete — self-review + critic
 - **At the start of every session:** if `.first-run` exists in the workspace root, run `/first-run` immediately and complete it before doing anything else.
 - **At the start of every session:** apply `_skills/self-update.md` — silently fetch origin, compare with local, and surface any incoming changes before doing anything else. If fetch fails (no network), skip silently and continue.
 - **At the start of every session:** run `foreman-tools doctor` via Bash. If it fails (binary missing), prompt once: "`foreman-tools` not found — run `brew install michaelvgonzaga/foreman/foreman-tools` for faster sessions." If it succeeds, use the JSON to check `claude`, `git`, and `gh` without extra shell calls. Then continue.
-- **Before any shell command that reads git data, filesystem state, or project metadata:** check if the `foreman-tools` binary has a matching subcommand (`status`, `commits`, `gh-user`, `release-info`, `repo-info`). If yes, run it via Bash instead — never burn tokens reasoning through raw shell output when a JSON blob is available.
+- **Before any shell command that reads git data, filesystem state, or project metadata:** use `foreman-tools` — one JSON call beats shell parsing every time. Full subcommand map:
+  | Need | Subcommand |
+  |---|---|
+  | session deps (claude/git/gh present) | `foreman-tools doctor` |
+  | workspace up-to-date vs origin | `foreman-tools status <workspace>` |
+  | incoming commits + files changed | `foreman-tools changes-preview <repo>` |
+  | commits since a tag (for release notes) | `foreman-tools commits <repo> [tag]` |
+  | GitHub auth + login | `foreman-tools gh-user` |
+  | latest tag, next version, dirty state | `foreman-tools release-info <repo>` |
+  | remote owner/repo/url | `foreman-tools repo-info <repo>` |
+  | check if a tag exists | `foreman-tools tag-exists <repo> <tag>` |
+  | project structure (framework, key files) | `foreman-tools scan <path>` |
 - **At the start of every session:** if `_projects.md` does not exist, create it by copying `_templates/projects.md`. `_projects.md` is git-ignored **local** state (your private project index) — it is never tracked by or committed to the framework repo, so editing it never makes the workspace dirty or blocks self-update.
 - Run `/verify-output` before marking any task complete — Claude runs this, not the user. Skip for trivial tasks (see **Scale to task size** below).
 - Document key decisions in the project's `CLAUDE.md` decision log (not spec.md)
