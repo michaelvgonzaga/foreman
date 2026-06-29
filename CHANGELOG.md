@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.15.0 — 2026-06-29
+
+### Improved
+- `/release` and `/brew-release` now use `foreman-tools gh-release` to create GitHub releases via a notes file, eliminating heredoc/quote escaping issues with multiline release notes
+
+---
+
 ## v1.14.0 — 2026-06-29
 
 ### Improved
