@@ -55,6 +55,7 @@ Run `/verify-output` before marking any output complete — self-review + critic
   | .env* file keys in a project root (keys only, never values) | `foreman-tools env-scan <root-path>` |
   | extract a value from a TOML file (Cargo.toml, pyproject.toml) | `foreman-tools toml-query <file-path> <dot-path>` |
   | stack trace in context — pipe it here to get structured file:line:col:fn JSON instead of reading it manually | `foreman-tools parse-stack` (reads stdin) |
+  | GitHub repos with isForeman + isLocal flags (use instead of gh repo list + per-repo API) | `foreman-tools list-projects <foreman-root>` |
 - **At the start of every session:** if `_projects.md` does not exist, create it by copying `_templates/projects.md`. `_projects.md` is git-ignored **local** state (your private project index) — it is never tracked by or committed to the framework repo, so editing it never makes the workspace dirty or blocks self-update.
 - Run `/verify-output` before marking any task complete — Claude runs this, not the user. Skip for trivial tasks (see **Scale to task size** below).
 - Document key decisions in the project's `CLAUDE.md` decision log (not spec.md)
