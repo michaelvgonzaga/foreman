@@ -1,5 +1,41 @@
 # Changelog
 
+## v1.20.0 — 2026-06-29
+
+### New
+- `foreman-tools context-scan <path>` — compact project summary: framework, entryPoint, fileCount, per-kind counts (source/test/config/docs/other), top 10 files by size, keyFiles, dirs; use instead of `scan` when only structure is needed — one JSON read beats exploring the filesystem
+
+---
+
+## v1.19.0 — 2026-06-29
+
+### New
+- `foreman-tools cache-store <file-path> <sub-key>` (value JSON via stdin) — stores extracted JSON keyed to file hash; auto-invalidates when file changes
+- `foreman-tools cache-fetch <file-path> <sub-key>` — `hit: true` means file unchanged + value cached; skip the read entirely and use `value` directly
+
+---
+
+## v1.18.0 — 2026-06-29
+
+### New
+- `foreman-tools cache-check <abs-path>` — persistent change detection; returns `{sha256, changed, cached}`; stores hash in `~/.cache/foreman-tools/`; `changed: false` means the file is byte-for-byte identical to the last check — skip the read entirely
+
+---
+
+## v1.17.0 — 2026-06-29
+
+### New
+- `foreman-tools file-hash <abs-path>` — returns SHA256 + byte size of any local file; foundation for cache-engine change detection; callers store the hash and compare on next invocation to skip unchanged reads
+
+---
+
+## v1.16.0 — 2026-06-29
+
+### Changed
+- `foreman-tools/api-schema.md` created — locked JSON output contract for all 24 subcommands; field changes now require explicit version bump
+
+---
+
 ## v1.15.0 — 2026-06-29
 
 ### Improved

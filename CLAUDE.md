@@ -61,6 +61,11 @@ Run `/verify-output` before marking any output complete — self-review + critic
   | Homebrew formula fields — url, sha256, version (use in /brew-release instead of reading .rb) | `foreman-tools formula-info <tap-path> <formula-name>` |
   | Claude Code Stop hooks present check (use in /setup-automation and /first-run instead of jq) | `foreman-tools validate-hooks` |
   | GitHub release creation via notes file (use in /release and /brew-release instead of --notes "...") | `foreman-tools gh-release <owner> <repo> <tag> <title> <notes-file>` |
+  | SHA256 hash of a local file (use before re-reading to detect if file changed) | `foreman-tools file-hash <abs-file-path>` |
+  | Persistent change detection — `changed: false` means skip the read entirely | `foreman-tools cache-check <abs-file-path>` |
+  | Store extracted JSON keyed to a file (stdin → cache, auto-invalidates on change) | `echo '<json>' \| foreman-tools cache-store <abs-file-path> <sub-key>` |
+  | Retrieve cached value — `hit: true` means file unchanged, skip the read | `foreman-tools cache-fetch <abs-file-path> <sub-key>` |
+  | Compact project summary (structure + top 10 files by size) — use instead of `scan` when only structure is needed, not the full file inventory | `foreman-tools context-scan <abs-path>` |
 - **At the start of every session:** if `_projects.md` does not exist, create it by copying `_templates/projects.md`. `_projects.md` is git-ignored **local** state (your private project index) — it is never tracked by or committed to the framework repo, so editing it never makes the workspace dirty or blocks self-update.
 - Run `/verify-output` before marking any task complete — Claude runs this, not the user. Skip for trivial tasks (see **Scale to task size** below).
 - Document key decisions in the project's `CLAUDE.md` decision log (not spec.md)
