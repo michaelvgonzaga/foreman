@@ -13,13 +13,20 @@ gh auth status
 
 Determine the foreman root (the directory containing this `_skills/` and `_templates/`). Call it `<foreman-root>`.
 
-## Step 1 — Enumerate candidate repos
+## Step 1 — Enumerate and classify repos
 
-List all repos: `gh repo list --json nameWithOwner,name,isPrivate,url --limit 300` (add `gh api user/repos --paginate` to catch org/collaborator repos not in the list).
+```bash
+# With foreman-tools (preferred — lists repos, checks spec.md, and isLocal in one call):
+foreman-tools list-projects <foreman-root>
+# Fallback:
+gh repo list --json nameWithOwner,name,url --limit 100
+```
+
+The JSON returns `[{name, url, isForeman, isLocal}]`. Filter to `isForeman: true` entries — those are the candidates to restore.
 
 ## Step 2 — Keep only Foreman projects (skip redundant/unrelated)
 
-A repo is a Foreman project only if it has both `spec.md` and `CLAUDE.md` at its root. Check via API before cloning. Skip framework repos (`foreman`, `homebrew-*`).
+When using the fallback: a repo is a Foreman project only if it has `spec.md` at its root. Check via `gh api repos/<owner>/<name>/contents/spec.md` before cloning. Skip framework repos (`foreman`, `homebrew-*`).
 
 ## Step 3 — Classify each Foreman project
 
