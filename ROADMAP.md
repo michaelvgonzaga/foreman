@@ -3,9 +3,10 @@
 ## Active Work — pick up here after any restart
 
 **Wave:** 1 — Token Savings  
-**Current subcommand:** `compat-check` (W1-A, NEW priority) — spec locked in `foreman-tools/spec.md` (M31). **Next step: implement in `foreman-tools/src/root.zig` + `src/main.zig`.**  
-**Queued:** `run-tests` (W1-B), `build` (W1-C) — specs and schemas written.  
-**Repo:** `foreman-tools/` is a separate git repo — check its own CHANGELOG for version state (current: v0.29.1).
+**Current subcommand:** `run-tests` (W1-C) → spec written in `foreman-tools/spec.md` (M28) and schema in `foreman-tools/api-schema.md`. **Next step: implement in `foreman-tools/src/root.zig` + `src/main.zig`.**  
+**Queued:** `build` (W1-D) — spec and schema written, implement after `run-tests`.  
+**Completed this wave:** `compat-check` (W1-A, v0.30.0) — ✅ implemented, released, live in PATH.  
+**Repo:** `foreman-tools/` is a separate git repo — check its own CHANGELOG for version state (current: v0.30.0).
 
 ---
 
@@ -74,7 +75,7 @@ Each of these eliminates multi-step Claude-side reasoning loops. One subcommand 
 - M2: `compat-check` (default) — compare current vs baseline; return `{ ok, drifted }` with rollback commands for each drifted tool
 - M3: `compat-check --update-baseline` — after user confirms drift is safe, update baseline to current versions; push verified combination to `foreman-env` repo (opt-in, same consent flow as device-scan)
 
-**Session-start rule (add after M1 is implemented):** Run `foreman-tools compat-check` before doctor. If `ok: false`, surface the `advice` string and all `rollback` commands, then pause — do not proceed with the session until the user confirms or rolls back.
+**Status: ✅ Implemented v0.30.0** — `compat-check`, `compat-check --baseline`, `compat-check --update-baseline` all live in PATH.
 
 #### W1-C: `run-tests <path>` — Module 18 M1–M3
 **Saves:** Test framework detection + command run + raw output parsing + failure reading.  
