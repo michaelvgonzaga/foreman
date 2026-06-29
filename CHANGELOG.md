@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.22.0 — 2026-06-29
+
+### New
+- `foreman-tools context-changed <repo-path> [ref]` — changed files with unified diff content in one call; default ref is HEAD (all uncommitted changes); first 8 files, 100 lines of diff each; use instead of running `git diff` and reading raw output
+
+---
+
 ## v1.21.0 — 2026-06-29
 
 ### New
