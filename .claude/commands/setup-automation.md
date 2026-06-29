@@ -51,9 +51,12 @@ Write the merged file.
 ## Step 3 — Validate
 
 ```bash
+# With foreman-tools (preferred — checks both hooks by statusMessage in one call):
+foreman-tools validate-hooks
+# Fallback:
 jq -e '.hooks.Stop[].hooks[] | select(.type=="command") | .command' ~/.claude/settings.json
 ```
-Exit 0 + prints both commands = correct. If it errors, the JSON is malformed — fix it (a broken settings.json silently disables ALL settings from that file).
+Both `memorySync` and `autoPush` true (or fallback exit 0 + prints both commands) = correct. If `validate-hooks` returns false for either, or the fallback errors, the JSON is malformed — fix it (a broken settings.json silently disables ALL settings from that file).
 
 Then run each stored command once to confirm it executes clean:
 ```bash
