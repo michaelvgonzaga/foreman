@@ -46,14 +46,15 @@ git -C <project-path> remote get-url origin
 # HTTPS format: https://github.com/owner/repo.git → owner/repo
 ```
 
-GitHub needs a few seconds to generate the tarball after a tag is pushed. Wait 5 seconds then compute:
+Compute the SHA256 (use owner/repo from the repo-info call above):
 
 ```bash
-sleep 5
-curl -sL https://github.com/<owner>/<repo>/archive/refs/tags/v<version>.tar.gz | shasum -a 256
+# With foreman-tools (preferred — fetches, computes SHA256, retries once on empty-file hash):
+foreman-tools tarball-sha <owner> <repo> v<version>
+# Fallback (wait 5s for GitHub to generate tarball, then hash):
+sleep 5 && curl -sL https://github.com/<owner>/<repo>/archive/refs/tags/v<version>.tar.gz | shasum -a 256
+# If fallback returns empty-file hash (e3b0c44...), wait 10s and retry once.
 ```
-
-If shasum returns the empty-file hash (`e3b0c44...`), wait 10s and retry once.
 
 ## Step 5 — Update the formula
 
