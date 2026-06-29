@@ -75,6 +75,16 @@ If the user chose **public or private project**, apply the `github-repo` skill (
 
 ## Phase 4 — Deep scan
 
+Get a structural overview first:
+
+```bash
+# With foreman-tools (preferred):
+foreman-tools scan <foreman-root>/<name>
+# Fallback: ls -la <foreman-root>/<name>
+```
+
+The JSON gives you: `framework` (tech stack), `keyFiles` (manifest/config files present), `depCount` (dependency scale), `dirMap` (directory tree). Use it as your map before reading individual files.
+
 Read everything. Do not skim.
 
 Go through all files in the project and build a complete picture:
