@@ -49,6 +49,8 @@ Run `/verify-output` before marking any output complete — self-review + critic
   | search for a string across multiple files (use instead of bash grep/rg) | `foreman-tools grep <root-path> <pattern> [ext]` |
   | find files by name/glob (use instead of bash find) | `foreman-tools find-files <root-path> <glob>` |
   | extract a value from a JSON file (use instead of reading the whole file) | `foreman-tools json-query <file-path> <dot-path>` |
+  | structured diff summary — use instead of reading raw git diff output | `foreman-tools git-diff <repo-path> [ref]` |
+  | immediate directory contents (use instead of bash ls or shallow find) | `foreman-tools list-dir <path>` |
   | stack trace in context — pipe it here to get structured file:line:col:fn JSON instead of reading it manually | `foreman-tools parse-stack` (reads stdin) |
 - **At the start of every session:** if `_projects.md` does not exist, create it by copying `_templates/projects.md`. `_projects.md` is git-ignored **local** state (your private project index) — it is never tracked by or committed to the framework repo, so editing it never makes the workspace dirty or blocks self-update.
 - Run `/verify-output` before marking any task complete — Claude runs this, not the user. Skip for trivial tasks (see **Scale to task size** below).
