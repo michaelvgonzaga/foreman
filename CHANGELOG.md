@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.26.0 — 2026-06-30
+
+### New
+- `foreman-tools deps <abs-root-path>` — declared dependencies from any package manifest without reading the full file; auto-detects package.json (npm), Cargo.toml (cargo), go.mod (go), requirements.txt (pip); returns name + version + dev flag; use in `/absorb` and `/new-project` to understand what a project depends on
+
+---
+
 ## v1.25.0 — 2026-06-30
 
 ### New

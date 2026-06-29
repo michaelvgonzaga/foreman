@@ -71,6 +71,7 @@ Run `/verify-output` before marking any output complete — self-review + critic
   | Evidence packets — relevant excerpts from a file without reading the whole thing (case-insensitive, ±10 lines context, merged windows, up to 8 chunks) | `foreman-tools context-evidence <abs-file-path> <pattern>` |
   | extract a value from a YAML file (GitHub Actions, docker-compose, k8s, Rails) | `foreman-tools yaml-query <file-path> <dot-path>` |
   | structural outline of a source file (function/class/struct names + line numbers) — use instead of reading the full file when you only need to understand its structure | `foreman-tools outline <abs-file-path>` |
+  | project dependencies from any package manifest (package.json/Cargo.toml/go.mod/requirements.txt) — use instead of reading the manifest when you only need the dep list | `foreman-tools deps <abs-root-path>` |
 - **At the start of every session:** if `_projects.md` does not exist, create it by copying `_templates/projects.md`. `_projects.md` is git-ignored **local** state (your private project index) — it is never tracked by or committed to the framework repo, so editing it never makes the workspace dirty or blocks self-update.
 - Run `/verify-output` before marking any task complete — Claude runs this, not the user. Skip for trivial tasks (see **Scale to task size** below).
 - Document key decisions in the project's `CLAUDE.md` decision log (not spec.md)
