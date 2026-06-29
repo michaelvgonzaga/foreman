@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.14.0 — 2026-06-29
+
+### Improved
+- `/brew-release` now uses `foreman-tools tarball-sha` to compute GitHub tarball SHA256 with automatic retry, replacing `curl | shasum -a 256`
+- `/brew-release` now uses `foreman-tools formula-info` to read the current formula state, replacing manual .rb file parsing
+- `/setup-automation` now uses `foreman-tools validate-hooks` to verify Stop hooks exist, replacing `jq` traversal of settings.json
+
+---
+
 ## v1.6.0 — 2026-06-28
 
 ### New
