@@ -35,14 +35,25 @@ REMOTE=$(git -C <foreman-root> rev-parse origin/main)
 
 ## Update prompt (when behind)
 
+Fill in the commit list and file count before showing:
+
+```bash
+# With foreman-tools (preferred):
+foreman-tools changes-preview <foreman-root>
+# Fallback:
+git -C <foreman-root> log HEAD..origin/main --oneline
+git -C <foreman-root> diff --name-only HEAD..origin/main | wc -l
+```
+
+Then surface:
+
 ```
 ⚠ Foreman update available.
 
 Changes incoming:
-  <git log HEAD..origin/main --oneline>
+  <one line per commit from changes-preview .commits[].message, or git log --oneline output>
 
-Files affected:
-  <git diff HEAD origin/main --stat>
+Files affected: <changes-preview .filesChanged, or wc -l output>
 
 Update now? (yes / no — I'll remind you again next session if no)
 ```
