@@ -2,16 +2,12 @@
 
 ## Active Work — pick up here after any restart
 
-**Wave:** 1 — Token Savings  
-**Wave:** 2 — Speed  
-**Wave:** 2 — Speed  
-**Wave:** 2 — Speed  
-**Wave:** 3 — Quality  
-**Current subcommand:** `prod-ready` (W3-C) → next to implement.  
+**Wave:** 4 — Architecture Completion  
+**Current subcommand:** Wave 4 planning — next is `Foreman Core` (Module 1).  
 **Completed Wave 1:** `compat-check` ✅, `run-tests` ✅, `build` ✅, `env-inspect` ✅, `symbol-find` ✅, `secret-scan` ✅  
 **Completed Wave 2:** `device-scan` ✅, `delta-context` ✅, `git-cache` ✅, `project-state` ✅, `shell-run` ✅  
-**Completed Wave 3 so far:** `quality-gate` (W3-A, v0.41.0) ✅, `validate-schema` (W3-B, v0.42.0) ✅  
-**Repo:** `foreman-tools/` is a separate git repo — check its own CHANGELOG for version state (current: v0.42.0).
+**Completed Wave 3:** `quality-gate` (W3-A, v0.41.0) ✅, `validate-schema` (W3-B, v0.42.0) ✅, `prod-ready` (W3-C, v0.43.0) ✅  
+**Repo:** `foreman-tools/` is a separate git repo — check its own CHANGELOG for version state (current: v0.43.0).
 
 ---
 
