@@ -3,12 +3,12 @@
 ## Active Work — pick up here after any restart
 
 **Wave:** 4 — Architecture Completion  
-**Current:** Module 23 done (`report`, v0.47.0). Next: Module 26 (Telemetry/Metrics) — `metrics`.  
+**Current:** Module 26 done (`metrics`, v0.48.0). Next: Module 27 (Permissions/Sandbox) — `sandbox-check`, or Module 29 (Rollback/Recovery) — `rollback`.  
 **Completed Wave 1:** `compat-check` ✅, `run-tests` ✅, `build` ✅, `env-inspect` ✅, `symbol-find` ✅, `secret-scan` ✅  
 **Completed Wave 2:** `device-scan` ✅, `delta-context` ✅, `git-cache` ✅, `project-state` ✅, `shell-run` ✅  
 **Completed Wave 3:** `quality-gate` (W3-A, v0.41.0) ✅, `validate-schema` (W3-B, v0.42.0) ✅, `prod-ready` (W3-C, v0.43.0) ✅  
-**Wave 4 so far:** framework cmds ✅, `registry` (M1) ✅, `capability-check` (M2) ✅, `route` (M3) ✅, `report` (M23) ✅ — current: v0.47.0  
-**Repo:** `foreman-tools/` is a separate git repo — check its own CHANGELOG for version state (current: v0.47.0).
+**Wave 4 so far:** framework cmds ✅, `registry` (M1) ✅, `capability-check` (M2) ✅, `route` (M3) ✅, `report` (M23) ✅, `metrics` (M26) ✅ — current: v0.48.0  
+**Repo:** `foreman-tools/` is a separate git repo — check its own CHANGELOG for version state (current: v0.48.0).
 
 ---
 
