@@ -3,10 +3,9 @@
 ## Active Work — pick up here after any restart
 
 **Wave:** 1 — Token Savings  
-**Current subcommand:** `run-tests` (W1-C) → spec written in `foreman-tools/spec.md` (M28) and schema in `foreman-tools/api-schema.md`. **Next step: implement in `foreman-tools/src/root.zig` + `src/main.zig`.**  
-**Queued:** `build` (W1-D) — spec and schema written, implement after `run-tests`.  
-**Completed this wave:** `compat-check` (W1-A, v0.30.0) — ✅ implemented, released, live in PATH.  
-**Repo:** `foreman-tools/` is a separate git repo — check its own CHANGELOG for version state (current: v0.30.0).
+**Current subcommand:** `build` (W1-D) → spec written in `foreman-tools/spec.md` (M29) and schema in `foreman-tools/api-schema.md`. **Next step: implement in `foreman-tools/src/root.zig` + `src/main.zig`.**  
+**Completed this wave:** `compat-check` (W1-A, v0.30.0) ✅, `run-tests` (W1-C, v0.31.0) ✅ — both live in PATH.  
+**Repo:** `foreman-tools/` is a separate git repo — check its own CHANGELOG for version state (current: v0.31.0).
 
 ---
 
