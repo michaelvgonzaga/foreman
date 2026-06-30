@@ -74,6 +74,9 @@ After the user accepts the output, proactively scan what was done and identify c
 **Skills candidates** (add to `_skills/[skill-name].md` and update `_skills/README.md`):
 - [prompt pattern or approach that worked well, or "none"]
 
+**Capability promotion candidates** — for any shell command repeated 2+ times this session, run `foreman-tools capability-promote <command>`. Surface any with `recommendation: "promote"`:
+- [command + score, or "none"]
+
 Should I add any of these?"
 
 If the user confirms, create or update the relevant file and add the entry to the index table in the matching README.
