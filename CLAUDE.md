@@ -95,6 +95,7 @@ Run `/verify-output` before marking any output complete — self-review + critic
   | task router — returns execution plan `{ routed, steps: [{layer, subcommand, argHint, confidence, reason}], fallback }` | `foreman-tools route <task...>` |
   | composite project status — git state + build + tests + secrets → `{ status, confidence, issues, nextAction }` | `foreman-tools report <abs-path>` |
   | telemetry snapshot — cache entry count, project-state decisions/patterns, device-profile + compat-baseline presence, estimated token savings | `foreman-tools metrics` |
+  | write ground-truth session state (version, wave, current step, pending errors) to `~/.foreman/session-snapshot.json` — called by PreCompact hook before every compaction | `foreman-tools session-snapshot <foreman-root>` |
 - **Before reading any large project file (spec.md, CLAUDE.md, ROADMAP.md, any source file >2KB):** call `cache-fetch <abs-path> <sub-key>` first — if `hit: true` use `value` and skip the read entirely. If `hit: false`: read the file, extract the key facts as JSON, call `cache-store`. Cache is local disk (`~/.cache/foreman-tools/`), persistent across restarts and power loss, auto-invalidates on file change. Standard sub-keys: `spec.md` → `"milestones"`, `CLAUDE.md` → `"guardrails"`, `ROADMAP.md` → `"state"`, source files → `"outline"`.
 - **At the start of every session, and whenever the user says "next", "continue", or similar:** call `foreman-tools cache-fetch /Users/michaelgonzaga/foreman/ROADMAP.md state` first — if `hit: true`, use the cached state directly. If miss or stale binary, read `ROADMAP.md`. The "Active Work" section at the top shows exactly where to resume. Do not ask the user what they were doing; the answer is there.
 - **At the start of every session:** if `_projects.md` does not exist, create it by copying `_templates/projects.md`. `_projects.md` is git-ignored **local** state (your private project index) — it is never tracked by or committed to the framework repo, so editing it never makes the workspace dirty or blocks self-update.
@@ -107,6 +108,14 @@ Run `/verify-output` before marking any output complete — self-review + critic
 - Keep changes small and reversible
 - **After `/new-project` or after adding/editing any command or skill:** read and follow `_skills/foreman-tools-audit.md` — one-minute check for shell patterns worth promoting to a foreman-tools subcommand.
 - **After committing changes to any project:** read and follow `_skills/release-notes.md` — check if commits have accumulated since the last tag and, if so, remind the user: "You have unreleased changes in `<project>` since `<last-tag>`. Run `/release` when ready to publish." Do not generate notes unprompted — just surface the reminder.
+- **Every compaction summary MUST open with this exact block** (populated from the `session-snapshot` values injected by the PreCompact hook):
+  ```
+  Current version: vX.X.X
+  Last completed: [subcommand name]
+  Next step: [exact text from ROADMAP Active Work **Current:** line]
+  Pending errors: [none | verbatim error text]
+  ```
+  These four lines are machine-readable ground truth. Never recall them from memory — they come from the hook. Claude narrates context below this block; the block itself is never paraphrased or omitted.
 
 ### Scale to task size
 

@@ -42,5 +42,17 @@
       "Bash(npm publish *)",
       "Bash(sudo *)"
     ]
+  },
+  "hooks": {
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "foreman-tools session-snapshot /Users/michaelgonzaga/foreman 2>/dev/null | python3 -c \"import sys,json; d=json.load(sys.stdin); print(json.dumps({'hookSpecificOutput': {'hookEventName': 'PreCompact', 'additionalContext': 'Ground truth from session-snapshot:\\n' + json.dumps(d, indent=2)}}))\" 2>/dev/null || echo '{}'"
+          }
+        ]
+      }
+    ]
   }
 }
