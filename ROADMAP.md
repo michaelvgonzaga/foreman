@@ -3,11 +3,11 @@
 ## Active Work — pick up here after any restart
 
 **Wave:** 4 — Architecture Completion  
-**Current:** `capability-promote` done (Module 21, v0.52.0). Wave 4 Medium modules remaining: 10, 11, 20.  
+**Current:** `ant` done (thin Hive runtime, v0.53.0). Wave 4 Medium modules remaining: 10, 11, 20.  
 **Completed Wave 1:** `compat-check` ✅, `run-tests` ✅, `build` ✅, `env-inspect` ✅, `symbol-find` ✅, `secret-scan` ✅  
 **Completed Wave 2:** `device-scan` ✅, `delta-context` ✅, `git-cache` ✅, `project-state` ✅, `shell-run` ✅  
 **Completed Wave 3:** `quality-gate` (W3-A, v0.41.0) ✅, `validate-schema` (W3-B, v0.42.0) ✅, `prod-ready` (W3-C, v0.43.0) ✅  
-**Wave 4 complete:** framework cmds ✅, `registry` (M1) ✅, `capability-check` (M2) ✅, `route` (M3) ✅, `report` (M23) ✅, `metrics` (M26) ✅, `session-snapshot` (anti-drift) ✅, `sandbox-check` (M27) ✅, `rollback` (M29) ✅, `capability-promote` (M21) ✅ — current: v0.52.0  
+**Wave 4 complete:** framework cmds ✅, `registry` (M1) ✅, `capability-check` (M2) ✅, `route` (M3) ✅, `report` (M23) ✅, `metrics` (M26) ✅, `session-snapshot` (anti-drift) ✅, `sandbox-check` (M27) ✅, `rollback` (M29) ✅, `capability-promote` (M21) ✅, `ant` (thin Hive) ✅ — current: v0.53.0  
 **Repo:** `foreman-tools/` is a separate git repo — check its own CHANGELOG for version state (current: v0.51.0).
 
 ---
