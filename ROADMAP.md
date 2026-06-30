@@ -3,9 +3,11 @@
 ## Active Work — pick up here after any restart
 
 **Wave:** 1 — Token Savings  
-**Current subcommand:** Wave 1 complete — `secret-scan` (W1-G, v0.35.0) ✅ is the final Wave 1 subcommand. Next: Wave 2 — `git-cache` (W2-B).  
-**Completed this wave:** `compat-check` (W1-A, v0.30.0) ✅, `run-tests` (W1-C, v0.31.0) ✅, `build` (W1-D, v0.32.0) ✅, `env-inspect` (W1-E, v0.33.0) ✅, `symbol-find` (W1-F, v0.34.0) ✅, `secret-scan` (W1-G, v0.35.0) ✅ — all live in PATH.  
-**Repo:** `foreman-tools/` is a separate git repo — check its own CHANGELOG for version state (current: v0.35.0).
+**Wave:** 2 — Speed  
+**Current subcommand:** `delta-context` (W2-D) → next to implement.  
+**Completed Wave 1:** `compat-check` ✅, `run-tests` ✅, `build` ✅, `env-inspect` ✅, `symbol-find` ✅, `secret-scan` ✅  
+**Completed Wave 2 so far:** `device-scan` (W2-F, v0.36.0) ✅ — profile at `~/.foreman/profile.json`, cache pre-warmed.  
+**Repo:** `foreman-tools/` is a separate git repo — check its own CHANGELOG for version state (current: v0.36.0).
 
 ---
 
