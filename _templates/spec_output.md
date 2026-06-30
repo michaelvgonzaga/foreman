@@ -51,6 +51,13 @@ Known unknowns and things that could kill this project.
 
 ---
 
+## Quality floor (non-negotiable)
+
+- **Latency:** [e.g., "Session start < 200ms", "API response < 500ms", "build < 30s"]
+- **Token budget:** [e.g., "No subcommand output > 2KB", "Session-start reads < 3 files"]
+- **Reliability:** [what must never fail silently — e.g., "Cache miss must not corrupt state"]
+- **Reversibility:** [what must always have a rollback — e.g., "Every write is atomic"]
+
 ## Open questions (unresolved)
 
 - [Question that still needs an answer — or "None identified"]

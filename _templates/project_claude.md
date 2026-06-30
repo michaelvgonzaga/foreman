@@ -71,8 +71,14 @@ Project knowledge: `knowledge/[topic].md`. Global: `_knowledgebase/[topic].md`.
 
 ---
 
-## Decision log
+## Decision log — Approved
 
 | Date | Decision | Why |
 |------|----------|-----|
 | [date] | [what was decided] | [why] |
+
+## Decision log — Declined
+
+| Date | Proposed | Why declined | Revisit when |
+|------|----------|-------------|--------------|
+| [date] | [what was considered] | [why it was rejected] | [the specific condition that would change this — not "later", a real trigger] |

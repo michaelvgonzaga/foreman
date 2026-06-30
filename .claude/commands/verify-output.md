@@ -50,7 +50,19 @@ Present:
 
 Do not present output as "done" until Steps 3 and 4 are complete.
 
-## Step 6 — Capture what was learned
+## Step 6 — Reputation check
+
+Before the user accepts the output, scan the change for trust risks:
+- Does this produce different output than before for any existing input? (silent behavior change)
+- Does this add a failure mode with no user-visible error? (silent failure)
+- Does this touch what a new user experiences in their first 5 minutes?
+- Does this change what gets stored, logged, or shared — even indirectly?
+
+If any answer is yes, surface it: "This changes X in a way that could surprise a user because Y." Let the user decide whether to proceed.
+
+Append real risks found to `reputation/risk-register.md` in the project root (create if absent). Format: `| Date | Change | Risk | Mitigated by |`
+
+## Step 7 — Capture what was learned
 
 After the user accepts the output, proactively scan what was done and identify candidates. Present them directly — do not ask the user to think of them:
 

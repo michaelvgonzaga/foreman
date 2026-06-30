@@ -2,6 +2,8 @@
 
 Base of operations. Every project lives here. Every project follows the 3-layer framework.
 
+> **Foreman exists to reduce the token and time cost of Claude reasoning about engineering state. It fails if a user session starts slower, burns more tokens, or produces a less reliable output than without it. It succeeds when session-start is under 200ms, cache hit rate exceeds 80%, and Claude never has to shell-parse a git command.**
+
 ---
 
 ## First-time setup (after cloning)
