@@ -6,10 +6,10 @@
 **Wave:** 2 — Speed  
 **Wave:** 2 — Speed  
 **Wave:** 2 — Speed  
-**Current subcommand:** `project-state` (W2-C) → next to implement.  
+**Current subcommand:** `shell-run` (W2-E) → next to implement.  
 **Completed Wave 1:** `compat-check` ✅, `run-tests` ✅, `build` ✅, `env-inspect` ✅, `symbol-find` ✅, `secret-scan` ✅  
-**Completed Wave 2 so far:** `device-scan` (W2-F, v0.36.0) ✅, `delta-context` (W2-D, v0.37.0) ✅, `git-cache` (W2-B, v0.38.0) ✅  
-**Repo:** `foreman-tools/` is a separate git repo — check its own CHANGELOG for version state (current: v0.38.0).
+**Completed Wave 2 so far:** `device-scan` (W2-F, v0.36.0) ✅, `delta-context` (W2-D, v0.37.0) ✅, `git-cache` (W2-B, v0.38.0) ✅, `project-state` (W2-C, v0.39.0) ✅  
+**Repo:** `foreman-tools/` is a separate git repo — check its own CHANGELOG for version state (current: v0.39.0).
 
 ---
 
