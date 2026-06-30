@@ -3,12 +3,12 @@
 ## Active Work — pick up here after any restart
 
 **Wave:** 4 — Architecture Completion  
-**Current:** `sandbox-check` done (Module 27, v0.50.0). Next: Module 29 (Rollback/Recovery) — `rollback`.  
+**Current:** `rollback` done (Module 29, v0.51.0). Wave 4 is complete — all planned subcommands shipped.  
 **Completed Wave 1:** `compat-check` ✅, `run-tests` ✅, `build` ✅, `env-inspect` ✅, `symbol-find` ✅, `secret-scan` ✅  
 **Completed Wave 2:** `device-scan` ✅, `delta-context` ✅, `git-cache` ✅, `project-state` ✅, `shell-run` ✅  
 **Completed Wave 3:** `quality-gate` (W3-A, v0.41.0) ✅, `validate-schema` (W3-B, v0.42.0) ✅, `prod-ready` (W3-C, v0.43.0) ✅  
-**Wave 4 so far:** framework cmds ✅, `registry` (M1) ✅, `capability-check` (M2) ✅, `route` (M3) ✅, `report` (M23) ✅, `metrics` (M26) ✅, `session-snapshot` (anti-drift) ✅, `sandbox-check` (M27) ✅ — current: v0.50.0  
-**Repo:** `foreman-tools/` is a separate git repo — check its own CHANGELOG for version state (current: v0.50.0).
+**Wave 4 complete:** framework cmds ✅, `registry` (M1) ✅, `capability-check` (M2) ✅, `route` (M3) ✅, `report` (M23) ✅, `metrics` (M26) ✅, `session-snapshot` (anti-drift) ✅, `sandbox-check` (M27) ✅, `rollback` (M29) ✅ — current: v0.51.0  
+**Repo:** `foreman-tools/` is a separate git repo — check its own CHANGELOG for version state (current: v0.51.0).
 
 ---
 
