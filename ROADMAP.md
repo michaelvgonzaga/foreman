@@ -3,9 +3,9 @@
 ## Active Work — pick up here after any restart
 
 **Wave:** 1 — Token Savings  
-**Current subcommand:** `symbol-find` (W1-F) → next to implement.  
-**Completed this wave:** `compat-check` (W1-A, v0.30.0) ✅, `run-tests` (W1-C, v0.31.0) ✅, `build` (W1-D, v0.32.0) ✅, `env-inspect` (W1-E, v0.33.0) ✅ — all live in PATH.  
-**Repo:** `foreman-tools/` is a separate git repo — check its own CHANGELOG for version state (current: v0.33.0).
+**Current subcommand:** `secret-scan` (W1-G) → next to implement.  
+**Completed this wave:** `compat-check` (W1-A, v0.30.0) ✅, `run-tests` (W1-C, v0.31.0) ✅, `build` (W1-D, v0.32.0) ✅, `env-inspect` (W1-E, v0.33.0) ✅, `symbol-find` (W1-F, v0.34.0) ✅ — all live in PATH.  
+**Repo:** `foreman-tools/` is a separate git repo — check its own CHANGELOG for version state (current: v0.34.0).
 
 ---
 
