@@ -3,9 +3,9 @@
 ## Active Work — pick up here after any restart
 
 **Wave:** 1 — Token Savings  
-**Current subcommand:** `build` (W1-D) → spec written in `foreman-tools/spec.md` (M29) and schema in `foreman-tools/api-schema.md`. **Next step: implement in `foreman-tools/src/root.zig` + `src/main.zig`.**  
-**Completed this wave:** `compat-check` (W1-A, v0.30.0) ✅, `run-tests` (W1-C, v0.31.0) ✅ — both live in PATH.  
-**Repo:** `foreman-tools/` is a separate git repo — check its own CHANGELOG for version state (current: v0.31.0).
+**Current subcommand:** `env-inspect` (W1-E) → next to implement.  
+**Completed this wave:** `compat-check` (W1-A, v0.30.0) ✅, `run-tests` (W1-C, v0.31.0) ✅, `build` (W1-D, v0.32.0) ✅ — all live in PATH.  
+**Repo:** `foreman-tools/` is a separate git repo — check its own CHANGELOG for version state (current: v0.32.0).
 
 ---
 
@@ -214,7 +214,7 @@ Modules needed to reach the full execution path.
 | Version Range | Theme |
 |---------------|-------|
 | v1.0–v1.26 (current) | Foundation: filesystem, git, context, cache, parser subcommands |
-| v1.27–v1.35 | Wave 1: run-tests, build, env-inspect, symbol-find, secret-scan |
+| v1.27–v1.35 | Wave 1: run-tests ✅, build ✅, env-inspect, symbol-find, secret-scan |
 | v1.36–v1.42 | Wave 2: git-cache, project-state, delta-context, shell-run |
 | v1.43–v1.50 | Wave 3: quality-gate, validate-schema, prod-ready |
 | v2.0 | Wave 4: Foreman Core, Capability Registry, Tool Router, Workers |
