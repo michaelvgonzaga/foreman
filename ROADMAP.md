@@ -3,7 +3,7 @@
 ## Active Work — pick up here after any restart
 
 **Wave:** 4 — Architecture Completion  
-**Current subcommand:** Wave 4 planning — next is `Foreman Core` (Module 1).  
+**Current:** Framework commands done ✅. Next: Module 1 (Foreman Core) — design phase.  
 **Completed Wave 1:** `compat-check` ✅, `run-tests` ✅, `build` ✅, `env-inspect` ✅, `symbol-find` ✅, `secret-scan` ✅  
 **Completed Wave 2:** `device-scan` ✅, `delta-context` ✅, `git-cache` ✅, `project-state` ✅, `shell-run` ✅  
 **Completed Wave 3:** `quality-gate` (W3-A, v0.41.0) ✅, `validate-schema` (W3-B, v0.42.0) ✅, `prod-ready` (W3-C, v0.43.0) ✅  
@@ -198,10 +198,10 @@ Modules needed to reach the full execution path.
 ## Foreman Framework Roadmap (Separate from foreman-tools)
 
 ### Commands + Skills
-- `/run-tests` — trigger `foreman-tools run-tests`, surface structured failures to Claude
-- `/build` — trigger `foreman-tools build`, surface errors with file:line navigation
-- `/quality-gate` — run full quality gate before any promote/merge/release
-- `/prod-ready` — composite production readiness check before deploy
+- `/run-tests` — trigger `foreman-tools run-tests`, surface structured failures to Claude ✅
+- `/build` — trigger `foreman-tools build`, surface errors with file:line navigation ✅
+- `/quality-gate` — run full quality gate before any promote/merge/release ✅
+- `/prod-ready` — composite production readiness check before deploy ✅
 
 ### Framework Maturity
 - Plugin protocol formalized (Module 11 milestone integration)
