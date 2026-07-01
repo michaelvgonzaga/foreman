@@ -59,7 +59,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "find ~/.cache/foreman-tools -mtime +30 -delete 2>/dev/null; true"
+            "command": "find ~/.cache/foreman-tools -mtime +30 -delete 2>/dev/null; pq=$(foreman-tools promotion-queue list 2>/dev/null); n=$(echo \"$pq\" | python3 -c \"import sys,json; d=json.load(sys.stdin); print(d.get('count',0))\" 2>/dev/null || echo 0); if [ \"$n\" -gt 0 ]; then names=$(echo \"$pq\" | python3 -c \"import sys,json; d=json.load(sys.stdin); print(', '.join(e['name'] for e in d.get('entries',[])))\" 2>/dev/null); echo \"{\\\"systemMessage\\\":\\\"$n Zig subcommand(s) built locally, not yet released: $names. Run /auto-public-release foreman-tools to ship.\\\"}\"; else echo '{}'; fi"
           }
         ]
       }
