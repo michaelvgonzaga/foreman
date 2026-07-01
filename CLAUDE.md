@@ -147,6 +147,16 @@ Before starting, classify the task and match the treatment:
 - **Standard** — a bug fix, a contained feature, a single-file change. Run the normal workflow. Skip `/verify-output` only when the change is a single, obvious, reversible fix.
 - **Full build** — a new project, a major feature, anything touching multiple files or introducing new architecture. Full 3-layer treatment without exception: spec → build → verify-output.
 
+### Terminal commands — always remind the user to open a new terminal first
+
+Whenever you ask the user to run any of these in the terminal, prepend: **"Open a fresh terminal tab first (⌘T), then run from your home directory (`cd ~`) to avoid nested paths."**
+
+- `foreman-ai` — runs from `$PWD`, so running it inside the workspace creates `foreman/foreman/`
+- `brew upgrade foreman-ai` or `brew upgrade foreman-tools` — upgrades the installed binary; the current session's open workspace is unaffected but the next `foreman-ai` launch picks up the new version
+- `brew install michaelvgonzaga/foreman/foreman-ai` — same nesting risk on first install
+
+The `foreman-ai` script now detects and recovers from this automatically, but a clean terminal is still the safest starting point.
+
 ### Ask first (consequences)
 - Any action that costs money — API calls, cloud deploys, paid services
 - Installing, upgrading, or removing packages
