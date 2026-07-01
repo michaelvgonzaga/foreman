@@ -10,6 +10,7 @@ Run **restore** on a new machine before the first session.
 ## Push (update remote from local)
 
 ```bash
+WSROOT=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
 KREPO=/tmp/foreman-knowledge-sync
 
 # Clone or pull
@@ -31,9 +32,9 @@ _ks_push_entry() {
   fi
   echo "$raw" | jq '.value' > "$dest"
 }
-_ks_push_entry ~/4orman/CLAUDE.md guardrails "$KREPO/pinned/claude-md-guardrails.json" || exit 1
-_ks_push_entry ~/4orman/ROADMAP.md state     "$KREPO/pinned/roadmap-state.json"        || exit 1
-_ks_push_entry ~/4orman/_skills/README.md outline "$KREPO/pinned/skills-readme-outline.json" || exit 1
+_ks_push_entry "$WSROOT/CLAUDE.md" guardrails "$KREPO/pinned/claude-md-guardrails.json" || exit 1
+_ks_push_entry "$WSROOT/ROADMAP.md" state     "$KREPO/pinned/roadmap-state.json"        || exit 1
+_ks_push_entry "$WSROOT/_skills/README.md" outline "$KREPO/pinned/skills-readme-outline.json" || exit 1
 
 # Update meta version
 FTVER=$(4orman-tools doctor 2>/dev/null | jq -r '.tools[] | select(.name=="4orman-tools") | .version' || echo "unknown")
@@ -49,13 +50,14 @@ git push origin main
 ## Restore (warm local cache from remote on a new machine)
 
 ```bash
+WSROOT=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
 KREPO=/tmp/foreman-knowledge-restore
 GH_USER=$(gh api user --jq .login 2>/dev/null)
 git clone "git@github.com:${GH_USER}/foreman-knowledge.git" "$KREPO"
 
-cat "$KREPO/pinned/claude-md-guardrails.json"  | 4orman-tools cache-store ~/4orman/CLAUDE.md guardrails
-cat "$KREPO/pinned/roadmap-state.json"          | 4orman-tools cache-store ~/4orman/ROADMAP.md state
-cat "$KREPO/pinned/skills-readme-outline.json"  | 4orman-tools cache-store ~/4orman/_skills/README.md outline
+cat "$KREPO/pinned/claude-md-guardrails.json"  | 4orman-tools cache-store "$WSROOT/CLAUDE.md" guardrails
+cat "$KREPO/pinned/roadmap-state.json"          | 4orman-tools cache-store "$WSROOT/ROADMAP.md" state
+cat "$KREPO/pinned/skills-readme-outline.json"  | 4orman-tools cache-store "$WSROOT/_skills/README.md" outline
 
 echo "Pinned knowledge restored — next session starts warm."
 ```

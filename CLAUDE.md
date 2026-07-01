@@ -116,6 +116,8 @@ Run `/verify-output` before marking any output complete — self-review + critic
   | package a project as .fmz archive or generate a platform installer script — formats: fmz, brew, mac, linux, windows, backup | `4orman-tools export <project-path> [--format fmz\|brew\|mac\|linux\|windows\|backup] [--out <dir>]` |
   | absorb a .fmz or raw project directory into the 4orman workspace; detects workspace backup vs single project; restores knowledge/ | `4orman-tools import <source-path> [<4orman-root>]` |
   | track Zig subcommands built locally but not yet brew-released — Stop hook surfaces pending count at session end | `4orman-tools promotion-queue [list \| add <name> <description> \| clear]` |
+  | list installed plugins (name, lang, description, args) — use in `/install-plugin`/`/export-plugin` instead of reading plugin.json by hand | `4orman-tools plugin-list` |
+  | execute an installed plugin via its worker runtime — returns plugin JSON output verbatim | `4orman-tools plugin-run <name> [args...]` |
 - **Before reading any large project file (spec.md, CLAUDE.md, ROADMAP.md, any source file >2KB):** call `cache-fetch <abs-path> <sub-key>` first — if `hit: true` use `value` and skip the read entirely. If `hit: false`: read the file, extract the key facts as JSON, call `cache-store`. Cache is local disk (`~/.cache/4orman-tools/`), persistent across restarts and power loss, auto-invalidates on file change. Standard sub-keys: `spec.md` → `"milestones"`, `CLAUDE.md` → `"guardrails"`, `ROADMAP.md` → `"state"`, source files → `"outline"`.
 - **At the start of every session, and whenever the user says "next", "continue", or similar:** determine the absolute path to `ROADMAP.md` in the 4orman workspace root (same directory as this CLAUDE.md), then call `4orman-tools cache-fetch <abs-path-to-ROADMAP.md> state` — if `hit: true`, use the cached state directly. If miss or stale binary, read `ROADMAP.md`. The "Active Work" section at the top shows exactly where to resume. Do not ask the user what they were doing; the answer is there.
 - **Knowledge State Taxonomy — three tiers, three rules:**
@@ -131,7 +133,7 @@ Run `/verify-output` before marking any output complete — self-review + critic
 - Update `_knowledgebase/` and `_skills/` when candidates surface during `/verify-output` Step 6
 - Prefer editing existing files over creating new ones
 - Keep changes small and reversible
-- **After `/new-project` or after adding/editing any command or skill:** read and follow `_skills/4orman-tools-audit.md` — one-minute check for shell patterns worth promoting to a 4orman-tools subcommand.
+- **After `/new-project` or after adding/editing any command or skill:** read and follow `_skills/foreman-tools-audit.md` — one-minute check for shell patterns worth promoting to a 4orman-tools subcommand.
 - **After committing changes to any project:** read and follow `_skills/release-notes.md` — check if commits have accumulated since the last tag and, if so, remind the user: "You have unreleased changes in `<project>` since `<last-tag>`. Run `/release` when ready to publish." Do not generate notes unprompted — just surface the reminder.
 - **Every compaction summary MUST open with this exact block** (populated from the `session-snapshot` values injected by the PreCompact hook):
   ```
