@@ -145,6 +145,28 @@ Before starting, classify the task and match the treatment:
 - Running scripts you didn't write
 - Any mid-project scope change — propose the change, get sign-off, then update spec.md
 
+### Mathematical proof (non-negotiable)
+
+Every architectural decision, performance claim, or worker promotion must be backed by one of:
+- **Measured data** — `foreman-tools metrics` before and after; state both numbers
+- **100% credible online source** — state the exact URL and specific claim; training memory alone is not evidence
+- **Formal proof** — state the algorithm, complexity class, and why it dominates
+
+If neither is available: do not proceed. Run the measurement first, then decide.
+
+When a worker or subcommand produces output: `confidence` and `self_healed` fields quantify result quality mathematically. `confidence: 1.0` = complete. `confidence < 0.8` = degraded; report to user before acting on the result.
+
+### Self-healing (automatic, modular)
+
+Workers and subcommands self-heal before escalating to the user:
+1. **Detect** — output schema is declared; violations surface as `schema_violations` in JSON
+2. **Retry** — network workers retry 3× with exponential backoff before reporting failure
+3. **Degrade gracefully** — partial results are valid; `confidence` quantifies completeness
+4. **Report** — `self_healed: true` marks any output that required recovery; never silently wrong
+5. **Escalate** — only if `success: false` after all retries; surface structured error, not raw exception
+
+Claude reads `confidence` and `self_healed` on every worker output. If `confidence < 0.8`: investigate before acting. If `self_healed: true`: note it but proceed if `success: true`.
+
 ### Never do (hard lines)
 - Touch production systems, databases, or live infrastructure
 - Expose, log, print, or echo API keys, passwords, tokens, or secrets
@@ -154,6 +176,8 @@ Before starting, classify the task and match the treatment:
 - Skip the spec interview (`/new-project`) when starting fresh work
 - Commit or push code without the user reviewing the diff
 - Add features, abstractions, or error handling beyond what was asked
+- Make an architectural decision based on a guess — measure first, decide after
+- Accept worker output with `schema_violations` as correct — investigate the violation
 
 ### Token discipline (when editing framework files)
 

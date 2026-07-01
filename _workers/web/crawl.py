@@ -35,6 +35,7 @@ Output (stdout JSON):
 """
 
 import sys
+import os
 import json
 import time
 import urllib.request
@@ -43,6 +44,19 @@ import urllib.error
 from html.parser import HTMLParser
 from urllib.parse import urljoin, urlparse
 from collections import deque
+
+# Self-healing protocol — retry, schema validation, structured error output
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+from _lib.protocol import Schema, write_output, retry  # noqa: E402
+
+OUTPUT_SCHEMA = Schema({
+    "success":       bool,
+    "pages":         list,
+    "errors":        list,
+    "robots_blocked": list,
+    "skipped":       list,
+    "duration_ms":   int,
+})
 
 MAX_BODY_BYTES = 512 * 1024  # 512KB per page — avoids huge JS bundles burning memory
 USER_AGENT = "foreman-crawler/1.0 (+https://github.com/michaelvgonzaga/foreman-tools)"
@@ -167,10 +181,14 @@ def crawl(cfg):
         if pages:  # rate-limit — skip on first request
             time.sleep(delay_ms / 1000.0)
 
-        body, status, dur_ms, err = _fetch(url, timeout_s)
+        # Self-heal: retry transient network failures up to 3× with exponential backoff
+        def _fetch_this():
+            b, s, d, e = _fetch(url, timeout_s)
+            return (b, s, d, e), e  # (result, error)
 
-        if err and body is None:
-            errors.append({"url": url, "status": status, "error": err})
+        (body, status, dur_ms, err), attempts, _ = retry(_fetch_this, max_attempts=3, base_delay_ms=300)
+        if body is None and err:
+            errors.append({"url": url, "status": status, "error": err, "attempts": attempts})
             continue
 
         page = {"url": url, "status": status, "depth": depth, "duration_ms": dur_ms}
@@ -209,6 +227,10 @@ def crawl(cfg):
 
         pages.append(page)
 
+    # Confidence: ratio of pages successfully fetched vs. total attempted
+    attempted = len(pages) + len(errors)
+    confidence = round(len(pages) / attempted, 3) if attempted > 0 else 1.0
+
     return {
         "success": True,
         "pages": pages,
@@ -216,6 +238,8 @@ def crawl(cfg):
         "robots_blocked": robots_blocked,
         "skipped": skipped,
         "duration_ms": int((time.monotonic() - t_start) * 1000),
+        "confidence": confidence,
+        "self_healed": any(e.get("attempts", 1) > 1 for e in errors),
     }
 
 
@@ -227,10 +251,10 @@ if __name__ == "__main__":
         if "url" not in cfg:
             raise ValueError("missing required field: url")
         result = crawl(cfg)
-        print(json.dumps(result))
+        write_output(result, OUTPUT_SCHEMA)  # validates schema before printing
     except json.JSONDecodeError as e:
-        print(json.dumps({"success": False, "error": f"invalid JSON input: {e}"}))
+        print(json.dumps({"success": False, "error": f"invalid JSON input: {e}", "self_healed": False}))
         sys.exit(1)
     except Exception as e:
-        print(json.dumps({"success": False, "error": str(e)}))
+        print(json.dumps({"success": False, "error": str(e), "self_healed": False}))
         sys.exit(1)
