@@ -38,6 +38,7 @@ Run `/verify-output` before marking any output complete — self-review + critic
 - **At the start of every session:** run `foreman-tools doctor` via Bash. If it fails (binary missing), prompt once: "`foreman-tools` not found — run `brew install michaelvgonzaga/foreman/foreman-tools`." If it succeeds, use the JSON to check `claude`, `git`, and `gh`. Then immediately verify the binary is current by running `foreman-tools cache-fetch /dev/null x 2>&1`— if the output contains "unknown subcommand" instead of JSON, surface once: "Homebrew binary is stale (missing cache + context subcommands). Run `/brew-release` to fix." and skip all `cache-fetch`, `cache-store`, `cache-check`, `outline`, `context-*`, `yaml-query`, and `deps` calls for this session.
 - **At the start of every session:** apply `_skills/self-update.md` — silently fetch origin, compare with local, and surface any incoming changes. If fetch fails (no network), skip silently.
 - **At the start of every session:** if binary is current (not stale per above), check `~/.foreman/profile.json` via `foreman-tools cache-fetch ~/.foreman/profile.json device` — if `hit: true`, load the stored hardware/tools/optimal profile and skip tool-detection shell calls. If miss, continue normally.
+- **At the start of every session:** run `foreman-tools ledger check-stale` — if any entries are stale (`is_stale: true`), surface them to the user and re-validate each via the scoring protocol before acting on them. Stale entries must not be used as ground truth.
 - **Zig-first (non-negotiable):** Before any action — data lookup, shell command, file read, build, test — check if a `foreman-tools` subcommand covers the need. One JSON call (~10–50ms) replaces 200–2000 tokens of Claude reasoning. Break-even or better → use Zig. When in doubt: `foreman-tools capability-check <what>` returns `{ available, subcommand }`. If no native subcommand exists: (1) check `_workers/` for an existing language worker → invoke via `foreman-tools worker-run <lang> _workers/<path> '<json>'`; (2) if no worker exists and the need is language-specific (web, ML, concurrency, JS ecosystem), run `/new-worker` to scaffold a permanent stdlib-only worker following senior-quality standards — one file, typed I/O contract, graceful errors, no external deps; (3) if pure computation with no existing coverage, use `foreman-tools shell-run <cmd>` so output is JSON, never raw text; (4) run `foreman-tools capability-promote <cmd>` — if the need appears 2+ times this session or score is high, implement it as a permanent Zig subcommand immediately (add to `foreman-tools/src/root.zig` + `main.zig`, run stress tests, bump version). Claude decides. Zig orchestrates. Workers execute. Claude reads structured data. Repeated needs become permanent Zig subcommands or permanent workers.
 - **Before any action that touches git data, filesystem state, or project metadata:** use `foreman-tools` — full subcommand map:
   | Need | Subcommand |
@@ -87,6 +88,8 @@ Run `/verify-output` before marking any output complete — self-review + critic
   | changed symbols since a ref + their callers — use instead of reading raw diffs for impact analysis | `foreman-tools delta-context <repo-path> [ref]` |
   | branch, HEAD SHA, dirty state, ahead/behind, last 10 commits — cached by HEAD SHA, hit: true within same HEAD | `foreman-tools git-cache <repo-path>` |
   | read/write project decisions and known patterns across sessions (state at `~/.foreman/state/`) | `foreman-tools project-state <abs-path> [record-decision <what> [<why>]]` |
+  | decision ledger — show/record/validate Claude-vs-Zig decisions with 365-day staleness (stored at `~/.foreman/ledger.json`) | `foreman-tools ledger [show \| record <winner> <question> <reasoning> \| check-stale \| validate <id>]` |
+  | score a contested decision — Zig computes composite from cited sources, checks ledger, returns winner/void verdict | `foreman-tools ledger score <question> <sources-json>` |
   | run a shell command safely — blocks destructive patterns, captures stdout/stderr as JSON, tracks duration | `foreman-tools shell-run [--timeout <ms>] <shell-command>` |
   | aggregate build + test results into a severity-bucketed verdict (pass/fail + critical/high/medium/low findings) | `foreman-tools quality-gate <abs-path>` |
   | validate a JSON file against a JSON Schema subset — returns violations with $-rooted paths | `foreman-tools validate-schema <abs-file> <abs-schema>` |
@@ -109,6 +112,7 @@ Run `/verify-output` before marking any output complete — self-review + critic
 - **At the start of every session, and whenever the user says "next", "continue", or similar:** call `foreman-tools cache-fetch /Users/michaelgonzaga/foreman/ROADMAP.md state` first — if `hit: true`, use the cached state directly. If miss or stale binary, read `ROADMAP.md`. The "Active Work" section at the top shows exactly where to resume. Do not ask the user what they were doing; the answer is there.
 - **At the start of every session:** if `_projects.md` does not exist, create it by copying `_templates/projects.md`. `_projects.md` is git-ignored **local** state (your private project index) — it is never tracked by or committed to the framework repo, so editing it never makes the workspace dirty or blocks self-update.
 - Run `/verify-output` before marking any task complete — Claude runs this, not the user. Skip for trivial tasks (see **Scale to task size** below).
+- **After any contested decision where Claude overrides Zig data OR Zig proves superior:** record via `foreman-tools ledger record <winner> <question> <reasoning>` — winner is "claude" or "zig", question is the contested claim, reasoning is the evidence summary. Only record confirmed wins; void rounds are not recorded.
 - **After completing any milestone step:** update `ROADMAP.md` in that project — check the step done (`[x]`), update the current milestone status — before asking the user to proceed with the next step. Never skip this update.
 - Document key decisions in the project's `CLAUDE.md` decision log (not spec.md)
 - Check `_skills/README.md` for relevant playbooks before starting work in a new domain or project type
@@ -155,6 +159,45 @@ Every architectural decision, performance claim, or worker promotion must be bac
 If neither is available: do not proceed. Run the measurement first, then decide.
 
 When a worker or subcommand produces output: `confidence` and `self_healed` fields quantify result quality mathematically. `confidence: 1.0` = complete. `confidence < 0.8` = degraded; report to user before acting on the result.
+
+**First: check Zig's memory.** Before reasoning about any decision, run `foreman-tools ledger show` — if Zig has a stored entry for this question (non-stale), use it directly. Zero tokens. Only if Zig has no answer does Claude reason and enter the scoring protocol below.
+
+### The Ledger — Rigged Rock-Paper-Scissors
+
+Every contested decision between Claude reasoning and Zig stored data runs through this protocol. The game is rigged toward mathematical truth, not toward either player.
+
+**Claude wins a round when all four conditions are met:**
+1. Composite confidence score is exactly 100%
+2. Score is backed by minimum 10 sampled sources retrieved online this session
+3. Every source is cited with exact URL and specific claim — no paraphrasing
+4. Zig has no stored ledger entry on this question, or the stored entry is stale
+
+**Zig wins a round when all three conditions are met:**
+1. A ledger entry exists for this question at `~/.foreman/ledger.json`
+2. Entry is not stale — recorded within the last 365 days
+3. Claude cannot produce 10 verified sources that contradict the stored data
+
+**Round is void when:** composite below 100%, fewer than 10 sources, or evidence is contradictory. No promotion, no decision — gather more evidence first.
+
+**Scoring formula** — Zig computes, Claude never self-certifies:
+```
+foreman-tools ledger score <question> <sources-json>
+```
+Returns `{ composite, sample_count, winner, void, reason, zig_entry_found, zig_entry_stale }`.
+
+Per source: cited URL retrieved this session + exact claim = 10 pts; training memory alone = 0 pts; contradicted by another source = −10 pts. Composite = total_points / (sample_count × 10) × 100. Minimum 10 sources or automatic void.
+
+**Tiebreaker:** Zig wins. Stored verified data costs zero tokens. A 100% Claude score that agrees with a valid Zig entry confirms the entry — Zig retains the win.
+
+**Staleness:** After 365 days Zig's entry is stale. `foreman-tools ledger check-stale` runs at every session start. Stale entries surface immediately — Claude never silently relies on outdated Zig data. Claude re-samples 10 sources; if score reaches 100% on updated data, Claude wins and the ledger updates.
+
+**Promotion gate:** Only a confirmed win triggers promotion. Claude win → capability promoted to permanent Zig subcommand or worker immediately. Zig win → stored entry confirmed, no new build needed. Void → no promotion.
+
+**Hard rules:**
+- Claude never scores its own round — Zig computes and returns the JSON verdict
+- Training memory alone scores 0 — never counts toward the 100% threshold
+- A void round never promotes anything
+- The ledger is append-only — old entries are never deleted, only superseded by newer entries on the same question
 
 ### Self-healing (automatic, modular)
 
