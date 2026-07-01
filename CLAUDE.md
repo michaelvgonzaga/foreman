@@ -82,8 +82,8 @@ Run `/verify-output` before marking any output complete — self-review + critic
   | extract a value from a YAML file (GitHub Actions, docker-compose, k8s, Rails) | `4orman-tools yaml-query <file-path> <dot-path>` |
   | structural outline of a source file (function/class/struct names + line numbers) — use instead of reading the full file when you only need to understand its structure | `4orman-tools outline <abs-file-path>` |
   | project dependencies from any package manifest (package.json/Cargo.toml/go.mod/requirements.txt) — use instead of reading the manifest when you only need the dep list | `4orman-tools deps <abs-root-path>` |
-  | run tests + get structured pass/fail/failures (use instead of running the test command and reading raw output) | `4orman-tools run-tests <abs-root-path>` |
-  | detect build system, run build, get structured errors/warnings (use instead of running the build command and parsing raw compiler output) | `4orman-tools build <abs-root-path>` |
+  | run tests + get structured pass/fail/failures (use instead of running the test command and reading raw output); `roleConfidence: "uncertain"` means multiple frameworks were detected — check `uncertaintyCandidates` before trusting `framework` | `4orman-tools run-tests <abs-root-path>` |
+  | detect build system, run build, get structured errors/warnings (use instead of running the build command and parsing raw compiler output); `roleConfidence: "uncertain"` means multiple build tools were detected — check `uncertaintyCandidates` before trusting `tool` | `4orman-tools build <abs-root-path>` |
   | detect languages, runtimes, package managers, and missing deps for a project (use instead of running which/--version loops) | `4orman-tools env-inspect <abs-root-path>` |
   | locate a symbol's definition and all references across a project (use instead of grep + read N files) | `4orman-tools symbol-find <abs-root-path> <symbol>` |
   | scan for hardcoded secrets (API keys, tokens, passwords, private keys) across a project | `4orman-tools secret-scan <abs-root-path>` |
@@ -98,8 +98,8 @@ Run `/verify-output` before marking any output complete — self-review + critic
   | validate a JSON file against a JSON Schema subset — returns violations with $-rooted paths | `4orman-tools validate-schema <abs-file> <abs-schema>` |
   | composite production readiness check — runs quality-gate + secret-scan + env-inspect; returns `{ ready, blockers, warnings }` | `4orman-tools prod-ready <abs-path>` |
   | machine-readable catalog of all subcommands — returns `{ version, subcommands: [{name, description, args}] }` | `4orman-tools registry` |
-  | check if a capability is natively available or needs Claude fallback — returns `{ available, source, subcommand, confidence }` | `4orman-tools capability-check <query...>` |
-  | task router — returns execution plan `{ routed, steps: [{layer, subcommand, argHint, confidence, reason}], fallback }` | `4orman-tools route <task...>` |
+  | check if a capability is natively available, has a non-stale ledger precedent, or needs Claude fallback — `source` is `native`\|`ledger`\|`claude`; `needsDecision: true` means neither exists — resolve now and `ledger record` the verdict | `4orman-tools capability-check <query...>` |
+  | task router — same 3-way check as `capability-check`, enriched into steps `{ routed, steps: [{layer, subcommand, argHint, confidence, reason}], fallback, reason }`; a `ledger`-layer step means reuse the recorded decision, don't re-reason | `4orman-tools route <task...>` |
   | composite project status — git state + build + tests + secrets → `{ status, confidence, issues, nextAction }` | `4orman-tools report <abs-path>` |
   | telemetry snapshot — cache entry count, project-state decisions/patterns, device-profile + compat-baseline presence, estimated token savings | `4orman-tools metrics` |
   | write ground-truth session state (version, wave, current step, pending errors) to `~/.4orman/session-snapshot.json` — called by PreCompact hook before every compaction | `4orman-tools session-snapshot <4orman-root>` |
@@ -180,7 +180,7 @@ If neither is available: do not proceed. Run the measurement first, then decide.
 
 When a worker or subcommand produces output: `confidence` and `self_healed` fields quantify result quality mathematically. `confidence: 1.0` = complete. `confidence < 0.8` = degraded; report to user before acting on the result.
 
-**First: check Zig's memory.** Before reasoning about any decision, run `4orman-tools ledger show` — if Zig has a stored entry for this question (non-stale), use it directly. Zero tokens. Only if Zig has no answer does Claude reason and enter the scoring protocol below.
+**First: check Zig's memory.** `capability-check`/`route` already do this automatically — before falling back to Claude they consult the ledger for a non-stale precedent (`source: "ledger"`). `build`/`run-tests` (and `quality-gate`, which runs both) also self-check: when tool/framework detection is genuinely ambiguous (e.g. both `Cargo.toml` and `build.zig` present), they flag `roleConfidence: "uncertain"` instead of silently trusting the tie-break, and `quality-gate` checks the ledger for that exact ambiguity — a `low`-severity finding means the ledger already resolved it, a `medium` one means it hasn't and needs a fresh decision. For anything not going through these, run `4orman-tools ledger show` directly — if Zig has a stored entry for this question (non-stale), use it. Zero tokens. Only when nothing has a native or ledger answer does Claude reason fresh and enter the scoring protocol below — and must `ledger record` the verdict afterward so it isn't re-litigated next time.
 
 ### The Ledger — Rigged Rock-Paper-Scissors
 
