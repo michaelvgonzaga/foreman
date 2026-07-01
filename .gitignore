@@ -1,5 +1,7 @@
 .DS_Store
 *.env
+__pycache__/
+*.pyc
 .claude/settings.local.json
 plugins.local.yml
 *-plugin.zip
