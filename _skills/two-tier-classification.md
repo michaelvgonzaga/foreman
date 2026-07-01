@@ -71,4 +71,4 @@ One word only. No punctuation. No explanation.
 
 ## Results
 
-- **Mjolnir M2** — 6 domains (wordpress, database, performance, pantheon, app-error, general); all 3 M2 test inputs routed correctly on first attempt; critic caught silent fallback bug, fixed before shipping.
+- **Support-bot** — 5 domains (billing, technical, account, feedback, general); all test inputs routed correctly on first attempt; critic caught silent fallback bug, fixed before shipping.

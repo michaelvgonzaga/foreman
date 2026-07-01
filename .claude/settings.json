@@ -49,7 +49,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "foreman-tools session-snapshot /Users/michaelgonzaga/foreman 2>/dev/null | python3 -c \"import sys,json,os; d=json.load(sys.stdin); v=d.get('version','?'); step=d.get('current','?'); ctx='Ground truth from session-snapshot:\\n'+json.dumps(d,indent=2); r={'hookSpecificOutput':{'hookEventName':'PreCompact','additionalContext':ctx}}; _p=os.path.expanduser('~/.foreman/foreman-quiet'); q=open(_p).read().strip()=='1' if os.path.exists(_p) else False; (r.update({'systemMessage':'foreman-tools session-snapshot v'+str(v)+' — next: '+str(step)}) if not q else None); print(json.dumps(r))\" 2>/dev/null || echo '{}'"
+            "command": "foreman-tools session-snapshot \"$(git rev-parse --show-toplevel 2>/dev/null || pwd)\" 2>/dev/null | python3 -c \"import sys,json,os; d=json.load(sys.stdin); v=d.get('version','?'); step=d.get('current','?'); ctx='Ground truth from session-snapshot:\\n'+json.dumps(d,indent=2); r={'hookSpecificOutput':{'hookEventName':'PreCompact','additionalContext':ctx}}; _p=os.path.expanduser('~/.foreman/foreman-quiet'); q=open(_p).read().strip()=='1' if os.path.exists(_p) else False; (r.update({'systemMessage':'foreman-tools session-snapshot v'+str(v)+' — next: '+str(step)}) if not q else None); print(json.dumps(r))\" 2>/dev/null || echo '{}'"
           }
         ]
       }

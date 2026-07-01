@@ -61,16 +61,20 @@ Ask the user (one question only): "Do you have existing Foreman projects on GitH
 
 ## Step 5 — Pinned Knowledge restore
 
-Run this unconditionally — it's a fast no-op if the cache is already warm:
+Get the user's GitHub username and derive their foreman-knowledge repo, then restore:
 
 ```bash
+GH_USER=$(gh api user --jq .login 2>/dev/null)
+FOREMAN_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo "$HOME/foreman")
 KREPO=/tmp/fk-restore
-git clone git@github.com:michaelvgonzaga/foreman-knowledge.git "$KREPO" 2>/dev/null || git -C "$KREPO" pull --ff-only 2>/dev/null
+git clone "git@github.com:${GH_USER}/foreman-knowledge.git" "$KREPO" 2>/dev/null || git -C "$KREPO" pull --ff-only 2>/dev/null
 if [ -f "$KREPO/pinned/claude-md-guardrails.json" ]; then
-  cat "$KREPO/pinned/claude-md-guardrails.json"  | foreman-tools cache-store ~/foreman/CLAUDE.md guardrails
-  cat "$KREPO/pinned/roadmap-state.json"          | foreman-tools cache-store ~/foreman/ROADMAP.md state
-  cat "$KREPO/pinned/skills-readme-outline.json"  | foreman-tools cache-store ~/foreman/_skills/README.md outline
+  cat "$KREPO/pinned/claude-md-guardrails.json"  | foreman-tools cache-store "$FOREMAN_ROOT/CLAUDE.md" guardrails
+  cat "$KREPO/pinned/roadmap-state.json"          | foreman-tools cache-store "$FOREMAN_ROOT/ROADMAP.md" state
+  cat "$KREPO/pinned/skills-readme-outline.json"  | foreman-tools cache-store "$FOREMAN_ROOT/_skills/README.md" outline
   echo "Pinned knowledge restored — session starts warm."
+else
+  echo "No foreman-knowledge repo found at github.com/${GH_USER}/foreman-knowledge — skipping. Create it with /knowledge-sync push after your first session."
 fi
 ```
 

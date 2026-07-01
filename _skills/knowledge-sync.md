@@ -16,7 +16,8 @@ KREPO=/tmp/foreman-knowledge-sync
 if [ -d "$KREPO/.git" ]; then
   git -C "$KREPO" pull --ff-only
 else
-  git clone git@github.com:michaelvgonzaga/foreman-knowledge.git "$KREPO"
+  GH_USER=$(gh api user --jq .login 2>/dev/null)
+  git clone "git@github.com:${GH_USER}/foreman-knowledge.git" "$KREPO"
 fi
 
 # Re-extract pinned values — abort on cache miss (hit: false means source must be read first)
@@ -49,7 +50,8 @@ git push origin main
 
 ```bash
 KREPO=/tmp/foreman-knowledge-restore
-git clone git@github.com:michaelvgonzaga/foreman-knowledge.git "$KREPO"
+GH_USER=$(gh api user --jq .login 2>/dev/null)
+git clone "git@github.com:${GH_USER}/foreman-knowledge.git" "$KREPO"
 
 cat "$KREPO/pinned/claude-md-guardrails.json"  | foreman-tools cache-store ~/foreman/CLAUDE.md guardrails
 cat "$KREPO/pinned/roadmap-state.json"          | foreman-tools cache-store ~/foreman/ROADMAP.md state

@@ -36,20 +36,20 @@ foreman-backup/
 ├── _skills/
 ├── ledger.json                ← ~/.foreman/ledger.json snapshot
 └── projects/
-    ├── cse-cli-v1.3.0.fmz
-    └── mjolnir-v0.2.0.fmz
+    ├── my-api-v1.3.0.fmz
+    └── my-tool-v0.2.0.fmz
 ```
 
 ### foreman.manifest.json schema
 
 ```json
 {
-  "name": "cse-cli",
+  "name": "my-api",
   "version": "v1.3.0",
   "foreman_min": "v0.60.0",
   "description": "",
   "kind": "project",
-  "github_url": "https://github.com/user/cse-cli",
+  "github_url": "https://github.com/user/my-api",
   "deps": {
     "brew": [],
     "apt": [],

@@ -6,6 +6,8 @@ __pycache__/
 .claude/settings.local.json
 plugins.local.yml
 *-plugin.zip
+# Personal workspace state — gitignored; each user maintains their own
+/ROADMAP.md
 # Local project index — per-workspace, seeded from _templates/projects.md, never committed
 /_projects.md
 # First-run marker — created by the launcher on fresh installs, deleted by /first-run on completion
