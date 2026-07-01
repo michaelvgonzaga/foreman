@@ -4,6 +4,22 @@ All caching layers in Foreman + foreman-tools, with status and gaps.
 
 ---
 
+## Knowledge State Taxonomy (v0.60.0+)
+
+Three tiers with distinct invalidation rules:
+
+| Tier | Location | Invalidation | Never |
+|---|---|---|---|
+| **Permanent Truth** | `~/.foreman/` (ledger, session-snapshot, profile, state/) | Never — append-only or hardware-only | Touched by any hook |
+| **Pinned Knowledge** | `~/.cache/foreman-tools/` sub-keys: guardrails, state, milestones, outline | Source file hash mismatch → invalidate, regenerate, re-store | Deleted preemptively |
+| **Disposable Cache** | `~/.cache/foreman-tools/` all other entries | Auto-invalidated by hash on access; Stop hook purges >30 days | Cleared on session start |
+
+**Rule:** Essential knowledge is not deleted; it is invalidated, regenerated, and verified.
+
+The five-layer map below (L1–L5) describes the *storage mechanism*. The taxonomy above describes the *architectural role*. Pinned Knowledge lives in L5 (disk cache) but is promoted above ordinary cache — it self-heals rather than being cleared.
+
+---
+
 ## Layer Map
 
 ```
@@ -200,7 +216,7 @@ Claude calls this once at session start instead of N separate cache-fetch calls.
 | L4a | Claude cache-fetch pattern | ⚠️ Guardrail only | Wave 2 |
 | L4b | Skills wired to cache | ❌ None wired | Wave 2 |
 | L5a | Disk cache persistence | ✅ Solid | — |
-| L5b | Atomic writes | ❌ Non-atomic | v0.30.0 |
+| L5b | Atomic writes | ✅ Fixed v0.30.0 | — |
 | L5c | Session warm-up | ❌ Missing | v0.30.0 (first W2) |
 | L5d | Scan result caching | ❌ Missing | Wave 2 |
 

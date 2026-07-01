@@ -16,3 +16,4 @@ Reusable prompt patterns, playbooks, and proven approaches.
 | [self-update.md](self-update.md) | Checking for Foreman upstream updates at session start and applying them safely | High |
 | [release-notes.md](release-notes.md) | Auto-generating categorized release notes from git commits for Foreman or any project | High |
 | [github-repo.md](github-repo.md) | Creating a public or private GitHub repo and wiring it as the git remote in one step | High |
+| [knowledge-sync.md](knowledge-sync.md) | Push/restore Pinned Knowledge State to/from `foreman-knowledge` private repo — portable across machines | High |

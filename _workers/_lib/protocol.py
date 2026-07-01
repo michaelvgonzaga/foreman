@@ -98,6 +98,7 @@ def write_output(result, schema=None):
             result["self_healed"] = result.get("self_healed", False)
         else:
             result.setdefault("confidence", 1.0)
+            result.setdefault("self_healed", False)
     print(json.dumps(result))
 
 

@@ -1,5 +1,18 @@
 First-run wizard. Complete each step in order before moving to the next.
 
+## Step 0 — Mode selection
+
+Ask the user exactly this, before anything else:
+
+> "Welcome to Foreman. Are you setting up as a **Power User** (log in with your GitHub account) or **Guest** (try it without an account)?
+>
+> **Power User** — your projects, customizations, and essential session knowledge are saved to your own private GitHub repos. Everything travels with you to any machine. Recommended.
+>
+> **Guest** — everything stays local. Nothing is saved to GitHub. You can upgrade to Power User any time by running `/first-run` again."
+
+- **Guest** → skip Steps 2, 4, 5, 6. Continue from Step 3. Remind the user at the end: "Run `/first-run` again when you're ready to connect your GitHub account — your knowledge and projects will sync from that point forward."
+- **Power User** → continue with all steps below.
+
 ## Step 1 — Dependencies
 
 Check all required tools:
@@ -46,18 +59,33 @@ Ask the user (one question only): "Do you have existing Foreman projects on GitH
 - Yes → run `/restore-projects`
 - No → continue
 
-## Step 5 — Memory restore
+## Step 5 — Pinned Knowledge restore
+
+Run this unconditionally — it's a fast no-op if the cache is already warm:
+
+```bash
+KREPO=/tmp/fk-restore
+git clone git@github.com:michaelvgonzaga/foreman-knowledge.git "$KREPO" 2>/dev/null || git -C "$KREPO" pull --ff-only 2>/dev/null
+if [ -f "$KREPO/pinned/claude-md-guardrails.json" ]; then
+  cat "$KREPO/pinned/claude-md-guardrails.json"  | foreman-tools cache-store ~/foreman/CLAUDE.md guardrails
+  cat "$KREPO/pinned/roadmap-state.json"          | foreman-tools cache-store ~/foreman/ROADMAP.md state
+  cat "$KREPO/pinned/skills-readme-outline.json"  | foreman-tools cache-store ~/foreman/_skills/README.md outline
+  echo "Pinned knowledge restored — session starts warm."
+fi
+```
+
+## Step 6 — Memory restore
 
 Ask the user (one question only): "Are you migrating from another machine and want to restore your Claude memory?"
 
 - Yes → run `/sync-memory restore`
 - No → continue
 
-## Step 6 — Plugins
+## Step 7 — Plugins
 
 Run `/setup` to install available public plugins.
 
-## Step 7 — Done
+## Step 8 — Done
 
 Delete the first-run marker: `rm -f <foreman-root>/.first-run`
 

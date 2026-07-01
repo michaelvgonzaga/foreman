@@ -3,7 +3,7 @@
 web/crawl.py — foreman worker
 Depth-limited BFS web crawler. stdlib only. Robots.txt compliant. Rate limited.
 
-Input (stdin JSON):
+Input (argv[1] JSON, falls back to stdin for direct testing):
   {
     "url":            "https://example.com",   # required — seed URL
     "max_depth":      2,                        # default 2 — link depth from seed

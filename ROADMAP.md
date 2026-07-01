@@ -2,13 +2,18 @@
 
 ## Active Work — pick up here after any restart
 
-**Wave:** 4 — Architecture Completion (effectively complete)  
-**Current:** v0.57.0 shipped. `ledger` subcommand + Rigged Rock-Paper-Scissors scoring protocol complete. Remaining deferred: M10 M2 (Rust worker), M11 M2 (plugin-install), M20 M2 (agent-slot shared state).  
+**Wave:** 5 — Portability + Self-Healing  
+**Current:** v0.60.0 in-flight — `export` + `import` subcommands written, build clean, uncommitted. Next: commit v0.60.0, retroactive tags v0.57.0/v0.58.0, brew-release. Then: audit findings remediation (CHANGELOG, api-schema, knowledgebase entries, knowledge-sync fix).  
+**v0.57.0 ✅** `ledger` + Rigged Rock-Paper-Scissors scoring protocol  
+**v0.58.0 ✅** `tui` — interactive split-panel project dashboard (Python curses via embedFile)  
+**v0.59.0 ✅** `knowledge-audit` — pre-export gate, 7-check scan, `ready: true` only when fully extracted  
+**v0.60.0 🔄** `export` + `import` — .fmz format, platform installers, workspace backup/restore  
 **Completed Wave 1:** `compat-check` ✅, `run-tests` ✅, `build` ✅, `env-inspect` ✅, `symbol-find` ✅, `secret-scan` ✅  
 **Completed Wave 2:** `device-scan` ✅, `delta-context` ✅, `git-cache` ✅, `project-state` ✅, `shell-run` ✅  
 **Completed Wave 3:** `quality-gate` (W3-A, v0.41.0) ✅, `validate-schema` (W3-B, v0.42.0) ✅, `prod-ready` (W3-C, v0.43.0) ✅  
-**Wave 4 complete:** framework cmds ✅, `registry` (M1) ✅, `capability-check` (M2) ✅, `route` (M3) ✅, `report` (M23) ✅, `metrics` (M26) ✅, `session-snapshot` (anti-drift) ✅, `sandbox-check` (M27) ✅, `rollback` (M29) ✅, `capability-promote` (M21) ✅, `ant` (thin Hive) ✅, `worker-run`+`worker-list` (M10 M1) ✅, `plugin-run`+`plugin-list` (M11 M1) ✅, `context-slice`+`state-merge` (M20 M1) ✅, `ledger`+`ledger score` (decision ledger) ✅ — current: v0.57.0  
-**Repo:** `foreman-tools/` is a separate git repo — check its own CHANGELOG for version state (current: v0.57.0).
+**Completed Wave 4:** framework cmds ✅, `registry` ✅, `capability-check` ✅, `route` ✅, `report` ✅, `metrics` ✅, `session-snapshot` ✅, `sandbox-check` ✅, `rollback` ✅, `capability-promote` ✅, `ant` ✅, `worker-run`+`worker-list` ✅, `plugin-run`+`plugin-list` ✅, `context-slice`+`state-merge` ✅, `ledger` ✅  
+**Deferred:** M10 M2 (Rust worker), M11 M2 (plugin-install UI), M20 M2 (agent-slot shared state)  
+**Repo:** `foreman-tools/` is a separate git repo — check its own CHANGELOG for version state.
 
 ---
 

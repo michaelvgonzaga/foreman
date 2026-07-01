@@ -53,6 +53,16 @@
           }
         ]
       }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "find ~/.cache/foreman-tools -mtime +30 -delete 2>/dev/null; true"
+          }
+        ]
+      }
     ]
   }
 }
