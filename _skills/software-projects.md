@@ -10,7 +10,7 @@
 If there is an existing codebase at a known path, scan it first:
 
 ```bash
-foreman-tools scan <path>
+4orman-tools scan <path>
 ```
 
 Use `entryPoint` to find the main file, `files` (sorted largest-first) to decide read order — largest source files are usually the most important. Use `framework` to confirm the tech stack before asking the user. Skip `find` / `ls` chains when the scan result covers it.

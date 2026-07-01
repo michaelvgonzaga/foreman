@@ -1,28 +1,30 @@
 <div align="center">
-  <img src="assets/foreman-banner.png" alt="Foreman - A framework for Claude Code that brings structure, verification, and shared knowledge to every project you build." width="100%"/>
+  <img src="assets/4orman-banner.png" alt="4ORMan - A framework for Claude Code that brings structure, verification, and shared knowledge to every project you build." width="100%"/>
 </div>
 
-# Foreman AI
+# 4ORMan
 
-A local AI-assisted development control plane built around deterministic execution.
+**Build • Verify • Share**
+
+A local AI-assisted development control plane built around deterministic execution — with a hard switch between **Manual mode** (you drive, you decide) and **Auto mode** (it drives, it decides — honored until you close the terminal).
 
 ---
 
 ## What is it?
 
-Foreman AI is a framework that runs on top of Claude Code. It adds structure to every session: a spec interview before any work begins, a verification step before any output ships, and a native CLI (`foreman-tools`) that replaces Claude's inline shell reasoning with 70 structured JSON subcommands — so every session starts fast, stays on track, and spends tokens on reasoning instead of parsing.
+4ORMan is a framework that runs on top of Claude Code. It adds structure to every session: a spec interview before any work begins, a verification step before any output ships, and a native CLI (`4orman-tools`) that replaces Claude's inline shell reasoning with structured JSON subcommands — so every session starts fast, stays on track, and spends tokens on reasoning instead of parsing. Every launch asks once, up front: manual or auto — and holds that answer for the life of the terminal session.
 
 ---
 
 ## Who is it for?
 
-Engineers, technical teams, and agencies running real projects with Claude Code. Claude is a skilled worker — but without structure it builds the wrong thing confidently, skips verification, and forgets what was decided last session. Foreman puts a foreman on the job: specs before work, verification before shipping, and a knowledgebase that carries context across every session.
+Engineers, technical teams, and agencies running real projects with Claude Code. Claude is a skilled worker — but without structure it builds the wrong thing confidently, skips verification, and forgets what was decided last session. 4ORMan puts a 4orman on the job: specs before work, verification before shipping, and a knowledgebase that carries context across every session.
 
 ---
 
 ## Why does it exist?
 
-AI-assisted development without determinism is expensive guesswork. Every token Claude spends parsing git output or re-deriving project state is waste. Foreman eliminates that waste: a session that starts slower or burns more tokens than without it is a failure.
+AI-assisted development without determinism is expensive guesswork. Every token Claude spends parsing git output or re-deriving project state is waste. 4ORMan eliminates that waste: a session that starts slower or burns more tokens than without it is a failure.
 
 ---
 
@@ -30,7 +32,7 @@ AI-assisted development without determinism is expensive guesswork. Every token 
 
 - **Spec-first workflow** — `/new-project` interviews you, writes a scope, requires sign-off before any code is written
 - **Built-in verification** — `/verify-output` runs a self-review then an independent Claude critic agent before anything ships
-- **Native CLI** — `foreman-tools` replaces shell parsing with 70 structured JSON subcommands
+- **Native CLI** — `4orman-tools` replaces shell parsing with 70 structured JSON subcommands
 - **TUI dashboard** — interactive split-panel project overview
 - **Worker system** — language workers (Python, Node, Go, Swift, Zig, and more) for tasks that need a runtime
 - **Plugin ecosystem** — public and private plugins via `/setup`, share as a zip
@@ -51,33 +53,33 @@ AI-assisted development without determinism is expensive guesswork. Every token 
 ## Installation
 
 ```bash
-brew tap michaelvgonzaga/foreman
-brew trust michaelvgonzaga/foreman
-brew install foreman-ai
+brew tap michaelvgonzaga/4orman
+brew trust michaelvgonzaga/4orman
+brew install orman-ai
 ```
 
 Then from any directory:
 
 ```bash
-foreman-ai
+4orman-ai
 ```
 
-On first run it walks you through setup and opens your Foreman workspace in Claude Code.
+On first run it walks you through setup and opens your 4ORMan workspace in Claude Code.
 
 **Update:**
 ```bash
-brew upgrade foreman-ai
+brew upgrade orman-ai
 ```
 
 **Uninstall:**
 ```bash
-brew uninstall foreman-ai && brew untap michaelvgonzaga/foreman
+brew uninstall orman-ai && brew untap michaelvgonzaga/4orman
 ```
 
 **Manual install:**
 ```bash
-git clone https://github.com/michaelvgonzaga/foreman.git
-claude /path/to/foreman
+git clone https://github.com/michaelvgonzaga/4orman.git
+claude /path/to/4orman
 ```
 
 ---
@@ -118,7 +120,7 @@ flowchart TD
 
     M --> O[/release or /brew-release]
 
-    subgraph FT[foreman-tools — 70 subcommands]
+    subgraph FT[4orman-tools — 70 subcommands]
         P[git · gh state]
         Q[build · test]
         R[cache · outline]
@@ -131,16 +133,16 @@ flowchart TD
     O -. structured JSON .-> FT
 ```
 
-**Session startup is under 200ms.** All git state, tool versions, and project context come from `foreman-tools` as pre-computed JSON — no Claude tokens spent parsing shell output.
+**Session startup is under 200ms.** All git state, tool versions, and project context come from `4orman-tools` as pre-computed JSON — no Claude tokens spent parsing shell output.
 
 ---
 
 ## Token savings
 
-Every cache hit, git query, and build-result read that goes through `foreman-tools` instead of Claude's inline reasoning saves tokens. Check your running total anytime:
+Every cache hit, git query, and build-result read that goes through `4orman-tools` instead of Claude's inline reasoning saves tokens. Check your running total anytime:
 
 ```bash
-foreman-tools metrics
+4orman-tools metrics
 ```
 
 ```json
@@ -157,7 +159,7 @@ Savings compound as the cache warms across sessions and more subcommands cover m
 
 ## Roadmap
 
-- [x] CLI — `foreman-tools` with 70 structured subcommands
+- [x] CLI — `4orman-tools` with 70 structured subcommands
 - [x] TUI — interactive project dashboard
 - [x] Worker ecosystem — Python, Node, Go, Swift, Zig, and more
 - [x] Plugin SDK — public and private plugin support

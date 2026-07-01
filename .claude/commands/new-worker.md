@@ -1,9 +1,9 @@
-Create a new language worker in `_workers/` — a single-file, stdlib-only script that Zig invokes via `foreman-tools worker-run` and returns structured JSON.
+Create a new language worker in `_workers/` — a single-file, stdlib-only script that Zig invokes via `4orman-tools worker-run` and returns structured JSON.
 
 ## Step 1 — Capability check
 
 ```bash
-foreman-tools capability-check <what you need>
+4orman-tools capability-check <what you need>
 ```
 
 If `available: true` — a native Zig subcommand already covers it. Use that instead.
@@ -37,7 +37,7 @@ Create `_workers/<category>/<name>.<ext>` following the senior-quality standards
 ## Step 4 — Test
 
 ```bash
-echo '{"<required_field>": "<value>"}' | foreman-tools worker-run <lang> _workers/<category>/<name>.<ext>
+echo '{"<required_field>": "<value>"}' | 4orman-tools worker-run <lang> _workers/<category>/<name>.<ext>
 ```
 
 Verify: `success: true`, correct output shape, no raw text in JSON values.
@@ -51,7 +51,7 @@ Add a row to the `_workers/README.md` catalog table:
 
 ## Step 6 — Promote check
 
-Run `foreman-tools capability-promote "<what this worker does>"`. If score ≥ 70, the core logic is a Zig promotion candidate — note it but don't block on it now.
+Run `4orman-tools capability-promote "<what this worker does>"`. If score ≥ 70, the core logic is a Zig promotion candidate — note it but don't block on it now.
 
 ---
 

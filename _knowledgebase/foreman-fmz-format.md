@@ -1,6 +1,6 @@
-# Foreman: .fmz Plugin/Project Format
+# 4ORMan: .fmz Plugin/Project Format
 
-**Source:** foreman-tools source (`computeExport`, `computeImport`, `exportWriteManifest` in root.zig) + direct experiment
+**Source:** 4orman-tools source (`computeExport`, `computeImport`, `exportWriteManifest` in root.zig) + direct experiment
 **Last verified:** 2026-07-01
 **Confidence:** High — derived directly from the v0.60.0 implementation
 
@@ -10,13 +10,13 @@
 
 ### .fmz is a renamed tar.gz
 
-A `.fmz` file (Foreman Module Zip) is a standard gzip-compressed tar archive with a `.fmz` extension. Any `tar -xzf` command can extract it. The extension signals "this is a Foreman package" and triggers special handling in `foreman-tools import`.
+A `.fmz` file (4ORMan Module Zip) is a standard gzip-compressed tar archive with a `.fmz` extension. Any `tar -xzf` command can extract it. The extension signals "this is a 4ORMan package" and triggers special handling in `4orman-tools import`.
 
 ### Archive structure
 
 ```
 <name>-<version>/
-├── foreman.manifest.json      ← required — package identity and metadata
+├── 4orman.manifest.json      ← required — package identity and metadata
 ├── project/                   ← git archive of HEAD (all tracked files)
 │   ├── CLAUDE.md
 │   ├── spec.md
@@ -27,20 +27,20 @@ A `.fmz` file (Foreman Module Zip) is a standard gzip-compressed tar archive wit
 
 For workspace backup format (`--format backup`):
 ```
-foreman-backup/
-├── foreman.manifest.json      ← kind: "workspace"
+4orman-backup/
+├── 4orman.manifest.json      ← kind: "workspace"
 ├── CLAUDE.md                  ← framework files
 ├── ROADMAP.md
 ├── _templates/
 ├── _knowledgebase/
 ├── _skills/
-├── ledger.json                ← ~/.foreman/ledger.json snapshot
+├── ledger.json                ← ~/.4orman/ledger.json snapshot
 └── projects/
     ├── my-api-v1.3.0.fmz
     └── my-tool-v0.2.0.fmz
 ```
 
-### foreman.manifest.json schema
+### 4orman.manifest.json schema
 
 ```json
 {
@@ -63,7 +63,7 @@ foreman-backup/
 |---|---|---|
 | `name` | string | basename of project directory |
 | `version` | string | latest git tag or `"0.0.0"` if untagged |
-| `foreman_min` | string | foreman-tools VERSION at export time |
+| `foreman_min` | string | 4orman-tools VERSION at export time |
 | `kind` | string | `"project"` or `"workspace"` — import uses this to detect backup vs project |
 | `github_url` | string | parsed from git remote origin; empty if no remote |
 | `deps.brew/apt/winget` | array | runtime deps for installer scripts (currently always empty — manual population needed) |
@@ -71,20 +71,20 @@ foreman-backup/
 
 ### Import behavior
 
-`foreman-tools import <path.fmz> [<foreman-root>]`
+`4orman-tools import <path.fmz> [<4orman-root>]`
 
-1. Extracts to `/tmp/foreman-import-<pid>/`
-2. Reads `foreman.manifest.json`
+1. Extracts to `/tmp/4orman-import-<pid>/`
+2. Reads `4orman.manifest.json`
 3. If `kind == "workspace"`: restores framework files + ledger + recursively imports `projects/*.fmz`
-4. If `kind == "project"`: copies `project/` tree to `<foreman-root>/<name>/`, carries over `knowledge/`
+4. If `kind == "project"`: copies `project/` tree to `<4orman-root>/<name>/`, carries over `knowledge/`
 5. Aborts with `success: false` if destination already exists
 
 ### Export formats summary
 
 | Format | Output | Use case |
 |---|---|---|
-| `fmz` | `<name>-<version>.fmz` | Machine-to-machine transfer; import on any Foreman install |
-| `backup` | `foreman-backup.fmz` | Full workspace snapshot; emergency migration |
+| `fmz` | `<name>-<version>.fmz` | Machine-to-machine transfer; import on any 4ORMan install |
+| `backup` | `4orman-backup.fmz` | Full workspace snapshot; emergency migration |
 | `brew` | `<name>-install-brew.sh` | Teammate with Homebrew — one script to clone + install |
 | `mac` | `<name>-install-mac.sh` | Teammate on fresh Mac — includes Homebrew bootstrap |
 | `linux` | `<name>-install-linux.sh` | apt/dnf detection, no Homebrew |
@@ -102,7 +102,7 @@ foreman-backup/
 
 ## How this affects our work
 
-- Use `foreman-tools knowledge-audit` before export — `ready: true` is the gate. Export before audit = incomplete knowledge transfer.
-- The `.fmz` format is the canonical portable unit for Foreman projects. Use it for: archiving a completed project, moving to a new machine, sharing with a teammate.
-- Workspace backup (`--format backup`) includes the ledger snapshot. Restore with `foreman-tools import foreman-backup.fmz` to get full session state on a new machine.
-- For public sharing, use `--format brew` or `--format mac` — these generate a script that only pulls from the project's GitHub repo (no Foreman internals included).
+- Use `4orman-tools knowledge-audit` before export — `ready: true` is the gate. Export before audit = incomplete knowledge transfer.
+- The `.fmz` format is the canonical portable unit for 4ORMan projects. Use it for: archiving a completed project, moving to a new machine, sharing with a teammate.
+- Workspace backup (`--format backup`) includes the ledger snapshot. Restore with `4orman-tools import 4orman-backup.fmz` to get full session state on a new machine.
+- For public sharing, use `--format brew` or `--format mac` — these generate a script that only pulls from the project's GitHub repo (no 4ORMan internals included).

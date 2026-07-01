@@ -5,9 +5,9 @@ Manual public release — pauses for explicit confirmation before each push, tag
 Get project path (ask if unclear). Then:
 
 ```bash
-foreman-tools release-info <project-path>
-foreman-tools repo-info <project-path>
-foreman-tools formula-info /opt/homebrew/Library/Taps/<owner>/homebrew-<repo> <name> 2>/dev/null
+4orman-tools release-info <project-path>
+4orman-tools repo-info <project-path>
+4orman-tools formula-info /opt/homebrew/Library/Taps/<owner>/homebrew-<repo> <name> 2>/dev/null
 ```
 
 Show `suggestedNext` and ask the user to confirm or override the version.
@@ -26,13 +26,13 @@ Show: `Will run: git tag v<version> && git push origin v<version>` — ask "OK?"
 
 ## Step 4 — GitHub release (confirm before running)
 
-Show the release title and notes. Ask "Publish this release?" before running `foreman-tools gh-release`.
+Show the release title and notes. Ask "Publish this release?" before running `4orman-tools gh-release`.
 
 ## Step 5 — Homebrew formula (if formula exists, confirm before running)
 
 Compute SHA256:
 ```bash
-foreman-tools tarball-sha <owner> <repo> v<version>
+4orman-tools tarball-sha <owner> <repo> v<version>
 ```
 
 Show the three formula fields that will change (url, sha256, version). Ask "Update and push formula?" before running.

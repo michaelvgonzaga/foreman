@@ -7,7 +7,7 @@ If inside a project directory (has `spec.md` and `CLAUDE.md`), use it. Otherwise
 ## Step 2 — Run prod-ready check
 
 ```bash
-foreman-tools prod-ready <abs-path>
+4orman-tools prod-ready <abs-path>
 ```
 
 ## Step 3 — Surface verdict

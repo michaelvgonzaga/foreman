@@ -9,8 +9,8 @@ Ask the user (one at a time if unclear):
 3. **Version number** — get release pre-flight data:
 
 ```bash
-# With foreman-tools (preferred — latestTag, suggestedNext, commitsSince, isDirty in one call):
-foreman-tools release-info <project-path>
+# With 4orman-tools (preferred — latestTag, suggestedNext, commitsSince, isDirty in one call):
+4orman-tools release-info <project-path>
 # Fallback:
 git -C <project-path> describe --tags --abbrev=0 2>/dev/null
 ```
@@ -22,8 +22,8 @@ Do not proceed until you have all three.
 ## Step 2 — Pre-flight checks
 
 Run and stop on any failure:
-- **Dirty repo** — use `isDirty` from `foreman-tools release-info` (if used in Step 1), or `git -C <project-path> status --porcelain`
-- **Tag already exists** — `foreman-tools tag-exists <project-path> <version>` (preferred), or `git -C <project-path> tag | grep "^v<version>$"`
+- **Dirty repo** — use `isDirty` from `4orman-tools release-info` (if used in Step 1), or `git -C <project-path> status --porcelain`
+- **Tag already exists** — `4orman-tools tag-exists <project-path> <version>` (preferred), or `git -C <project-path> tag | grep "^v<version>$"`
 - `git -C <tap-path> status` — tap not found
 
 ## Step 3 — Tag the release
@@ -38,8 +38,8 @@ git -C <project-path> push origin v<version>
 Get owner/repo (needed to build the tarball URL):
 
 ```bash
-# With foreman-tools (preferred — parses SSH and HTTPS automatically):
-foreman-tools repo-info <project-path>
+# With 4orman-tools (preferred — parses SSH and HTTPS automatically):
+4orman-tools repo-info <project-path>
 # Fallback:
 git -C <project-path> remote get-url origin
 # SSH format:  git@github.com:owner/repo.git  → owner/repo
@@ -49,8 +49,8 @@ git -C <project-path> remote get-url origin
 Compute the SHA256 (use owner/repo from the repo-info call above):
 
 ```bash
-# With foreman-tools (preferred — fetches, computes SHA256, retries once on empty-file hash):
-foreman-tools tarball-sha <owner> <repo> v<version>
+# With 4orman-tools (preferred — fetches, computes SHA256, retries once on empty-file hash):
+4orman-tools tarball-sha <owner> <repo> v<version>
 # Fallback (wait 5s for GitHub to generate tarball, then hash):
 sleep 5 && curl -sL https://github.com/<owner>/<repo>/archive/refs/tags/v<version>.tar.gz | shasum -a 256
 # If fallback returns empty-file hash (e3b0c44...), wait 10s and retry once.
@@ -61,8 +61,8 @@ sleep 5 && curl -sL https://github.com/<owner>/<repo>/archive/refs/tags/v<versio
 Read the current formula state to know what to change:
 
 ```bash
-# With foreman-tools (preferred — parses url, sha256, version in one call):
-foreman-tools formula-info <tap-path> <formula-name>
+# With 4orman-tools (preferred — parses url, sha256, version in one call):
+4orman-tools formula-info <tap-path> <formula-name>
 # Fallback: read the .rb file directly
 ```
 
@@ -88,9 +88,9 @@ Apply the `release-notes` skill (`_skills/release-notes.md`) to auto-generate ca
 Wait for confirmation, then write the notes to a temp file and create the release:
 
 ```bash
-# With foreman-tools (preferred — avoids heredoc/quote escaping):
+# With 4orman-tools (preferred — avoids heredoc/quote escaping):
 # Write notes to $NOTES_FILE, then:
-foreman-tools gh-release <owner> <repo> v<version> "v<version> — <summary>" $NOTES_FILE
+4orman-tools gh-release <owner> <repo> v<version> "v<version> — <summary>" $NOTES_FILE
 # Fallback:
 gh release create v<version> \
   --repo <owner>/<repo> \

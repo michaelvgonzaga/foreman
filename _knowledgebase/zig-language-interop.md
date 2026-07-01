@@ -1,8 +1,8 @@
 # Zig: Language Interop Policy
 
-**Source:** Architectural decision from foreman-tools design session
+**Source:** Architectural decision from 4orman-tools design session
 **Last verified:** 2026-06-30
-**Confidence:** High — derived from actual foreman-tools implementation and Wave 1-4 roadmap analysis
+**Confidence:** High — derived from actual 4orman-tools implementation and Wave 1-4 roadmap analysis
 
 ## What we know
 
@@ -48,7 +48,7 @@ Task requires a library (not a CLI)?
 
 Zig does NOT link against Python, Node, or any other language runtime. Workers are:
 - Separate executables invoked via `std.process.Child`
-- Return JSON to stdout (same contract as foreman-tools subcommands)
+- Return JSON to stdout (same contract as 4orman-tools subcommands)
 - Only instantiated when the task genuinely requires their ecosystem
 
 This is Module 10 (Language Worker Manager), Wave 4. Not relevant until Wave 4.

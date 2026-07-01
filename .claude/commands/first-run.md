@@ -4,7 +4,7 @@ First-run wizard. Complete each step in order before moving to the next.
 
 Ask the user exactly this, before anything else:
 
-> "Welcome to Foreman. Are you setting up as a **Power User** (log in with your GitHub account) or **Guest** (try it without an account)?
+> "Welcome to 4ORMan. Are you setting up as a **Power User** (log in with your GitHub account) or **Guest** (try it without an account)?
 >
 > **Power User** — your projects, customizations, and essential session knowledge are saved to your own private GitHub repos. Everything travels with you to any machine. Recommended.
 >
@@ -18,8 +18,8 @@ Ask the user exactly this, before anything else:
 Check all required tools:
 
 ```bash
-# With foreman-tools (preferred — claude, git, gh in one call):
-foreman-tools doctor
+# With 4orman-tools (preferred — claude, git, gh in one call):
+4orman-tools doctor
 # Fallback:
 echo "claude: $(command -v claude >/dev/null 2>&1 && echo OK || echo MISSING)"
 echo "git:    $(command -v git >/dev/null 2>&1 && echo OK || echo MISSING)"
@@ -36,8 +36,8 @@ Do not continue until all three show OK. Tell the user to type `/first-run` agai
 ## Step 2 — GitHub authentication
 
 ```bash
-# With foreman-tools (preferred):
-foreman-tools gh-user
+# With 4orman-tools (preferred):
+4orman-tools gh-user
 # Fallback:
 gh auth status 2>&1
 ```
@@ -54,7 +54,7 @@ This installs the memory-sync and auto-push Stop hooks into `~/.claude/settings.
 
 ## Step 4 — Existing projects
 
-Ask the user (one question only): "Do you have existing Foreman projects on GitHub from another machine?"
+Ask the user (one question only): "Do you have existing 4ORMan projects on GitHub from another machine?"
 
 - Yes → run `/restore-projects`
 - No → continue
@@ -65,13 +65,13 @@ Get the user's GitHub username and derive their foreman-knowledge repo, then res
 
 ```bash
 GH_USER=$(gh api user --jq .login 2>/dev/null)
-FOREMAN_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo "$HOME/foreman")
+FOREMAN_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo "$HOME/4orman")
 KREPO=/tmp/fk-restore
 git clone "git@github.com:${GH_USER}/foreman-knowledge.git" "$KREPO" 2>/dev/null || git -C "$KREPO" pull --ff-only 2>/dev/null
 if [ -f "$KREPO/pinned/claude-md-guardrails.json" ]; then
-  cat "$KREPO/pinned/claude-md-guardrails.json"  | foreman-tools cache-store "$FOREMAN_ROOT/CLAUDE.md" guardrails
-  cat "$KREPO/pinned/roadmap-state.json"          | foreman-tools cache-store "$FOREMAN_ROOT/ROADMAP.md" state
-  cat "$KREPO/pinned/skills-readme-outline.json"  | foreman-tools cache-store "$FOREMAN_ROOT/_skills/README.md" outline
+  cat "$KREPO/pinned/claude-md-guardrails.json"  | 4orman-tools cache-store "$FOREMAN_ROOT/CLAUDE.md" guardrails
+  cat "$KREPO/pinned/roadmap-state.json"          | 4orman-tools cache-store "$FOREMAN_ROOT/ROADMAP.md" state
+  cat "$KREPO/pinned/skills-readme-outline.json"  | 4orman-tools cache-store "$FOREMAN_ROOT/_skills/README.md" outline
   echo "Pinned knowledge restored — session starts warm."
 else
   echo "No foreman-knowledge repo found at github.com/${GH_USER}/foreman-knowledge — skipping. Create it with /knowledge-sync push after your first session."
@@ -91,6 +91,6 @@ Run `/setup` to install available public plugins.
 
 ## Step 8 — Done
 
-Delete the first-run marker: `rm -f <foreman-root>/.first-run`
+Delete the first-run marker: `rm -f <4orman-root>/.first-run`
 
 Tell the user: "You're set up. Run `/new-project` to start your first project."

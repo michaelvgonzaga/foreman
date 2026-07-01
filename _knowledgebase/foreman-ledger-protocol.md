@@ -1,6 +1,6 @@
-# Foreman: Ledger Protocol — Rigged Rock-Paper-Scissors
+# 4ORMan: Ledger Protocol — Rigged Rock-Paper-Scissors
 
-**Source:** CLAUDE.md guardrails + foreman-tools source (`computeLedger*` in root.zig) + direct experiment
+**Source:** CLAUDE.md guardrails + 4orman-tools source (`computeLedger*` in root.zig) + direct experiment
 **Last verified:** 2026-07-01
 **Confidence:** High — derived directly from the implementation
 
@@ -15,7 +15,7 @@ Every contested decision between Claude reasoning and Zig stored data runs throu
 ### Scoring formula (Zig computes, Claude never self-certifies)
 
 ```
-foreman-tools ledger score <question> <sources-json>
+4orman-tools ledger score <question> <sources-json>
 ```
 
 Returns `{ composite, sample_count, winner, void, reason, zig_entry_found, zig_entry_stale }`.
@@ -35,7 +35,7 @@ Minimum 10 sources or automatic void. Composite must reach exactly 100% for a Cl
 4. No valid non-stale Zig ledger entry exists for this question
 
 **Zig wins when ALL THREE hold:**
-1. A ledger entry exists at `~/.foreman/ledger.json`
+1. A ledger entry exists at `~/.4orman/ledger.json`
 2. Entry is not stale (recorded within 365 days)
 3. Claude cannot produce 10 verified sources that contradict it
 
@@ -45,7 +45,7 @@ Minimum 10 sources or automatic void. Composite must reach exactly 100% for a Cl
 
 ### Storage format
 
-File: `~/.foreman/ledger.json`
+File: `~/.4orman/ledger.json`
 Structure: `{ "entries": [ { id, winner, question, reasoning, recorded_at, revalidation_due_ts, is_stale } ] }`
 
 - `id` — first 16 hex chars of sha256(winner:question:date)
@@ -62,7 +62,7 @@ Only a confirmed win triggers promotion:
 
 ### Session start check
 
-`foreman-tools ledger check-stale` runs at every session start. Stale entries surface immediately — Claude never silently relies on outdated Zig data.
+`4orman-tools ledger check-stale` runs at every session start. Stale entries surface immediately — Claude never silently relies on outdated Zig data.
 
 ---
 
@@ -75,7 +75,7 @@ Only a confirmed win triggers promotion:
 
 ## How this affects our work
 
-- Before reasoning about any contested claim, run `foreman-tools ledger show` first. If Zig has a stored entry (non-stale), use it. Zero tokens.
+- Before reasoning about any contested claim, run `4orman-tools ledger show` first. If Zig has a stored entry (non-stale), use it. Zero tokens.
 - Never score your own round — call `ledger score` and read the JSON verdict.
 - Training memory alone scores 0. A claim backed only by training memory can never win a round.
-- After a confirmed win, call `foreman-tools ledger record <winner> <question> <reasoning>` immediately — do not defer.
+- After a confirmed win, call `4orman-tools ledger record <winner> <question> <reasoning>` immediately — do not defer.

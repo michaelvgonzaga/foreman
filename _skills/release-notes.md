@@ -1,6 +1,6 @@
 # Release Notes
 
-**Works well for:** Auto-generating release notes for Foreman itself or any project inside Foreman, based on git commits since the last tag
+**Works well for:** Auto-generating release notes for 4ORMan itself or any project inside 4ORMan, based on git commits since the last tag
 **Confidence:** High
 
 ## The pattern
@@ -8,9 +8,9 @@
 ### Step 1 — Get commits since last release
 
 ```bash
-# With foreman-tools (preferred — latestTag + pre-categorized commits in two calls):
-foreman-tools release-info <repo-path>          # get latestTag → use as PREV
-foreman-tools commits <repo-path> <latestTag>   # pre-categorized JSON array
+# With 4orman-tools (preferred — latestTag + pre-categorized commits in two calls):
+4orman-tools release-info <repo-path>          # get latestTag → use as PREV
+4orman-tools commits <repo-path> <latestTag>   # pre-categorized JSON array
 # Fallback:
 PREV=$(git -C <repo-path> describe --tags --abbrev=0 <new-tag>^ 2>/dev/null || echo "")
 git -C <repo-path> log ${PREV:+"$PREV"..}"<new-tag>" --oneline
@@ -60,7 +60,7 @@ For projects, focus on what the user can now do differently, not what files chan
 
 Write a short title (under 60 chars) that captures the most important thing in this release:
 
-- Good: `v1.2.0 — Public/private model, foreman-ai rename`
+- Good: `v1.2.0 — Public/private model, 4orman-ai rename`
 - Bad: `v1.2.0 — Various updates and fixes`
 
 ## When to use it
@@ -69,7 +69,7 @@ Write a short title (under 60 chars) that captures the most important thing in t
 - Automatically during `/release` (Step 3) and `/brew-release` (Step 7) — generates the release body and CHANGELOG entry
 - When the user asks "write release notes", "what changed since last release", or "generate changelog"
 - When completing a project milestone and wanting to document progress
-- For Foreman itself: if a command or skill file changed, name it specifically.
+- For 4ORMan itself: if a command or skill file changed, name it specifically.
 
 ## When NOT to use it
 

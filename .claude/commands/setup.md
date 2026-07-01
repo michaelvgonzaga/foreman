@@ -1,4 +1,4 @@
-# Foreman Setup
+# 4ORMan Setup
 
 Install plugins listed in `plugins.public.yml` and `plugins.local.yml`.
 
@@ -6,7 +6,7 @@ Install plugins listed in `plugins.public.yml` and `plugins.local.yml`.
 
 **1. Read the plugin manifests**
 
-Read `plugins.public.yml` from the Foreman root. If `plugins.local.yml` exists, read it too. Merge both plugin lists. If neither has any entries, tell the user there is nothing to install and stop.
+Read `plugins.public.yml` from the 4ORMan root. If `plugins.local.yml` exists, read it too. Merge both plugin lists. If neither has any entries, tell the user there is nothing to install and stop.
 
 **2. Check for plugins.local.yml**
 
@@ -21,7 +21,7 @@ No plugins.local.yml found. To install your private repos:
 
 **3. For each plugin in the merged list**
 
-- Check if the directory `<name>/` already exists in the Foreman root
+- Check if the directory `<name>/` already exists in the 4ORMan root
   - If yes: mark as "already installed — skipped"
   - If no: run `git clone <repo> <name>/`
     - If clone succeeds: mark as "installed"
@@ -53,8 +53,8 @@ After the plugin summary, print:
 
 ```
 Next steps:
-  /setup-automation    — install the auto-sync/auto-push hooks (memory + project repos). Run once per machine; the hooks are machine-local and don't travel with Foreman.
-  /restore-projects    — pull your existing Foreman projects from GitHub into this workspace.
+  /setup-automation    — install the auto-sync/auto-push hooks (memory + project repos). Run once per machine; the hooks are machine-local and don't travel with 4ORMan.
+  /restore-projects    — pull your existing 4ORMan projects from GitHub into this workspace.
   /sync-memory restore — pull your saved Claude memory onto this machine.
 ```
 

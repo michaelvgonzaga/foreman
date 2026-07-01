@@ -5,8 +5,8 @@ Manual private release — pauses for explicit confirmation before each push and
 Get project path (ask if unclear). Then:
 
 ```bash
-foreman-tools release-info <project-path>
-foreman-tools repo-info <project-path>
+4orman-tools release-info <project-path>
+4orman-tools repo-info <project-path>
 ```
 
 Show `suggestedNext` and ask the user to confirm or override the version.
@@ -25,7 +25,7 @@ Show: `Will run: git tag v<version> && git push origin v<version>` — ask "OK?"
 
 ## Step 4 — GitHub release (confirm before running)
 
-Show the release title and notes. Ask "Publish this release?" before running `foreman-tools gh-release`.
+Show the release title and notes. Ask "Publish this release?" before running `4orman-tools gh-release`.
 
 ## Step 5 — Summary
 

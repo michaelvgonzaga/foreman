@@ -3,8 +3,8 @@ Wire up per-machine Stop hooks in `~/.claude/settings.json` — auto-sync memory
 ## Step 0 — Preconditions
 
 ```bash
-# With foreman-tools (preferred):
-foreman-tools gh-user
+# With 4orman-tools (preferred):
+4orman-tools gh-user
 # Fallback:
 gh auth status                 # git pushes need auth
 git --version
@@ -25,9 +25,9 @@ The two hooks (identified by `statusMessage`). If a `Stop` hook with the same `s
 d="$HOME/.claude/projects/$(printf '%s' \"$HOME\" | sed 's#/#-#g')/memory"; if [ -d \"$d/.git\" ]; then cd \"$d\" && git add -A 2>/dev/null; git diff --cached --quiet 2>/dev/null || { git commit -qm \"Memory auto-sync $(date +%FT%T)\" 2>/dev/null; git push -q 2>/dev/null || { git pull --rebase -q 2>/dev/null && git push -q 2>/dev/null || git rebase --abort 2>/dev/null; }; }; fi; exit 0
 ```
 
-**Hook B — "Pushing project commits…"** (push any `~/foreman` project repo with a remote + unpushed commits):
+**Hook B — "Pushing project commits…"** (push any `~/4orman` project repo with a remote + unpushed commits):
 ```
-for p in \"$HOME/foreman\"/*/; do [ -d \"$p/.git\" ] || continue; git -C \"$p\" rev-parse --abbrev-ref --symbolic-full-name @{u} >/dev/null 2>&1 || continue; [ -n \"$(git -C \"$p\" log @{u}..HEAD --oneline 2>/dev/null)\" ] || continue; git -C \"$p\" push -q 2>/dev/null || { git -C \"$p\" pull --rebase -q 2>/dev/null && git -C \"$p\" push -q 2>/dev/null || git -C \"$p\" rebase --abort 2>/dev/null; }; done; exit 0
+for p in \"$HOME/4orman\"/*/; do [ -d \"$p/.git\" ] || continue; git -C \"$p\" rev-parse --abbrev-ref --symbolic-full-name @{u} >/dev/null 2>&1 || continue; [ -n \"$(git -C \"$p\" log @{u}..HEAD --oneline 2>/dev/null)\" ] || continue; git -C \"$p\" push -q 2>/dev/null || { git -C \"$p\" pull --rebase -q 2>/dev/null && git -C \"$p\" push -q 2>/dev/null || git -C \"$p\" rebase --abort 2>/dev/null; }; done; exit 0
 ```
 
 Merge them under `.hooks.Stop` so the result looks like (alongside any existing settings):
@@ -51,8 +51,8 @@ Write the merged file.
 ## Step 3 — Validate
 
 ```bash
-# With foreman-tools (preferred — checks both hooks by statusMessage in one call):
-foreman-tools validate-hooks
+# With 4orman-tools (preferred — checks both hooks by statusMessage in one call):
+4orman-tools validate-hooks
 # Fallback:
 jq -e '.hooks.Stop[].hooks[] | select(.type=="command") | .command' ~/.claude/settings.json
 ```

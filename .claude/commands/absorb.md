@@ -1,4 +1,4 @@
-Find a project, file, or repo — wherever it lives — bring it into Foreman, scan it, and iterate to production-ready.
+Find a project, file, or repo — wherever it lives — bring it into 4ORMan, scan it, and iterate to production-ready.
 
 ---
 
@@ -14,7 +14,7 @@ Present matches with path, type, and recency. Ask which one (or accept a path/UR
 
 ## Phase 2 — Check if already absorbed
 
-Check `ls <foreman-root>/` and `_projects.md` for an existing match. If found, tell the user and stop.
+Check `ls <4orman-root>/` and `_projects.md` for an existing match. If found, tell the user and stop.
 
 ---
 
@@ -22,14 +22,14 @@ Check `ls <foreman-root>/` and `_projects.md` for an existing match. If found, t
 
 Ask the user two questions (one at a time):
 
-1. **Name:** "What should this project be called inside Foreman? (lowercase, no spaces — e.g. `shopify-theme`)"
+1. **Name:** "What should this project be called inside 4ORMan? (lowercase, no spaces — e.g. `shopify-theme`)"
 2. **Visibility:** "Public or private?"
    - **Public project** — pushed to a public GitHub repo, anyone can see it
    - **Private project** — pushed to a private GitHub repo, only you
-   - **Public plugin** — extends Foreman, listed in `plugins.public.yml`, anyone can install via `/setup`
-   - **Private plugin** — extends your Foreman privately, listed in `plugins.local.yml`
+   - **Public plugin** — extends 4ORMan, listed in `plugins.public.yml`, anyone can install via `/setup`
+   - **Private plugin** — extends your 4ORMan privately, listed in `plugins.local.yml`
 
-Then copy the source. Use `rsync` to exclude dependency dirs and any existing `.git` history — the absorbed project gets a fresh git history inside Foreman:
+Then copy the source. Use `rsync` to exclude dependency dirs and any existing `.git` history — the absorbed project gets a fresh git history inside 4ORMan:
 
 ```bash
 rsync -a \
@@ -45,24 +45,24 @@ rsync -a \
   --exclude='.next' \
   --exclude='vendor' \
   --exclude='*.zip' \
-  <source-path>/ <foreman-root>/<name>/
+  <source-path>/ <4orman-root>/<name>/
 ```
 
 If source is a git repo URL:
 ```bash
-git clone --depth=1 <url> <foreman-root>/<name>
-rm -rf <foreman-root>/<name>/.git
+git clone --depth=1 <url> <4orman-root>/<name>
+rm -rf <4orman-root>/<name>/.git
 ```
 
 If source is a single file, create a minimal structure:
 ```bash
-mkdir -p <foreman-root>/<name>/src
-cp <source-path> <foreman-root>/<name>/src/
+mkdir -p <4orman-root>/<name>/src
+cp <source-path> <4orman-root>/<name>/src/
 ```
 
 **On any failure during copy:** immediately remove the partial directory and tell the user what failed — do not leave a broken state.
 ```bash
-rm -rf <foreman-root>/<name>
+rm -rf <4orman-root>/<name>
 ```
 
 Check git version; if 2.28+: `git init -b main`, else `git init` + `git symbolic-ref HEAD refs/heads/main`. Then: `git add . && git commit -m "Initial import"`.
@@ -78,9 +78,9 @@ If the user chose **public or private project**, apply the `github-repo` skill (
 Get a structural overview first:
 
 ```bash
-# With foreman-tools (preferred):
-foreman-tools scan <foreman-root>/<name>
-# Fallback: ls -la <foreman-root>/<name>
+# With 4orman-tools (preferred):
+4orman-tools scan <4orman-root>/<name>
+# Fallback: ls -la <4orman-root>/<name>
 ```
 
 The JSON gives you: `framework` (tech stack), `keyFiles` (manifest/config files present), `depCount` (dependency scale), `dirMap` (directory tree), `entryPoint` (detected main file), `files` (flat file inventory sorted largest-first, capped at 500), `fileCount` (total). Use `entryPoint` and the top entries in `files` to decide which files to read first — do not `find` or `ls` when the scan result is available.
@@ -110,7 +110,7 @@ Go through all files in the project and build a complete picture:
 **Production gap**
 - What specifically needs to happen before this is production-ready?
 
-Write a `spec.md` based on what you find using the standard Foreman spec template (`_templates/spec_output.md`). The milestones should map to closing the production gap.
+Write a `spec.md` based on what you find using the standard 4ORMan spec template (`_templates/spec_output.md`). The milestones should map to closing the production gap.
 
 Write a `CLAUDE.md` based on `_templates/project_claude.md`.
 

@@ -1,23 +1,60 @@
-# Foreman Help
+# 4ORMan Help
 
 ---
 
-**Foreman commands**
+**Core workflow**
 
 | Command | What it does |
 |---------|-------------|
 | `/help` | Show this list |
 | `/new-project` | Start a new project — spec interview, scaffolding, and sign-off before any work begins |
 | `/verify-output` | Verify any output before marking it done — self-review + independent critic agent |
+| `/gate` | Toggle autopilot vs. confirm-before-acting for the rest of this terminal session |
+| `/build` | Build the project and surface structured errors with file:line navigation |
+| `/run-tests` | Run the project's test suite and surface structured failures |
+| `/quality-gate` | Run build + tests and get a severity-bucketed pass/fail verdict |
+| `/prod-ready` | Composite production readiness check — build, tests, quality gate, secrets, env |
+
+**Setup & plugins**
+
+| Command | What it does |
+|---------|-------------|
 | `/setup` | Install available plugins from the public list and your private repos |
+| `/setup-automation` | Install per-machine auto-sync/auto-push Stop hooks into `~/.claude/settings.json` — run once on a new machine |
+| `/first-run` | First-run wizard — dependency checks, GitHub auth, mode selection, knowledge restore |
 | `/export-plugin <name>` | Package a plugin as a zip file to share with anyone |
 | `/install-plugin <path>` | Install a plugin from a zip file |
-| `/brew-release` | Cut a Homebrew release — tag, SHA256, update formula, push both repos |
-| `/absorb` | Find a file, repo, or project → bring it into Foreman → scan, fix, and iterate to production |
-| `/restore-projects` | Pull your existing Foreman projects from GitHub into this workspace — clone what's missing, fast-forward the rest, push nothing |
-| `/sync-memory` | Back up your machine-local Claude memory to a private repo, or restore it on a new machine — makes memory portable across devices |
-| `/setup-automation` | Install the per-machine auto-sync/auto-push Stop hooks (memory + project repos) into ~/.claude/settings.json — run once on a new machine |
+| `/new-worker` | Scaffold a permanent stdlib-only language worker in `_workers/` |
 
+**Projects**
+
+| Command | What it does |
+|---------|-------------|
+| `/absorb` | Find a file, repo, or project → bring it into 4ORMan → scan, fix, and iterate to production |
+| `/restore-projects` | Pull your existing 4ORMan projects from GitHub into this workspace — clone what's missing, fast-forward the rest, push nothing |
+| `/from-context` | Paste raw notes/requirements/code and turn them into a scoped task |
+| `/mjolnir` | Senior-engineer review pass on complex technical input |
+
+**Releases**
+
+| Command | What it does |
+|---------|-------------|
+| `/release` | Cut a GitHub release — CHANGELOG, tag, push, GitHub release |
+| `/brew-release` | Cut a Homebrew release — tag, SHA256, update formula, push both repos |
+| `/auto-public-release` | Fully automated public release — one confirmation, then runs end-to-end |
+| `/manual-public-release` | Manual public release — pauses for confirmation before each push/tag/formula update |
+| `/auto-private-release` | Fully automated private release — one confirmation, then runs end-to-end |
+| `/manual-private-release` | Manual private release — pauses for confirmation before each push and tag |
+
+**Memory & cache**
+
+| Command | What it does |
+|---------|-------------|
+| `/sync-memory` | Back up machine-local Claude memory to a private repo, or restore it on a new machine |
+| `/auto-delete-cache` | Delete all disposable cache entries automatically, no confirmation |
+| `/manual-delete-cache` | Delete disposable cache entries with a preview and explicit confirmation |
+| `/4orman-quiet` | Suppress `4orman-tools` hook activity in the terminal |
+| `/4orman-watch` | Show `4orman-tools` hook activity in the terminal |
 
 **Plugin files**
 

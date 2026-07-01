@@ -2,7 +2,7 @@
 
 Domain knowledge, research, and external signals that improve the accuracy of Claude's work across all projects.
 
-This is shared across all projects in foreman. Project-specific knowledge lives in `[project-name]/knowledge/`.
+This is shared across all projects in 4orman. Project-specific knowledge lives in `[project-name]/knowledge/`.
 
 ---
 
@@ -71,7 +71,7 @@ To re-verify: check the original source, update any outdated content, and update
 | File | Domain | Topic | Last verified |
 |------|--------|-------|---------------|
 | [zig-0.16-io-api.md](zig-0.16-io-api.md) | Zig 0.16 | std.Io file/dir/process/env API — gotchas and correct patterns | 2026-06-29 |
-| [cache-architecture.md](cache-architecture.md) | Foreman/foreman-tools | All 5 caching layers — status, gaps, implementation order | 2026-06-30 |
-| [zig-language-interop.md](zig-language-interop.md) | Foreman/foreman-tools | Zig-native vs. language worker decision tree — when to use Python/Node, no-bloat rule | 2026-06-30 |
-| [foreman-ledger-protocol.md](foreman-ledger-protocol.md) | Foreman/foreman-tools | Ledger scoring protocol — Rigged Rock-Paper-Scissors, win/void conditions, storage format | 2026-07-01 |
-| [foreman-fmz-format.md](foreman-fmz-format.md) | Foreman/foreman-tools | .fmz package format — archive structure, manifest schema, import/export behavior | 2026-07-01 |
+| [cache-architecture.md](cache-architecture.md) | 4ORMan/4orman-tools | All 5 caching layers — status, gaps, implementation order | 2026-06-30 |
+| [zig-language-interop.md](zig-language-interop.md) | 4ORMan/4orman-tools | Zig-native vs. language worker decision tree — when to use Python/Node, no-bloat rule | 2026-06-30 |
+| [4orman-ledger-protocol.md](4orman-ledger-protocol.md) | 4ORMan/4orman-tools | Ledger scoring protocol — Rigged Rock-Paper-Scissors, win/void conditions, storage format | 2026-07-01 |
+| [4orman-fmz-format.md](4orman-fmz-format.md) | 4ORMan/4orman-tools | .fmz package format — archive structure, manifest schema, import/export behavior | 2026-07-01 |

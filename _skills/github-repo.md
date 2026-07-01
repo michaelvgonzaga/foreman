@@ -8,8 +8,8 @@
 ### Step 1 — Check prerequisites
 
 ```bash
-# With foreman-tools (preferred — auth check + username in one call):
-foreman-tools gh-user
+# With 4orman-tools (preferred — auth check + username in one call):
+4orman-tools gh-user
 # Fallback:
 gh auth status
 gh api user --jq '.login'
@@ -19,7 +19,7 @@ If `authenticated` is false (or fallback exits non-zero), tell the user (`brew i
 
 ### Step 2 — Confirm details
 
-Confirm name, visibility, and GitHub username (from `foreman-tools gh-user` `.login` field, or `gh api user --jq '.login'`) before creating anything.
+Confirm name, visibility, and GitHub username (from `4orman-tools gh-user` `.login` field, or `gh api user --jq '.login'`) before creating anything.
 
 ### Step 3 — Create the repo
 
@@ -40,8 +40,8 @@ If the repo name is already taken under that account, stop and tell the user —
 Get the canonical URL:
 
 ```bash
-# With foreman-tools (preferred):
-foreman-tools repo-info <project-path>
+# With 4orman-tools (preferred):
+4orman-tools repo-info <project-path>
 # Fallback: construct from owner + repo-name used in Step 3
 ```
 

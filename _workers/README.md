@@ -1,6 +1,6 @@
-# Foreman Workers
+# 4ORMan Workers
 
-Language-specific workers invoked by `foreman-tools worker-run`. Each worker:
+Language-specific workers invoked by `4orman-tools worker-run`. Each worker:
 - Reads config from **argv[1] as JSON** (when invoked via `worker-run`); falls back to stdin for direct testing
 - Writes result to **stdout as JSON**
 - Writes errors to **stderr** (never stdout)
@@ -9,7 +9,7 @@ Language-specific workers invoked by `foreman-tools worker-run`. Each worker:
 
 Claude invokes via:
 ```bash
-foreman-tools worker-run python _workers/web/crawl.py '{"url":"https://example.com","max_depth":1}'
+4orman-tools worker-run python _workers/web/crawl.py '{"url":"https://example.com","max_depth":1}'
 ```
 
 Zig receives `{ lang, exit_code, stdout, stderr, duration_ms }` — Claude reads JSON, never raw text.
@@ -69,10 +69,10 @@ if __name__ == "__main__":
 ## Adding a New Worker
 
 Use `/new-worker`. It will:
-1. Check if `foreman-tools capability-check` already covers the need
+1. Check if `4orman-tools capability-check` already covers the need
 2. Spec the worker (inputs, outputs, constraints, language choice)
 3. Scaffold the file with the standard header
-4. Test it via `foreman-tools worker-run`
+4. Test it via `4orman-tools worker-run`
 5. Register it here
 
 ---

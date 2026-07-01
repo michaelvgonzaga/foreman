@@ -27,7 +27,7 @@ This applies across any domain — software, legal, healthcare, trades, retail, 
 1. **Confirm the project name.** Ask: "What do you want to call this project? This becomes the directory name — keep it short, lowercase, no spaces (e.g., `injury-intake`, `plumbing-scheduler`, `lease-drafter`)."
 
 2. **Check the knowledgebase and skills before writing anything:**
-   - If the user provides an existing codebase path, run `foreman-tools scan <path>` first — it returns framework, key files, dep count, directory map, entry point, and a file inventory (sorted largest-first). Use `entryPoint` and the top `files` entries to prioritize reads instead of running `find` or `ls`.
+   - If the user provides an existing codebase path, run `4orman-tools scan <path>` first — it returns framework, key files, dep count, directory map, entry point, and a file inventory (sorted largest-first). Use `entryPoint` and the top `files` entries to prioritize reads instead of running `find` or `ls`.
    - Read `_knowledgebase/README.md` and any relevant files before writing the spec.
    - Read `_skills/README.md` — identify which playbooks apply:
      - If the domain is unfamiliar: read and apply `_skills/domain-research.md`
@@ -52,7 +52,7 @@ This applies across any domain — software, legal, healthcare, trades, retail, 
      - Universal: "Never send real messages, emails, or notifications to real users"
    - If tools and platform not yet decided, leave those fields as `TODO: not yet decided`
    - Read `_templates/roadmap_output.md` and write it to `[project-name]/ROADMAP.md` — fill in all milestones, their "Done when" criteria, and an initial step breakdown for M1. Leave M2/M3 steps as placeholders until M1 is complete.
-   - Run `git init -b main` inside `[project-name]/` to initialize it as its own repository (the project directory is already excluded from foreman's git by `.gitignore` — no manual entry needed). If git version is older than 2.28 and `-b` is unsupported, run `git init` then `git symbolic-ref HEAD refs/heads/main`.
+   - Run `git init -b main` inside `[project-name]/` to initialize it as its own repository (the project directory is already excluded from 4orman's git by `.gitignore` — no manual entry needed). If git version is older than 2.28 and `-b` is unsupported, run `git init` then `git symbolic-ref HEAD refs/heads/main`.
    - Ask the user: "Should this project be **public** (anyone can see it on GitHub) or **private** (only you)?" — then apply the `github-repo` skill (`_skills/github-repo.md`) to create the GitHub repo and wire up the remote immediately. Record visibility in `_projects.md` and `[project-name]/CLAUDE.md`.
 
 6. **Present the spec to the user** and say:

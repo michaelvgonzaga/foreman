@@ -27,7 +27,7 @@ Read everything. Build a complete picture:
 
 For every core operation, decide whether a CLI tool would save tokens across future sessions:
 
-**Use `foreman-tools` (Zig subcommand)** when ALL of these are true:
+**Use `4orman-tools` (Zig subcommand)** when ALL of these are true:
 - Reads git refs, filesystem state, or project metadata
 - Will run on every session open, every release, or every build cycle
 - Needs <10ms startup (no acceptable latency budget)
@@ -37,7 +37,7 @@ For every core operation, decide whether a CLI tool would save tokens across fut
 **Use a standalone script (Python / bash / zsh)** when:
 - Python: complex parsing, API calls, data transformation, rich library needed
 - bash/zsh: shell glue, environment setup, tool orchestration, simple file ops
-- Project-specific — won't reuse across other Foreman projects
+- Project-specific — won't reuse across other 4ORMan projects
 
 **Skip** when:
 - Operation is truly one-off (runs once ever)
@@ -48,7 +48,7 @@ For each CLI candidate, output:
 
 ```
 CLI candidate: `<name> <args>`
-Language: Zig (foreman-tools) | Python | bash | zsh
+Language: Zig (4orman-tools) | Python | bash | zsh
 Why: <one line — what makes this language the right fit>
 Replaces: <the shell reasoning or tool Claude would otherwise run>
 Frequency: every session | every release | per project setup | one-off
@@ -70,12 +70,12 @@ Toolchain recommendation:
   Core: <language/framework>
   <CLI tool candidates — one per line with language and savings>
 
-Foreman project type: standard project | plugin | standalone script
+4ORMan project type: standard project | plugin | standalone script
 
 Next: proceed to spec? (yes / adjust)
 ```
 
-If any foreman-tools candidates surfaced: ask "Add these to foreman-tools/spec.md now, or after the project spec?" Do not add without confirmation.
+If any 4orman-tools candidates surfaced: ask "Add these to 4orman-tools/spec.md now, or after the project spec?" Do not add without confirmation.
 
 ---
 
@@ -88,6 +88,6 @@ On confirmation, run `/new-project` with the synthesized context pre-loaded — 
 ## Rules
 
 - Never start spec work before Step 4 confirmation.
-- Never recommend Zig for one-off or project-specific operations — foreman-tools is for cross-project, high-frequency work only.
+- Never recommend Zig for one-off or project-specific operations — 4orman-tools is for cross-project, high-frequency work only.
 - If the pasted context is too vague to evaluate CLI candidates, ask one clarifying question before Step 3.
 - If the user pastes a GitHub URL instead of context, run `/absorb` instead.

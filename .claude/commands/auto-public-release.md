@@ -5,9 +5,9 @@ Fully automated public release. Shows a single plan, gets one confirmation, then
 Get project path (ask if unclear). Then:
 
 ```bash
-foreman-tools release-info <project-path>
-foreman-tools repo-info <project-path>
-foreman-tools formula-info /opt/homebrew/Library/Taps/<owner>/homebrew-<repo> <name> 2>/dev/null
+4orman-tools release-info <project-path>
+4orman-tools repo-info <project-path>
+4orman-tools formula-info /opt/homebrew/Library/Taps/<owner>/homebrew-<repo> <name> 2>/dev/null
 ```
 
 Use `suggestedNext` as the version. Check `isDirty` — abort if dirty.

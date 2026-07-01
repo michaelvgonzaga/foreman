@@ -1,0 +1,144 @@
+#!/bin/bash
+set -e
+
+# --- dependency checks -------------------------------------------------
+
+if command -v foreman-tools >/dev/null 2>&1; then
+  _doctor="$(foreman-tools doctor 2>/dev/null)"
+  if echo "$_doctor" | grep -q '"claude": false'; then
+    echo ""
+    echo "  ERROR: Claude Code is not installed."
+    echo "  Install it from: https://claude.ai/code"
+    echo ""
+    exit 1
+  fi
+  if echo "$_doctor" | grep -q '"git": false'; then
+    echo ""
+    echo "  ERROR: Git is not installed."
+    echo "  Run: brew install git"
+    echo ""
+    exit 1
+  fi
+  if echo "$_doctor" | grep -q '"gh": false'; then
+    echo "  NOTE: GitHub CLI (gh) is not installed. Run: brew install gh"
+  fi
+else
+  if ! command -v claude >/dev/null 2>&1; then
+    echo "  ERROR: Claude Code is not installed. Install it from: https://claude.ai/code"
+    exit 1
+  fi
+  if ! command -v git >/dev/null 2>&1; then
+    echo "  ERROR: Git is not installed. Run: brew install git"
+    exit 1
+  fi
+fi
+
+# --- locate or initialize the workspace --------------------------------
+# Walk up the directory tree first so running 4orman-ai from inside an
+# existing workspace (or a project subdirectory) never creates a nested
+# 4orman/4orman.
+
+_find_workspace_root() {
+  local dir="$PWD"
+  while [ "$dir" != "/" ]; do
+    if [ -f "$dir/CLAUDE.md" ] && [ -d "$dir/.claude" ]; then
+      echo "$dir"
+      return 0
+    fi
+    dir="$(dirname "$dir")"
+  done
+  return 1
+}
+
+DEST="$(_find_workspace_root 2>/dev/null || true)"
+
+if [ -z "$DEST" ]; then
+  DEST="$PWD/4orman"
+  if [ ! -d "$DEST" ]; then
+    echo "Initializing 4orman in $DEST ..."
+    if ! git clone --quiet https://github.com/michaelvgonzaga/4orman.git "$DEST"; then
+      echo "  ERROR: git clone failed and no local fallback is available."
+      exit 1
+    fi
+    touch "$DEST/.first-run"
+  fi
+fi
+
+cd "$DEST"
+
+# --- splash --------------------------------------------------------------
+
+clear 2>/dev/null || true
+cat <<'BANNER'
+ ██╗  ██╗ ██████╗ ██████╗ ███╗   ███╗ █████╗ ███╗   ██╗
+██║  ██║██╔═══██╗██╔══██╗████╗ ████║██╔══██╗████╗  ██║
+███████║██║   ██║██████╔╝██╔████╔██║███████║██╔██╗ ██║
+╚════██║██║   ██║██╔══██╗██║╚██╔╝██║██╔══██║██║╚██╗██║
+     ██║╚██████╔╝██║  ██║██║ ╚═╝ ██║██║  ██║██║ ╚████║
+     ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝
+
+                    4 O R M a n
+         Build • Verify • Share • Remember
+═══════════════════════════════════════════════════════════════════════════════
+BANNER
+
+if [ -f "$DEST/_projects.md" ]; then
+  echo ""
+  echo "  ACTIVE PROJECTS"
+  awk -F'|' '/^\| *[A-Za-z0-9_-]+ *\|.*`active`/ {gsub(/^ +| +$/,"",$2); gsub(/^ +| +$/,"",$7); printf "    ▸ %-20s %s\n", $2, $7}' "$DEST/_projects.md"
+fi
+
+if [ -d "$DEST/.claude/commands" ]; then
+  echo ""
+  echo "  COMMANDS"
+  cmds=$(ls "$DEST/.claude/commands"/*.md 2>/dev/null | xargs -n1 basename | sed 's/\.md$//' | sed 's/^/\//' | sort)
+  echo "$cmds" | pr -4 -t -w 100 2>/dev/null | sed 's/^/    /' || echo "$cmds" | sed 's/^/    /'
+  echo ""
+  echo "    Run /help inside Claude for what each one does."
+fi
+
+echo "═══════════════════════════════════════════════════════════════════════════════"
+
+# --- mode: ask every launch, honored only for this terminal session -----
+
+read -r -p "  Enable auto-pilot for this session — Claude decides and builds without asking? [Y/n] " _ans
+case "$_ans" in
+  [nN]*) export FOREMAN_MODE="gate" ;;
+  *)     export FOREMAN_MODE="autopilot" ;;
+esac
+echo "  Mode: $FOREMAN_MODE for this terminal (say /gate inside Claude to flip it; closing this terminal resets it)."
+
+echo "═══════════════════════════════════════════════════════════════════════════════"
+echo ""
+echo "> booting 4ORMan..."
+echo ""
+
+_check() {
+  local label="$1" ok="$2"
+  if [ "$ok" = "1" ]; then
+    echo "  ✓ $label"
+  else
+    echo "  ✗ $label — not found yet, first-run will set this up"
+  fi
+}
+
+[ -f "$HOME/.foreman/profile.json" ] && _p=1 || _p=0
+_check "Loading device profile..." "$_p"
+[ -f "$HOME/.foreman/ledger.json" ] && _l=1 || _l=0
+_check "Loading verified ledger..." "$_l"
+[ -d "$DEST/_knowledgebase" ] && _k=1 || _k=0
+_check "Restoring knowledge graph..." "$_k"
+[ -d "$HOME/.foreman/state" ] && _s=1 || _s=0
+_check "Restoring project state..." "$_s"
+[ -d "$DEST/_workers" ] && _w=1 || _w=0
+_check "Awakening required workers..." "$_w"
+if command -v foreman-tools >/dev/null 2>&1 && echo "$_doctor" | grep -q '"claude": true'; then _e=1; else _e=0; fi
+_check "Verifying environment..." "$_e"
+echo "  ✓ Ready."
+echo ""
+echo "═══════════════════════════════════════════════════════════════════════════════"
+echo ""
+echo '      "AI proposes. 4ORMan verifies. You remain in control."'
+echo ""
+
+exec claude

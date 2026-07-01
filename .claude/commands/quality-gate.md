@@ -7,7 +7,7 @@ If inside a project directory (has `spec.md` and `CLAUDE.md`), use it. Otherwise
 ## Step 2 — Run quality gate
 
 ```bash
-foreman-tools quality-gate <abs-path>
+4orman-tools quality-gate <abs-path>
 ```
 
 ## Step 3 — Surface verdict

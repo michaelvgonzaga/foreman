@@ -1,6 +1,6 @@
 # Cache Architecture
 
-All caching layers in Foreman + foreman-tools, with status and gaps.
+All caching layers in 4ORMan + 4orman-tools, with status and gaps.
 
 ---
 
@@ -10,9 +10,9 @@ Three tiers with distinct invalidation rules:
 
 | Tier | Location | Invalidation | Never |
 |---|---|---|---|
-| **Permanent Truth** | `~/.foreman/` (ledger, session-snapshot, profile, state/) | Never — append-only or hardware-only | Touched by any hook |
-| **Pinned Knowledge** | `~/.cache/foreman-tools/` sub-keys: guardrails, state, milestones, outline | Source file hash mismatch → invalidate, regenerate, re-store | Deleted preemptively |
-| **Disposable Cache** | `~/.cache/foreman-tools/` all other entries | Auto-invalidated by hash on access; Stop hook purges >30 days | Cleared on session start |
+| **Permanent Truth** | `~/.4orman/` (ledger, session-snapshot, profile, state/) | Never — append-only or hardware-only | Touched by any hook |
+| **Pinned Knowledge** | `~/.cache/4orman-tools/` sub-keys: guardrails, state, milestones, outline | Source file hash mismatch → invalidate, regenerate, re-store | Deleted preemptively |
+| **Disposable Cache** | `~/.cache/4orman-tools/` all other entries | Auto-invalidated by hash on access; Stop hook purges >30 days | Cleared on session start |
 
 **Rule:** Essential knowledge is not deleted; it is invalidated, regenerated, and verified.
 
@@ -27,7 +27,7 @@ L1  Anthropic prompt cache       — in Claude's infrastructure, 5-min TTL
 L2  Zig binary internals         — comptime maps, shared helpers, per-invocation
 L3  Git subprocess calls         — spawned via runGit(), no cross-call dedup
 L4  Claude reading behavior      — what gets read per session, cache-fetch pattern
-L5  Disk cache                   — ~/.cache/foreman-tools/, persistent
+L5  Disk cache                   — ~/.cache/4orman-tools/, persistent
 ```
 
 ---
@@ -166,28 +166,28 @@ No skill or command currently calls `cache-fetch` before reading. The guardrail 
 
 ## L5 — Disk Cache
 
-**Location:** `~/.cache/foreman-tools/`  
+**Location:** `~/.cache/4orman-tools/`  
 **Persistence:** On-disk. Survives restarts, power loss (safe miss on partial write), internet outages.  
 **Invalidation:** Content-addressed (SHA256 of file content). File changes → automatic miss on next fetch.  
 **Current entries:** 4 (as of 2026-06-30). Barely used.
 
 ### Entry format
 
-`cache-check`: `~/.cache/foreman-tools/<SHA256(file_path)>` → `<SHA256(file_content)>`  
-`cache-store/fetch`: `~/.cache/foreman-tools/<SHA256(file_path + ":" + sub_key)>` → `<SHA256(file_content)>\n<value_json>`
+`cache-check`: `~/.cache/4orman-tools/<SHA256(file_path)>` → `<SHA256(file_content)>`  
+`cache-store/fetch`: `~/.cache/4orman-tools/<SHA256(file_path + ":" + sub_key)>` → `<SHA256(file_content)>\n<value_json>`
 
 ### Session warm-up (GAP — highest ROI)
 
 No subcommand warms the cache for a project at session start. Claude must call `cache-fetch` on each file individually, which it often skips.
 
-**Fix:** `foreman-tools warm-up <project-root>` subcommand — in one call:
+**Fix:** `4orman-tools warm-up <project-root>` subcommand — in one call:
 1. `cache-fetch` on key files (spec.md, CLAUDE.md, ROADMAP.md, entry point)
 2. For each miss: read file, extract standard values (milestones, guardrails, state, outline), `cache-store`
 3. Return: `{ warmed: N, hits: N, misses: N, files: [{path, sub_key, hit}] }`
 
 Claude calls this once at session start instead of N separate cache-fetch calls. This is the highest-ROI addition in Wave 2.
 
-**Status:** ❌ Not implemented. Target: foreman-tools v0.30.0 (first Wave 2 item).
+**Status:** ❌ Not implemented. Target: 4orman-tools v0.30.0 (first Wave 2 item).
 
 ### Scan result caching (GAP)
 
@@ -232,7 +232,7 @@ Claude calls this once at session start instead of N separate cache-fetch calls.
 |------|--------|--------|
 | Build optimization | `ReleaseSafe` ✅ | Correct — reads untrusted data, keep safety checks |
 | CPU target | Generic arm64 → changed to `apple_m3` | `-Dcpu=apple_m3` in build command — enables M3 SIMD for string ops |
-| `ReleaseFast` | ❌ Do not use | Removes bounds checks; foreman-tools reads untrusted filesystem/git data |
+| `ReleaseFast` | ❌ Do not use | Removes bounds checks; 4orman-tools reads untrusted filesystem/git data |
 | Parallel file reads | ❌ Not yet | `context-rank` reads files sequentially; parallelism requires Zig threading (Wave 4) |
 | Memory allocator | `GeneralPurposeAllocator` ✅ | Correct for this use case; binary exits after each command |
 | Universal binary | arm64 + x86_64 ✅ | M3 runs arm64 natively; no Rosetta overhead |
