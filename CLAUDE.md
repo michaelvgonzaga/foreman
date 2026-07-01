@@ -92,6 +92,7 @@ Run `/verify-output` before marking any output complete — self-review + critic
   | branch, HEAD SHA, dirty state, ahead/behind, last 10 commits — cached by HEAD SHA, hit: true within same HEAD | `4orman-tools git-cache <repo-path>` |
   | read/write project decisions and known patterns across sessions (state at `~/.4orman/state/`) | `4orman-tools project-state <abs-path> [record-decision <what> [<why>]]` |
   | decision ledger — show/record/validate Claude-vs-Zig decisions with 365-day staleness (stored at `~/.4orman/ledger.json`) | `4orman-tools ledger [show \| record <winner> <question> <reasoning> \| check-stale \| validate <id>]` |
+  | Jungian ledger category — for values/trade-off decisions with no measured data, no credible source, no formal proof (the "Mathematical proof" gate has nothing to check), and that can't be deferred. No winner, no contest — record `chosen` (the decision), `shadow` (the strongest case against it, not a strawman), and `synthesis` (what's retained from the rejected alternative, what's consciously sacrificed). Never consulted by `capability-check`/`route`/`build`/`run-tests` — values trade-offs must never silently override a factual or tool-choice decision | `4orman-tools ledger record-jungian <question> <chosen> <shadow> <synthesis>` |
   | score a contested decision — Zig computes composite from cited sources, checks ledger, returns winner/void verdict | `4orman-tools ledger score <question> <sources-json>` |
   | run a shell command safely — blocks destructive patterns, captures stdout/stderr as JSON, tracks duration | `4orman-tools shell-run [--timeout <ms>] <shell-command>` |
   | aggregate build + test results into a severity-bucketed verdict (pass/fail + critical/high/medium/low findings) | `4orman-tools quality-gate <abs-path>` |
@@ -176,7 +177,7 @@ Every architectural decision, performance claim, or worker promotion must be bac
 - **100% credible online source** — state the exact URL and specific claim; training memory alone is not evidence
 - **Formal proof** — state the algorithm, complexity class, and why it dominates
 
-If neither is available: do not proceed. Run the measurement first, then decide.
+If neither is available: do not proceed. Run the measurement first, then decide. **Exception:** a values/trade-off decision with genuinely no factual answer and that can't be deferred — use `ledger record-jungian` instead of guessing (see subcommand table). This is not a loophole around measuring when measurement is possible; it's for the class of decision measurement can't touch.
 
 When a worker or subcommand produces output: `confidence` and `self_healed` fields quantify result quality mathematically. `confidence: 1.0` = complete. `confidence < 0.8` = degraded; report to user before acting on the result.
 
