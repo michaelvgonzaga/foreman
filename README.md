@@ -2,54 +2,53 @@
   <img src="assets/foreman-banner.png" alt="Foreman - A framework for Claude Code that brings structure, verification, and shared knowledge to every project you build." width="100%"/>
 </div>
 
-# Foreman
+# Foreman AI
 
-The name is literal: a foreman doesn't swing the hammer — they run the job site. Foreman is a framework that directs Claude Code: spec the work, structure the build, verify before shipping.
-
-Every project starts with a spec interview, every output goes through a verification step, and a shared knowledgebase and skills library accumulates across all your projects.
+A local AI-assisted development control plane built around deterministic execution.
 
 ---
 
-## Who it's for
+## What is it?
 
-Engineers, technical teams, and agencies running real projects with Claude Code. Claude Code is a skilled worker — but a skilled worker without a foreman builds the wrong thing confidently, skips verification, and forgets what was decided last session. Foreman puts the structure in place: specs before work, verification before shipping, and a knowledgebase that carries context across every session.
-
----
-
-## What it does
-
-**Layer 1 — Spec** (`/new-project`)
-Interview → real goal → scoped spec → explicit sign-off before any work begins.
-
-**Layer 2 — Verifier** (`/verify-output`)
-Self-review → independent critic (forked Claude agent) → fix what fails → then ship.
-
-**Layer 3 — Workspace**
-Every project builds its own knowledge. A shared skills library and knowledgebase accumulate across all projects so you don't re-solve the same problems.
-
-**Plugin system** (`/setup`, `/export-plugin`, `/install-plugin`)
-Install public plugins, add your own private repos, or share a plugin with anyone as a zip file.
-
-**Proportional effort**
-Foreman scales to the task — trivial questions get direct answers, full builds get the full 3-layer treatment. The expensive steps (spec interview, second-agent critic) only fire when the work warrants it.
-
-**Token discipline**
-Every line in every command, skill, and template costs tokens on every use. Foreman enforces a hard rule when editing its own framework files: earn every token, one location per rule, no rationale commentary, no placeholders, no obvious instructions. Tighten, don't expand.
+Foreman AI is a framework that runs on top of Claude Code. It adds structure to every session: a spec interview before any work begins, a verification step before any output ships, and a native CLI (`foreman-tools`) that replaces Claude's inline shell reasoning with 70 structured JSON subcommands — so every session starts fast, stays on track, and spends tokens on reasoning instead of parsing.
 
 ---
 
-## Prerequisites
+## Who is it for?
 
-- [Claude Code](https://claude.ai/code) installed and authenticated
-- Git (`brew install git` if missing)
-- GitHub CLI (`brew install gh` if missing) — needed for repo creation, authentication, and pushing
-- A Claude account with API access
+Engineers, technical teams, and agencies running real projects with Claude Code. Claude is a skilled worker — but without structure it builds the wrong thing confidently, skips verification, and forgets what was decided last session. Foreman puts a foreman on the job: specs before work, verification before shipping, and a knowledgebase that carries context across every session.
+
+---
+
+## Why does it exist?
+
+AI-assisted development without determinism is expensive guesswork. Every token Claude spends parsing git output or re-deriving project state is waste. Foreman eliminates that waste: a session that starts slower or burns more tokens than without it is a failure.
+
+---
+
+## Features
+
+- **Spec-first workflow** — `/new-project` interviews you, writes a scope, requires sign-off before any code is written
+- **Built-in verification** — `/verify-output` runs a self-review then an independent Claude critic agent before anything ships
+- **Native CLI** — `foreman-tools` replaces shell parsing with 70 structured JSON subcommands
+- **TUI dashboard** — interactive split-panel project overview
+- **Worker system** — language workers (Python, Node, Go, Swift, Zig, and more) for tasks that need a runtime
+- **Plugin ecosystem** — public and private plugins via `/setup`, share as a zip
+- **Portable knowledge** — pinned knowledge backs up to your private GitHub, restores on any machine in three commands
+- **Token discipline** — every framework line earns its place; no commentary, no placeholders, no duplication
+
+---
+
+## Philosophy
+
+- AI assists. It does not replace engineering judgment.
+- Local execution first. Nothing phones home.
+- Deterministic tooling — Zig, not shell scripts.
+- Human remains in control. Every release requires a diff review.
 
 ---
 
 ## Installation
-
-### Option 1 — Homebrew (recommended)
 
 ```bash
 brew tap michaelvgonzaga/foreman
@@ -57,37 +56,25 @@ brew trust michaelvgonzaga/foreman
 brew install foreman-ai
 ```
 
-Then launch it from any directory:
+Then from any directory:
 
 ```bash
 foreman-ai
 ```
 
-On first run it clones the Foreman workspace from GitHub into a `foreman/` folder in your current directory and opens it in Claude Code. Subsequent runs just open it. Brew checks for Claude Code and Git on launch and warns you if either is missing.
+On first run it walks you through setup and opens your Foreman workspace in Claude Code.
 
-**To update to the latest version:**
-
+**Update:**
 ```bash
 brew upgrade foreman-ai
 ```
 
-**To uninstall:**
-
+**Uninstall:**
 ```bash
-brew uninstall foreman-ai
-brew untap michaelvgonzaga/foreman
+brew uninstall foreman-ai && brew untap michaelvgonzaga/foreman
 ```
 
-**To reinstall from scratch:**
-
-```bash
-brew untap michaelvgonzaga/foreman
-brew tap michaelvgonzaga/foreman
-brew install foreman-ai
-```
-
-### Option 2 — Manual
-
+**Manual install:**
 ```bash
 git clone https://github.com/michaelvgonzaga/foreman.git
 claude /path/to/foreman
@@ -95,90 +82,90 @@ claude /path/to/foreman
 
 ---
 
-## Getting started
+## Quick Start
 
-Run `/first-run` inside Claude Code. It walks you through everything: dependency checks, GitHub auth, per-machine automation, restoring existing projects, and installing plugins. Takes about 2 minutes.
+Inside Claude Code:
 
-After that, run `/new-project` to start your first project.
-
-## How to use
-
-**Starting a new project**
-Run `/new-project`. Claude will interview you one question at a time to uncover your real goal, write a spec, scaffold the project directory, and require explicit sign-off before any work begins. Don't skip this — the interview takes 5 minutes and prevents weeks of wasted work.
-
-**Working on an existing project**
-Open foreman in Claude Code (`claude /path/to/foreman`), then navigate to your project. Claude will read that project's `CLAUDE.md` and `spec.md` automatically before making any changes.
-
-**Verifying output**
-Before marking any task complete, run `/verify-output`. Claude self-reviews the output, then spawns a second Claude agent as an independent critic. It fixes what the critic flags before showing you the result.
-
-**Adding private plugins**
-Copy `plugins.local.yml.example` → `plugins.local.yml`, add your private repo URLs, then run `/setup` again.
-
-**Sharing a plugin**
-Run `/export-plugin <name>` to package it as a zip. The recipient runs `/install-plugin <path>` to install it.
+1. Run `/first-run` — one-time setup: dependency checks, GitHub auth, mode selection (Power User or Guest), pinned knowledge restore. Takes ~2 minutes.
+2. Run `/new-project` — spec interview → scoped build → verify → ship.
 
 ---
 
-## Commands
+## How it works
 
-| Command | What it does |
-|---------|-------------|
-| `/first-run` | First-time setup wizard — dependency checks, GitHub auth, automation hooks, project restore, plugins |
-| `/help` | Show all available commands |
-| `/new-project` | Start a new project — spec interview, scaffolding, and sign-off before any work begins |
-| `/from-context` | Paste notes, requirements, or code — Claude synthesizes the project, picks the right toolchain, and flags CLI tool candidates for token savings before spec work begins |
-| `/verify-output` | Verify any output before marking it done — self-review + independent critic agent |
-| `/setup` | Install available plugins from the public list and your private repos |
-| `/export-plugin <name>` | Package a plugin as a zip file to share with anyone |
-| `/install-plugin <path>` | Install a plugin from a zip file |
-| `/release` | Cut a GitHub release for any project — update CHANGELOG, tag, push, and publish a GitHub release |
-| `/brew-release` | Cut a Homebrew release — tag, SHA256, update formula, push both repos |
-| `/absorb` | Find a file, repo, or project → bring it into Foreman → scan, fix, and iterate to production |
-| `/restore-projects` | Pull your existing Foreman projects from GitHub down into this workspace (new device / recovery) — clone what's missing, fast-forward the rest, push nothing |
-| `/sync-memory` | Back up your machine-local Claude memory to a private repo, or restore it on a new machine — makes memory portable across devices |
-| `/setup-automation` | Install the per-machine auto-sync/auto-push Stop hooks (memory + project repos) into ~/.claude/settings.json — run once on a new machine |
+```mermaid
+flowchart TD
+    A([Session Start]) --> B[compat-check\nZig binary, zero tokens]
+    B -->|drift| C[Surface rollback advice]
+    B -->|ok| D[doctor\nverify claude · git · gh]
+    D --> E{Cache warm?}
+    E -->|hit| F[Load ROADMAP state\nfrom cache]
+    E -->|miss| G[Read ROADMAP.md\ncache-store result]
+    G --> F
 
----
+    F --> H{Starting\nfresh or continuing?}
 
-## Skills
+    H -->|New project| I[/new-project\nSpec interview · sign-off]
+    H -->|Continue| J[Resume from\nROADMAP active work]
 
-Built-in playbooks Claude applies automatically:
+    I --> K[Build]
+    J --> K
 
-| Skill | When it kicks in |
-|-------|-----------------|
-| `self-update` | Session start — silently checks if Foreman is behind its remote and prompts to update before any work begins |
-| `foreman-tools-audit` | After any new project or command/skill edit — scans for shell patterns worth promoting to a native CLI subcommand |
-| `release-notes` | Auto-generates categorized release notes from git commits for Foreman or any project — called automatically by `/brew-release` |
-| `github-repo` | Creates a public or private GitHub repo and wires it as the git remote — called by `/new-project` and `/absorb` |
-| `domain-research` | Before building in an unfamiliar field |
-| `software-projects` | Stack decisions and risk checklist for software builds |
-| `rubric-driven-verification` | Defining quality criteria upfront for subjective outputs |
-| `vendor-neutral-adapter-pattern` | Building integrations that aren't locked to one provider |
-| `two-tier-classification` | Routing inputs to specialist handlers via a fast pre-pass |
+    K --> L[/verify-output\nSelf-review + critic agent]
+    L -->|Pass| M[Ship]
+    L -->|Fail| N[Fix]
+    N --> L
 
----
+    M --> O[/release or /brew-release]
 
-## Plugins
+    subgraph FT[foreman-tools — 70 subcommands]
+        P[git · gh state]
+        Q[build · test]
+        R[cache · outline]
+        S[release · export]
+        T[ledger · ledger score]
+    end
 
-Public plugins are listed in `plugins.public.yml` and install automatically via `/setup`.
+    K -. structured JSON .-> FT
+    L -. structured JSON .-> FT
+    O -. structured JSON .-> FT
+```
 
-To add your private repos: copy `plugins.local.yml.example` → `plugins.local.yml`, add your repos, run `/setup` again.
-
-To share a private plugin with someone: run `/export-plugin <name>` → send the zip → they run `/install-plugin <path>`.
+**Session startup is under 200ms.** All git state, tool versions, and project context come from `foreman-tools` as pre-computed JSON — no Claude tokens spent parsing shell output.
 
 ---
 
-## Four categories
+## Token savings
 
-| Type | Visibility | How |
-|------|-----------|-----|
-| Project | Private | Own private git repo, git-ignored inside Foreman |
-| Project | Public | Own public git repo, git-ignored inside Foreman |
-| Plugin | Private | Listed in `plugins.local.yml` (git-ignored), install via `/setup` |
-| Plugin | Public | Listed in `plugins.public.yml` (tracked), anyone can install via `/setup` |
+Every cache hit, git query, and build-result read that goes through `foreman-tools` instead of Claude's inline reasoning saves tokens. Check your running total anytime:
 
-**Projects** are things you build. **Plugins** extend Foreman itself — new commands, skills, or knowledgebase entries. Both can be public or private.
+```bash
+foreman-tools metrics
+```
+
+```json
+{
+  "cacheEntries": 10,
+  "estimatedTokenSavings": 1600,
+  "note": "savings estimated at 80% hit rate x 200 tokens/hit"
+}
+```
+
+Savings compound as the cache warms across sessions and more subcommands cover more of your workflow.
+
+---
+
+## Roadmap
+
+- [x] CLI — `foreman-tools` with 70 structured subcommands
+- [x] TUI — interactive project dashboard
+- [x] Worker ecosystem — Python, Node, Go, Swift, Zig, and more
+- [x] Plugin SDK — public and private plugin support
+- [x] Portable knowledge — GitHub-backed pinned knowledge, restores on any machine
+- [x] Export / Import — `.fmz` format for project portability and workspace backup
+- [ ] Plugin marketplace
+- [ ] Team workspace sync
+- [ ] Windows support
 
 ---
 
